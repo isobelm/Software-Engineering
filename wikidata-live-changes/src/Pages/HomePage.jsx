@@ -11,14 +11,9 @@ class HomePage extends Component {
 		return (
 			<div className="HomePage">
 				<p>Wikidata Live Changes</p>
-				<button onClick={this.route}>click me</button>
 			</div>
 		);
 	}
-
-	route = () => {
-		this.state.history.push("page");
-	};
 }
 
 export default HomePage;
