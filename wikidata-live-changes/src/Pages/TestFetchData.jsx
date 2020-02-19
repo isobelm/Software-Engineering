@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
-import { getRecentChanges, getUserData } from './Backend/APIWrapper'
+import { getRecentChanges, getUserData } from '../Backend/APIWrapper'
 
 function TestFetchData() {
   const [recentChanges, setRecentChanges] = useState([])
@@ -35,21 +34,6 @@ function TestFetchData() {
       </ul>
     </div>
   )
-=======
-import React, { useEffect } from 'react'
-import { getRecentChanges } from './Backend/APIWrapper'
-
-function TestFetchData() {
-	useEffect(() => {
-		async function fetchData() {
-			const result = await getRecentChanges()
-			console.log(result)
-		}
-		fetchData()
-	}, [])
-
-	return <div></div>
->>>>>>> Add test fetch recent changes
 }
 
 export default TestFetchData
