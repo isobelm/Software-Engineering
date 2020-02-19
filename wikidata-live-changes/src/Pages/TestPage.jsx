@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import GraphCard from '../Components/GraphCard'
 
 class HomePage extends Component {
 	constructor(props) {

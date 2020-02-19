@@ -13,14 +13,7 @@ class GraphCard extends Component {
 	}
 
 	render() {
-		return (
-			<Card onClick={this.onClick} tag="a">
-				<Card.Body>
-					<Card.Title>{this.state.title}</Card.Title>
-					<SampleGraph />
-				</Card.Body>
-			</Card>
-		)
+		return <div className="Card-Container" />
 	}
 
 	onClick = () => {
