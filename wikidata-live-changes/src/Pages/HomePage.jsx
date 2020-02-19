@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import GraphCard from '../Components/GraphCard'
+import TitleContainer from '../Components/TitleContainer'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 class HomePage extends Component {
 	constructor(props) {
@@ -11,12 +13,15 @@ class HomePage extends Component {
 	render() {
 		return (
 			<div className="HomePage">
-				<p>Wikidata Live Changes</p>
-				<GraphCard
+				<TitleContainer
+					title="Wikidata Live"
+					subtitle="A web app to visualise recent changes to Wikidata in quasi real time."
+				></TitleContainer>
+				{/* <GraphCard
 					title="Card"
 					history={this.state.history}
 					pageLink="page"
-				/>
+				/> */}
 			</div>
 		)
 	}
