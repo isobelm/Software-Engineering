@@ -12,11 +12,6 @@ class HomePage extends Component {
 		return (
 			<div className="HomePage">
 				<p>Wikidata Live Changes</p>
-				<GraphCard
-					title="Card"
-					history={this.state.history}
-					pageLink="page"
-				/>
 			</div>
 		)
 	}
