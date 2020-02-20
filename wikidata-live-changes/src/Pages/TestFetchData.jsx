@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { getRecentChanges, getUserData } from '../Backend/APIWrapper'
+
+const URL = 'https://stream.wikimedia.org/v2/stream/recentchange'
 
 function TestFetchData() {
   const [recentChanges, setRecentChanges] = useState([])
+  const [eventSource] = useState(new EventSource(URL))
 
-  useEffect(() => {
-    async function fetchData() {
-      const recentChanges = await getRecentChanges()
-      const items = recentChanges.items
-      const authorNames = []
-      items.forEach(item => authorNames.push(item.authors[0].name))
-      const userData = await getUserData(authorNames)
-      userData.forEach(userObject => {
-        items.forEach(item => {
-          if (userObject.name === item.authors[0].name) {
-            item.authors[0].registration = userObject.registration
-          }
+  useEffect(
+    () =>
+      (eventSource.onmessage = event => {
+        const change = JSON.parse(event.data)
+        setRecentChanges(prevChanges => {
+          const newChanges = [...prevChanges]
+          newChanges.push(change)
+          if (newChanges.length > 10) newChanges.shift()
+          return newChanges
         })
-      })
-      setRecentChanges(items)
-    }
-    fetchData()
-  })
+      }),
+    []
+  )
 
   return (
     <div>
       <ul>
         {recentChanges.map((item, index) => (
-          <li
-            key={index}
-          >{`${item.authors[0].name} (created ${item.authors[0].registration}) edited ${item.title} page at ${item.published}`}</li>
+          <li key={index}>
+            {item.title} {item.user} {item.timestamp} {item.bot}
+          </li>
         ))}
       </ul>
     </div>

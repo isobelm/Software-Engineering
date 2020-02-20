@@ -2,8 +2,8 @@ import React from 'react'
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import HomePage from './Pages/HomePage'
 import history from './Utils/History'
-import TestFetchData from './Pages/TestFetchData'
 import './App.css'
+import TestFeedData from './Pages/TestFeedData'
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
           <Route exact path="/" component={HomePage} />
         </Switch>
       </Router>
-      <TestFetchData />
+      <TestFeedData />
     </div>
   )
 }
