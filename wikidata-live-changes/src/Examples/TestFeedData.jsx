@@ -6,7 +6,6 @@ function TestFeedData() {
   const [recentChanges, setRecentChanges] = useState({ items: [] })
 
   useEffect(() => {
-    setRecentChanges({ items: feedData.changes })
     setInterval(() => {
       setRecentChanges({ items: feedData.changes })
     }, 1000)
