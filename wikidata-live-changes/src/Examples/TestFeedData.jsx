@@ -3,24 +3,22 @@ import FeedData from '../Backend/FeedData'
 
 function TestFeedData() {
   const [feedData] = useState(new FeedData())
-  const [recentChanges, setRecentChanges] = useState({ items: [] })
+  const [recentChanges, setRecentChanges] = useState({
+    items: feedData.changes,
+  })
 
   useEffect(() => {
-    setInterval(() => {
-      setRecentChanges({ items: feedData.changes })
-    }, 1000)
-  }, [])
+    setInterval(() => setRecentChanges({ items: feedData.changes }), 1000)
+  }, [feedData.changes])
 
   return (
     <div>
       <ul style={{ listStyleType: 'none' }}>
         {recentChanges.items.map((item, index) => (
           <li key={index}>
-            {`User ${item.user.name} (created ${
-              item.user.registration
-            }) did action ${item.type} ${item.title} ${getTimeDifference(
-              item.timestamp
-            )} seconds ago`}
+            {`User ${item.user} did action ${item.type} ${
+              item.title
+            } ${getTimeDifference(item.timestamp)} seconds ago`}
           </li>
         ))}
       </ul>

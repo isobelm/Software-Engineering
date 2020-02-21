@@ -1,6 +1,5 @@
-import { getUserData } from './APIWrapper'
-
 const URL = 'https://stream.wikimedia.org/v2/stream/recentchange'
+const MAX_NUM_ITEMS = 50
 
 class FeedData {
   constructor() {
@@ -13,11 +12,8 @@ class FeedData {
 
   async handleMessage(event) {
     const change = JSON.parse(event.data)
-    const userNames = [change.user]
-    const registration = (await getUserData(userNames))[0].registration
-    change.user = { name: change.user, registration: registration }
     this.changes.unshift(change)
-    if (this.changes.length > 50) this.changes.pop()
+    if (this.changes.length > MAX_NUM_ITEMS) this.changes.pop()
   }
 }
 
