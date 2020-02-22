@@ -26,7 +26,7 @@ function TestFeedData() {
   )
 }
 
-const getTimeDifference = toCompare =>
+const getTimeDifference = (toCompare) =>
   Math.round(Math.abs(new Date().getTime() / 1000 - toCompare))
 
 export default TestFeedData
