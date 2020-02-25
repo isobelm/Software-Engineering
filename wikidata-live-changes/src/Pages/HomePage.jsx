@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import GraphCard from '../Components/GraphCard'
 import TitleContainer from '../Components/TitleContainer'
-import CardDeck from 'react-bootstrap/CardDeck'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Navbar from '../Components/Navbar'

@@ -48,7 +48,9 @@
 .Graph-Container-Card {
   min-width: 300px;
   height: 200px;
+  padding: 0;
 }
+
 .navbar-light .navbar-nav .nav-link {
   color: var(--p);
   font-size: 1.12rem;
@@ -66,4 +68,23 @@
 
 .navbar {
   background-color: transparent;
+}
+
+.deck-container {
+  padding: 2%;
+  justify-content: start;
+}
+
+.deck {
+  margin-bottom: 2%;
+}
+
+.card-title {
+  text-align: left;
+  justify-content: left;
+}
+
+.graph-card:hover {
+  cursor: pointer;
+  filter: brightness(90%);
 }
