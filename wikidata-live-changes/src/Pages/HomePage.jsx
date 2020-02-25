@@ -15,7 +15,6 @@ class HomePage extends Component {
     return (
       <div className="HomePage">
         <Navbar history={this.state.histpry} />
-        <p>Wikidata Live Changes</p>
         <TitleContainer
           title="Wikidata Live"
           subtitle="A web app to visualise recent changes to Wikidata in quasi real time."
