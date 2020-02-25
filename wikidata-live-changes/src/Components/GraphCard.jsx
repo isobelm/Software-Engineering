@@ -1,6 +1,5 @@
 import Card from 'react-bootstrap/Card'
 import React, { Component } from 'react'
-import SampleGraph from './SampleGraph'
 
 class GraphCard extends Component {
   constructor(props) {
@@ -9,6 +8,7 @@ class GraphCard extends Component {
       history: this.props.history,
       title: this.props.title,
       pageLink: this.props.pageLink,
+      graph: this.props.graph,
     }
   }
 
@@ -17,7 +17,7 @@ class GraphCard extends Component {
       <Card onClick={this.onClick} tag="a" className="graph-card">
         <Card.Body>
           <Card.Title className="card-title">{this.state.title}</Card.Title>
-          <SampleGraph />
+          {this.state.graph.render()}
         </Card.Body>
       </Card>
     )
