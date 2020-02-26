@@ -6,7 +6,7 @@ class SampleGraph extends Component {
     <div className="Graph-Container-Card">
       <ResponsiveLine
         data={data}
-        margin={{ top: 25, right: 55, bottom: 25, left: 30 }}
+        margin={{ top: 5, right: 55, bottom: 25, left: 30 }}
         xScale={{ type: 'point' }}
         yScale={{
           type: 'linear',
@@ -35,8 +35,8 @@ class SampleGraph extends Component {
           legendOffset: -40,
           legendPosition: 'middle',
         }}
-        colors={{ scheme: 'nivo' }}
-        pointSize={10}
+        colors={{ scheme: 'accent' }}
+        pointSize={5}
         pointColor={{ theme: 'background' }}
         pointBorderWidth={2}
         pointBorderColor={{ from: 'serieColor' }}

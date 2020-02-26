@@ -51,6 +51,12 @@
   padding: 0;
 }
 
+.full-graph-container {
+  min-width: 300px;
+  height: 80vh;
+  padding: 0;
+}
+
 .navbar-light .navbar-nav .nav-link {
   color: var(--p);
   font-size: 1.12rem;
@@ -85,6 +91,10 @@
 }
 
 .graph-card:hover {
-  cursor: pointer;
   filter: brightness(90%);
+  cursor: pointer;
+}
+
+.Graph-Container-Card:hover {
+  cursor: pointer;
 }

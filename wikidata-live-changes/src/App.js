@@ -4,6 +4,7 @@ import HomePage from './Pages/HomePage'
 import history from './Utils/History'
 import TestFeedData from './Examples/TestFeedData'
 import TestPage from './Pages/TestPage'
+import UsersByMostEditsPage from './Pages/UsersByMostEditsPage'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
@@ -14,6 +15,11 @@ function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/page" component={TestPage} />
+          <Route
+            exact
+            path="/users-by-most-edits"
+            component={UsersByMostEditsPage}
+          />
           <Route exact path="/feed" component={TestFeedData} />
         </Switch>
       </Router>
