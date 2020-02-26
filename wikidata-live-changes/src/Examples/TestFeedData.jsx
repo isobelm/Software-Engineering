@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import FeedData from '../Backend/FeedData'
+import style from '../style.css'
 
 function TestFeedData() {
   const [feedData] = useState(new FeedData())
@@ -13,9 +14,10 @@ function TestFeedData() {
 
   return (
     <div>
-      <ul style={{ listStyleType: 'none' }}>
+      <h3 class = "text-blue text-left">Most Recent Activity</h3>
+         <ul class="list-group">
         {recentChanges.items.map((item, index) => (
-          <li key={index}>
+          <li class="list-group-item text-left" key={index}>
             {`User ${item.user} did action ${item.type} ${
               item.title
             } ${getTimeDifference(item.timestamp)} seconds ago`}
