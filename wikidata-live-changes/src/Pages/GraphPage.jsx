@@ -4,24 +4,26 @@ import TitleContainer from '../Components/TitleContainer'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Navbar from '../Components/Navbar'
 
-class HomePage extends Component {
+class GraphPage extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { history: this.props.history }
+    this.state = {
+      history: this.props.history,
+      graph: this.props.graph,
+      title: this.props.name,
+    }
   }
 
   render() {
     return (
       <div className="HomePage">
         <Navbar history={this.state.history} />
-        <TitleContainer
-          title="Wikidata Live"
-          subtitle="A web app to visualise recent changes to Wikidata in quasi real time."
-        ></TitleContainer>
+        <TitleContainer title="" subtitle={this.props.name}></TitleContainer>
+        {this.state.graph}
       </div>
     )
   }
 }
 
-export default HomePage
+export default GraphPage

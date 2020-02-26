@@ -17,7 +17,7 @@ class GraphCard extends Component {
       <Card onClick={this.onClick} tag="a" className="graph-card">
         <Card.Body>
           <Card.Title className="card-title">{this.state.title}</Card.Title>
-          {this.state.graph.render()}
+          {this.state.graph}
         </Card.Body>
       </Card>
     )

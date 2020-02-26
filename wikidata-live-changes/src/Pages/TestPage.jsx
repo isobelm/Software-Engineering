@@ -3,12 +3,15 @@ import Navbar from '../Components/Navbar'
 import GraphCard from '../Components/GraphCard'
 import CardDeck from 'react-bootstrap/CardDeck'
 import SampleGraph from '../Components/SampleGraph'
+import UsersByMostEdits from '../Components/UsersByMostEditsGraph'
 
 class HomePage extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { history: this.props.history, sampleGraph: new SampleGraph() }
+    this.state = {
+      history: this.props.history,
+    }
   }
 
   render() {
@@ -18,22 +21,22 @@ class HomePage extends Component {
         <div className="deck-container">
           <CardDeck className="deck">
             <GraphCard
-              title="Sample Graph: link to feed"
-              pageLink="feed"
+              title="Users by most edits"
+              pageLink="users-by-most-edits"
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<UsersByMostEdits fullGraph={false} />}
             />
             <GraphCard
               title="Sample Graph: link to feed"
               pageLink="feed"
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<SampleGraph />}
             />
             <GraphCard
               title="Sample Graph: link to home"
               pageLink=""
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<SampleGraph />}
             />
           </CardDeck>
           <CardDeck className="deck">
@@ -41,19 +44,19 @@ class HomePage extends Component {
               title="Sample Graph: link to home"
               pageLink=""
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<SampleGraph />}
             />
             <GraphCard
               title="Sample Graph: link to feed"
               pageLink="feed"
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<SampleGraph />}
             />
             <GraphCard
               title="Sample Graph: link to home"
               pageLink=""
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<SampleGraph />}
             />
           </CardDeck>
         </div>
