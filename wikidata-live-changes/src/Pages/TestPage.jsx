@@ -3,7 +3,9 @@ import Navbar from '../Components/Navbar'
 import GraphCard from '../Components/GraphCard'
 import CardDeck from 'react-bootstrap/CardDeck'
 import SampleGraph from '../Components/SampleGraph'
-import UsersByMostEdits from '../Components/UsersByMostEditsGraph'
+import SimpleBarGraph from '../Components/SimpleBarGraph'
+import { MostActiveUsersGraphSettings } from './MostActiveUsers'
+import { UsersByMostEditsGraphSettings } from './UsersByMostEditsPage'
 
 class HomePage extends Component {
   constructor(props) {
@@ -24,13 +26,23 @@ class HomePage extends Component {
               title="Users by most edits"
               pageLink="users-by-most-edits"
               history={this.state.history}
-              graph={<UsersByMostEdits fullGraph={false} />}
+              graph={
+                <SimpleBarGraph
+                  fullGraph={false}
+                  settings={UsersByMostEditsGraphSettings}
+                />
+              }
             />
             <GraphCard
-              title="Sample Graph: link to feed"
-              pageLink="feed"
+              title="Most Active Users"
+              pageLink="most-active-users"
               history={this.state.history}
-              graph={<SampleGraph />}
+              graph={
+                <SimpleBarGraph
+                  fullGraph={false}
+                  settings={MostActiveUsersGraphSettings}
+                />
+              }
             />
             <GraphCard
               title="Sample Graph: link to home"

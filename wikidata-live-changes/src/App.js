@@ -5,6 +5,7 @@ import history from './Utils/History'
 import TestFeedData from './Examples/TestFeedData'
 import TestPage from './Pages/TestPage'
 import UsersByMostEditsPage from './Pages/UsersByMostEditsPage'
+import MostActiveUsers from './Pages/MostActiveUsers'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
@@ -20,6 +21,7 @@ function App() {
             path="/users-by-most-edits"
             component={UsersByMostEditsPage}
           />
+          <Route exact path="/most-active-users" component={MostActiveUsers} />
           <Route exact path="/feed" component={TestFeedData} />
         </Switch>
       </Router>
