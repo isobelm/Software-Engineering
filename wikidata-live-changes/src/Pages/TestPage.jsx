@@ -47,7 +47,7 @@ class HomePage extends Component {
             />
             <GraphCard
               title="Most Active Pages"
-              pageLink=""
+              pageLink="most-active-pages"
               history={this.state.history}
               graph={
                 <SimpleBarGraph
