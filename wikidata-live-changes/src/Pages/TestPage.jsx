@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import Navbar from '../Components/Navbar'
 import GraphCard from '../Components/GraphCard'
+import TestFeedData from '../Examples/TestFeedData'
 import CardDeck from 'react-bootstrap/CardDeck'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import SampleGraph from '../Components/SampleGraph'
 import SimpleBarGraph from '../Components/SimpleBarGraph'
 import { MostActiveUsersGraphSettings } from './MostActiveUsers'
@@ -21,62 +23,59 @@ class HomePage extends Component {
     return (
       <div className="HomePage">
         <Navbar />
-        <div className="deck-container">
-          <CardDeck className="deck">
-            <GraphCard
-              title="Users by most edits"
-              pageLink="users-by-most-edits"
-              history={this.state.history}
-              graph={
-                <SimpleBarGraph
-                  fullGraph={false}
-                  settings={UsersByMostEditsGraphSettings}
+        <div class="row justify-content-left text-dark">
+          <div class="col-4">
+            <div class="feedContainer">
+              <TestFeedData></TestFeedData>
+            </div>
+          </div>
+          <div class="col-8">
+            <div className="deck-container">
+              <CardDeck className="deck">
+                <GraphCard
+                  title="Users by most edits"
+                  pageLink="users-by-most-edits"
+                  history={this.state.history}
+                  graph={
+                    <SimpleBarGraph
+                      fullGraph={false}
+                      settings={UsersByMostEditsGraphSettings}
+                    />
+                  }
                 />
-              }
-            />
-            <GraphCard
-              title="Most Active Users"
-              pageLink="most-active-users"
-              history={this.state.history}
-              graph={
-                <SimpleBarGraph
-                  fullGraph={false}
-                  settings={MostActiveUsersGraphSettings}
+                <GraphCard
+                  title="Most Active Users"
+                  pageLink="most-active-users"
+                  history={this.state.history}
+                  graph={
+                    <SimpleBarGraph
+                      fullGraph={false}
+                      settings={MostActiveUsersGraphSettings}
+                    />
+                  }
                 />
-              }
-            />
-            <GraphCard
-              title="Most Active Pages"
-              pageLink="most-active-pages"
-              history={this.state.history}
-              graph={
-                <SimpleBarGraph
-                  fullGraph={false}
-                  settings={MostActivePagesGraphSettings}
+              </CardDeck>
+              <CardDeck className="deck">
+                <GraphCard
+                  title="Most Active Pages"
+                  pageLink="most-active-pages"
+                  history={this.state.history}
+                  graph={
+                    <SimpleBarGraph
+                      fullGraph={false}
+                      settings={MostActivePagesGraphSettings}
+                    />
+                  }
                 />
-              }
-            />
-          </CardDeck>
-          <CardDeck className="deck">
-            <GraphCard
-              title="Sample Graph: link to home"
-              pageLink=""
-              history={this.state.history}
-              graph={<SampleGraph />}
-            />
-            <GraphCard
-              title="Sample Graph: link to feed"
-              pageLink="feed"
-              history={this.state.history}
-              graph={<SampleGraph />}
-            />
-            <GraphCard
-              title="Sample Graph: link to home"
-              pageLink=""
-              history={this.state.history}
-              graph={<SampleGraph />}
-            />
-          </CardDeck>
+                <GraphCard
+                  title="Sample Graph: link to home"
+                  pageLink=""
+                  history={this.state.history}
+                  graph={<SampleGraph />}
+                />
+              </CardDeck>
+            </div>
+          </div>
         </div>
       </div>
     )
