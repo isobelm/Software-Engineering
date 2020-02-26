@@ -5,6 +5,7 @@ import CardDeck from 'react-bootstrap/CardDeck'
 import SampleGraph from '../Components/SampleGraph'
 import SimpleBarGraph from '../Components/SimpleBarGraph'
 import { MostActiveUsersGraphSettings } from './MostActiveUsers'
+import { MostActivePagesGraphSettings } from './MostActivePages'
 import { UsersByMostEditsGraphSettings } from './UsersByMostEditsPage'
 
 class HomePage extends Component {
@@ -45,10 +46,15 @@ class HomePage extends Component {
               }
             />
             <GraphCard
-              title="Sample Graph: link to home"
+              title="Most Active Pages"
               pageLink=""
               history={this.state.history}
-              graph={<SampleGraph />}
+              graph={
+                <SimpleBarGraph
+                  fullGraph={false}
+                  settings={MostActivePagesGraphSettings}
+                />
+              }
             />
           </CardDeck>
           <CardDeck className="deck">
