@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import GraphPage from './GraphPage'
 import SimpleBarGraph from '../Components/SimpleBarGraph'
-import { getMostEditsUsers } from '../Backend/APIWrapper'
+import { getMostActivePages } from '../Backend/APIWrapper'
 
-export const UsersByMostEditsGraphSettings = {
-  getData: getMostEditsUsers,
-  keys: ['editcount'],
-  index: 'name',
-  xAxis: 'users',
-  yAxis: 'edit count',
-  colors: 'paired',
+export const MostActivePagesGraphSettings = {
+  getData: getMostActivePages,
+  keys: ['actions'],
+  index: 'id',
+  xAxis: 'pages',
+  yAxis: 'actions',
+  colors: 'pastel1',
 }
 
 class UsersByMostEditsPage extends Component {
@@ -28,7 +28,7 @@ class UsersByMostEditsPage extends Component {
         graph={
           <SimpleBarGraph
             fullGraph={true}
-            settings={UsersByMostEditsGraphSettings}
+            settings={MostActivePagesGraphSettings}
           />
         }
         name={'Users By Most Edits'}

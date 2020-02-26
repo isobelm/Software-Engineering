@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
-import { getMostEditsUsers } from '../Backend/APIWrapper'
 import { ResponsiveBar } from '@nivo/bar'
 
-class UsersByMostEdits extends Component {
+class SimpleBarGraph extends Component {
   constructor(props) {
     super(props)
-    this.state = { loaded: false, data: null, fullGraph: this.props.fullGraph }
+    this.state = {
+      loaded: false,
+      data: null,
+      fullGraph: this.props.fullGraph,
+    }
 
     this.init()
   }
 
   loadData = data => {
     let smlData = data.splice(1, this.state.fullGraph ? 30 : 10)
-    debugger
     this.setState({
       loaded: true,
       data: smlData,
@@ -20,7 +22,7 @@ class UsersByMostEdits extends Component {
   }
 
   init = async () => {
-    let data = await getMostEditsUsers()
+    let data = await this.props.settings.getData()
     this.loadData(data)
   }
 
@@ -46,11 +48,11 @@ class UsersByMostEdits extends Component {
             <div className={classname}>
               <ResponsiveBar
                 data={this.state.data}
-                keys={['editcount']}
-                indexBy="name"
+                keys={this.props.settings.keys}
+                indexBy={this.props.settings.index}
                 margin={margin}
                 padding={0.3}
-                colors={{ scheme: 'accent' }}
+                colors={{ scheme: this.props.settings.colors }}
                 borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
                 axisTop={null}
                 axisRight={null}
@@ -58,15 +60,15 @@ class UsersByMostEdits extends Component {
                   tickSize: 5,
                   tickPadding: 5,
                   tickRotation: 30,
-                  legend: 'users',
+                  legend: this.props.settings.xAxis,
                   legendPosition: 'bottom',
-                  legendOffset: 30,
+                  legendOffset: 40,
                 }}
                 axisLeft={{
                   tickSize: 5,
                   tickPadding: 5,
                   tickRotation: 0,
-                  legend: 'edits',
+                  legend: this.props.settings.yAxis,
                   legendPosition: 'middle',
                   legendOffset: -60,
                 }}
@@ -84,4 +86,4 @@ class UsersByMostEdits extends Component {
   }
 }
 
-export default UsersByMostEdits
+export default SimpleBarGraph

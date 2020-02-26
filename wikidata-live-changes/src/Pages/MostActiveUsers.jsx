@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import GraphPage from './GraphPage'
 import SimpleBarGraph from '../Components/SimpleBarGraph'
-import { getMostEditsUsers } from '../Backend/APIWrapper'
+import { getMostActiveUsers } from '../Backend/APIWrapper'
 
-export const UsersByMostEditsGraphSettings = {
-  getData: getMostEditsUsers,
-  keys: ['editcount'],
+export const MostActiveUsersGraphSettings = {
+  getData: getMostActiveUsers,
+  keys: ['recentactions'],
   index: 'name',
   xAxis: 'users',
-  yAxis: 'edit count',
-  colors: 'paired',
+  yAxis: 'recent actions',
+  colors: 'set3',
 }
 
-class UsersByMostEditsPage extends Component {
+class MostActiveUsers extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -28,10 +28,10 @@ class UsersByMostEditsPage extends Component {
         graph={
           <SimpleBarGraph
             fullGraph={true}
-            settings={UsersByMostEditsGraphSettings}
+            settings={MostActiveUsersGraphSettings}
           />
         }
-        name={'Users By Most Edits'}
+        name={'Most Active Users'}
       />
     )
   }
@@ -49,4 +49,5 @@ class UsersByMostEditsPage extends Component {
     this.setState({ width: window.innerWidth, height: window.innerHeight })
   }
 }
-export default UsersByMostEditsPage
+
+export default MostActiveUsers
