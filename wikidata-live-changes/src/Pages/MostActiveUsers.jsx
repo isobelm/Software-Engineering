@@ -9,6 +9,7 @@ export const MostActiveUsersGraphSettings = {
   index: 'name',
   xAxis: 'users',
   yAxis: 'recent actions',
+  colors: 'set3',
 }
 
 class MostActiveUsers extends Component {
@@ -16,10 +17,6 @@ class MostActiveUsers extends Component {
     super(props)
     this.state = {
       history: this.props.history,
-      data: undefined,
-      dataRecieved: false,
-      width: 0,
-      height: 0,
     }
 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)

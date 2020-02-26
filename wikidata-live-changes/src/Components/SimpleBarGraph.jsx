@@ -52,7 +52,7 @@ class SimpleBarGraph extends Component {
                 indexBy={this.props.settings.index}
                 margin={margin}
                 padding={0.3}
-                colors={{ scheme: 'accent' }}
+                colors={{ scheme: this.props.settings.colors }}
                 borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
                 axisTop={null}
                 axisRight={null}

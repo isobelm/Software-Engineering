@@ -9,6 +9,7 @@ export const UsersByMostEditsGraphSettings = {
   index: 'name',
   xAxis: 'users',
   yAxis: 'edit count',
+  colors: 'paired',
 }
 
 class UsersByMostEditsPage extends Component {
@@ -16,10 +17,6 @@ class UsersByMostEditsPage extends Component {
     super(props)
     this.state = {
       history: this.props.history,
-      data: undefined,
-      dataRecieved: false,
-      width: 0,
-      height: 0,
     }
 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
