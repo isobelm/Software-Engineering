@@ -8,7 +8,9 @@ class HomePage extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { history: this.props.history, sampleGraph: new SampleGraph() }
+    this.state = {
+      history: this.props.history,
+    }
   }
 
   render() {
@@ -21,19 +23,19 @@ class HomePage extends Component {
               title="Sample Graph: link to feed"
               pageLink="feed"
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<SampleGraph />}
             />
             <GraphCard
               title="Sample Graph: link to feed"
               pageLink="feed"
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<SampleGraph />}
             />
             <GraphCard
               title="Sample Graph: link to home"
               pageLink=""
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<SampleGraph />}
             />
           </CardDeck>
           <CardDeck className="deck">
@@ -41,19 +43,19 @@ class HomePage extends Component {
               title="Sample Graph: link to home"
               pageLink=""
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<SampleGraph />}
             />
             <GraphCard
               title="Sample Graph: link to feed"
               pageLink="feed"
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<SampleGraph />}
             />
             <GraphCard
               title="Sample Graph: link to home"
               pageLink=""
               history={this.state.history}
-              graph={this.state.sampleGraph}
+              graph={<SampleGraph />}
             />
           </CardDeck>
         </div>
