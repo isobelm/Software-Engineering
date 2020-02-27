@@ -3,7 +3,7 @@ import FeedData from '../Backend/FeedData'
 import style from '../style.css'
 
 function TestFeedData() {
-  const [feedData] = useState(new FeedData())
+  const [feedData] = useState(new FeedData(30))
   const [recentChanges, setRecentChanges] = useState({
     items: feedData.changes,
   })
@@ -14,8 +14,8 @@ function TestFeedData() {
 
   return (
     <div>
-      <h3 class = "text-blue text-left">Most Recent Activity</h3>
-         <ul class="list-group">
+      <h3 class="text-blue text-left">Most Recent Activity</h3>
+      <ul class="list-group">
         {recentChanges.items.map((item, index) => (
           <li class="list-group-item text-left" key={index}>
             {`User ${item.user} did action ${item.type} ${
