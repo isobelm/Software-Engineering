@@ -47,6 +47,9 @@ export const MostActivePagesGraphSettings = {
   xAxis: 'pages',
   yAxis: 'actions',
   colors: 'pastel1',
+  onClick: function(click) {
+    window.open('https://www.wikidata.org/wiki/' + click.indexValue, '_blank')
+  },
 }
 
 class UsersByMostEditsPage extends Component {
