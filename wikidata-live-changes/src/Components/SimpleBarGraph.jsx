@@ -34,10 +34,16 @@ class SimpleBarGraph extends Component {
     let margin = {}
     let label = null
     let classname = ''
+    let onClick = null
+    let clickable = false
     if (this.state.fullGraph) {
       margin = { top: 5, right: 30, bottom: 80, left: 80 }
       label = true
       classname = 'full-graph-container'
+      if (this.props.settings.onClick) {
+        onClick = this.props.settings.onClick
+        clickable = true
+      }
     } else {
       margin = { top: 0, right: 0, bottom: 0, left: 0 }
       label = false
@@ -77,6 +83,7 @@ class SimpleBarGraph extends Component {
                 legendOffset: -60,
               }}
               enableLabel={label}
+              onClick={clickable ? onClick : function() {}}
               animate={label}
               isInteractive={label}
               motionStiffness={90}
