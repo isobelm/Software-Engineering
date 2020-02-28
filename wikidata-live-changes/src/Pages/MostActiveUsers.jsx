@@ -4,7 +4,14 @@ import SimpleBarGraph from '../Components/SimpleBarGraph'
 import { getMostActiveUsers } from '../Backend/APIWrapper'
 
 export const MostActiveUsersGraphSettings = {
-  getData: getMostActiveUsers,
+  getData: async function() {
+    let data = await getMostActiveUsers()
+    return data
+  },
+  refreshTime: 2000,
+  refreshMethod: function() {
+    this.loadData()
+  },
   keys: ['recentactions'],
   index: 'name',
   xAxis: 'users',

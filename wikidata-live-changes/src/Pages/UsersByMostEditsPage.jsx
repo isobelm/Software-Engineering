@@ -4,7 +4,14 @@ import SimpleBarGraph from '../Components/SimpleBarGraph'
 import { getMostEditsUsers } from '../Backend/APIWrapper'
 
 export const UsersByMostEditsGraphSettings = {
-  getData: getMostEditsUsers,
+  getData: async function() {
+    let data = await getMostEditsUsers()
+    return data
+  },
+  refreshTime: 2000,
+  refreshMethod: function() {
+    this.loadData()
+  },
   keys: ['editcount'],
   index: 'name',
   xAxis: 'users',

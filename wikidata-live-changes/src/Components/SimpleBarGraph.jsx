@@ -10,20 +10,24 @@ class SimpleBarGraph extends Component {
       fullGraph: this.props.fullGraph,
     }
 
-    this.init()
+    this.loadData()
   }
 
-  loadData = data => {
-    let smlData = data.splice(1, this.state.fullGraph ? 30 : 10)
+  loadData = async () => {
+    let getData = this.props.settings.getData.bind(this)
+    let data = await getData()
+    let smlData = data.slice(0, this.state.fullGraph ? 30 : 10)
     this.setState({
       loaded: true,
       data: smlData,
     })
   }
 
-  init = async () => {
-    let data = await this.props.settings.getData()
-    this.loadData(data)
+  componentDidMount() {
+    this.refreshInterval = setInterval(async () => {
+      let method = this.props.settings.refreshMethod.bind(this)
+      await method()
+    }, this.props.settings.refreshTime)
   }
 
   render() {
@@ -41,46 +45,45 @@ class SimpleBarGraph extends Component {
     }
     return (
       <div>
-        <p>
-          {!this.state.loaded ? (
-            'loading...'
-          ) : (
-            <div className={classname}>
-              <ResponsiveBar
-                data={this.state.data}
-                keys={this.props.settings.keys}
-                indexBy={this.props.settings.index}
-                margin={margin}
-                padding={0.3}
-                colors={{ scheme: this.props.settings.colors }}
-                borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-                axisTop={null}
-                axisRight={null}
-                axisBottom={{
-                  tickSize: 5,
-                  tickPadding: 5,
-                  tickRotation: 30,
-                  legend: this.props.settings.xAxis,
-                  legendPosition: 'bottom',
-                  legendOffset: 40,
-                }}
-                axisLeft={{
-                  tickSize: 5,
-                  tickPadding: 5,
-                  tickRotation: 0,
-                  legend: this.props.settings.yAxis,
-                  legendPosition: 'middle',
-                  legendOffset: -60,
-                }}
-                enableLabel={label}
-                animate={!label}
-                isInteractive={label}
-                motionStiffness={90}
-                motionDamping={15}
-              />
-            </div>
-          )}
-        </p>
+        {!this.state.loaded ? (
+          'loading...'
+        ) : (
+          <div className={classname}>
+            <ResponsiveBar
+              data={this.state.data}
+              keys={this.props.settings.keys}
+              indexBy={this.props.settings.index}
+              margin={margin}
+              padding={0.3}
+              colors={{ scheme: this.props.settings.colors }}
+              colorBy="index"
+              borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 30,
+                legend: this.props.settings.xAxis,
+                legendPosition: 'start',
+                legendOffset: 40,
+              }}
+              axisLeft={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: this.props.settings.yAxis,
+                legendPosition: 'middle',
+                legendOffset: -60,
+              }}
+              enableLabel={label}
+              animate={label}
+              isInteractive={label}
+              motionStiffness={90}
+              motionDamping={15}
+            />
+          </div>
+        )}
       </div>
     )
   }
