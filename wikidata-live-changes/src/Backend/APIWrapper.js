@@ -86,7 +86,7 @@ export const getMostActivePages = async prevTimestamp => {
     rcprop: 'title|ids|timestamp',
     rclimit: 'max',
     rcstart: tmpTimestamp,
-    ...(prevTimestamp && { rcend: prevTimestamp }),
+    rcend: prevTimestamp,
   }
   const activePages = query(params, NUM_RETRIES)
     .then(data => data.query.recentchanges)
