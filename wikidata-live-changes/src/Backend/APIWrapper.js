@@ -70,24 +70,22 @@ export const getMostActiveUsers = async () => {
 /**
  * Returns an array of most active pages currently
  *
- * @param {string} continueID - The previous recent changes continue id
+ * @param {string} prevTimestamp - Previous timestamp when the function was
+ *        last called
  * @return {Promise<PageInfo[]>}
  */
-export const getMostActivePages = async (continueID) => {
+export const getMostActivePages = async (prevTimestamp) => {
+  const newTimestamp = new Date().toISOString()
   const params = {
     action: 'query',
     format: 'json',
     list: 'recentchanges',
     rcprop: 'title|ids',
     rclimit: 'max',
-    ...(continueID && { rccontinue: continueID }),
+    rcstart: newTimestamp,
+    ...(prevTimestamp && { rcend: prevTimestamp }),
   }
-  let newContinueID = null
   const activePages = query(params, NUM_RETRIES)
-    .then((data) => {
-      newContinueID = data.continue.rccontinue
-      return data
-    })
     .then((data) => data.query.recentchanges)
     .then((recentChanges) => getMostActivePagesTitles(recentChanges))
     .then((pageTitles) => {
@@ -99,7 +97,7 @@ export const getMostActivePages = async (continueID) => {
       })
       return pageTitles
     })
-  return [await activePages, newContinueID]
+  return [await activePages, newTimestamp]
 }
 
 /**
