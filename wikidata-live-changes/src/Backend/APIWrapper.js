@@ -86,7 +86,6 @@ export const getMostActivePages = async (continueID) => {
   const activePages = query(params, NUM_RETRIES)
     .then((data) => {
       newContinueID = data.continue.rccontinue
-      console.log([data, newContinueID])
       return data
     })
     .then((data) => data.query.recentchanges)
