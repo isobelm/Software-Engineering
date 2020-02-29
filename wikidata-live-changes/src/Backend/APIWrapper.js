@@ -159,7 +159,6 @@ const query = async (params, n) => {
 }
 
 const getMostActivePagesTitles = recentChanges => {
-  debugger
   const compare = (a, b) => b.actions - a.actions
   const titleCounts = {}
   recentChanges.forEach(change => {
