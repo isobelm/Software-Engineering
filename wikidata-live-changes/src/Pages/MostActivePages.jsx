@@ -3,7 +3,7 @@ import GraphPage from './GraphPage'
 import SimpleBarGraph from '../Components/SimpleBarGraph'
 import { getMostActivePages } from '../Backend/APIWrapper'
 
-//This probably doesn't really work: currently, previous changes may get counted more than once.
+//This doesn't really work: currently, previous changes may get counted more than once.
 //It does look good though.
 export const MostActivePagesGraphSettings = {
   getData: async function() {
@@ -58,8 +58,6 @@ class UsersByMostEditsPage extends Component {
     this.state = {
       history: this.props.history,
     }
-
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
   render() {
@@ -74,19 +72,6 @@ class UsersByMostEditsPage extends Component {
         name={'Most Active Pages'}
       />
     )
-  }
-
-  componentDidMount() {
-    this.updateWindowDimensions()
-    window.addEventListener('resize', this.updateWindowDimensions)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions)
-  }
-
-  updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight })
   }
 }
 export default UsersByMostEditsPage

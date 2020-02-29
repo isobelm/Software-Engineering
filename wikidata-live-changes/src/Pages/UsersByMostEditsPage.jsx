@@ -42,18 +42,5 @@ class UsersByMostEditsPage extends Component {
       />
     )
   }
-
-  componentDidMount() {
-    this.updateWindowDimensions()
-    window.addEventListener('resize', this.updateWindowDimensions)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions)
-  }
-
-  updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight })
-  }
 }
 export default UsersByMostEditsPage
