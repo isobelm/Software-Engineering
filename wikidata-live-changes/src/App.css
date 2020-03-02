@@ -98,3 +98,10 @@
 .Graph-Container-Card:hover {
   cursor: pointer;
 }
+
+.resp-container {
+  position: relative;
+  overflow: hidden;
+  width: 35vw;
+  height: 35vh;
+}
