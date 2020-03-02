@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import GraphPage from './GraphPage'
 import SimpleBarGraph from '../Components/SimpleBarGraph'
 import { getMostActivePages } from '../Backend/APIWrapper'
-import Iframe from 'react-iframe'
 
 //This doesn't really work: currently, previous changes may get counted more than once.
 //It does look good though.
@@ -13,7 +12,7 @@ export const MostActivePagesGraphSettings = {
     this.setState({ fullData: data })
     return data
   },
-  refreshTime: 1000,
+  refreshTime: 2000,
   refreshMethod: async function() {
     let data = await getMostActivePages()
     data = data.slice(0, 50)
@@ -53,13 +52,13 @@ export const MostActivePagesGraphSettings = {
   },
   tooltip: function(click) {
     return (
-      <Iframe
-        url={
-          'https://www.wikidata.org/wiki/' + click.indexValue + '#firstHeading'
-        }
-        className="resp-container"
-      />
-      // <div />
+      <div className="iframe-container">
+        <iframe
+          src={'https://www.wikidata.org/wiki/' + click.indexValue}
+          className="iframe"
+          title="tooltip-option-2"
+        />
+      </div>
     )
   },
 }
