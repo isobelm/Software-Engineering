@@ -25,8 +25,6 @@ class MostActiveUsers extends Component {
     this.state = {
       history: this.props.history,
     }
-
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
   render() {
