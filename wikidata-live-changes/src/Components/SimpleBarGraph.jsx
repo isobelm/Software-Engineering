@@ -13,6 +13,18 @@ class SimpleBarGraph extends Component {
     this.loadData()
   }
 
+  tooltip = function(click, url) {
+    return (
+      <div className="iframe-container">
+        <iframe
+          src={url + click.indexValue}
+          className="iframe"
+          title="tooltip-option-2"
+        />
+      </div>
+    )
+  }
+
   loadData = async () => {
     let getData = this.props.settings.getData.bind(this)
     let data = await getData()
@@ -46,7 +58,7 @@ class SimpleBarGraph extends Component {
         clickable = true
       }
       if (this.props.settings.tooltip) {
-        tooltip = this.props.settings.tooltip
+        tooltip = this.props.settings.tooltip.bind(this)
       }
     } else {
       margin = { top: 0, right: 0, bottom: 0, left: 0 }

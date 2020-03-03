@@ -17,6 +17,9 @@ export const MostActiveUsersGraphSettings = {
   xAxis: 'users',
   yAxis: 'recent actions',
   colors: 'set3',
+  tooltip: function(click) {
+    return this.tooltip(click, 'https://www.wikidata.org/wiki/User:')
+  },
 }
 
 class MostActiveUsers extends Component {

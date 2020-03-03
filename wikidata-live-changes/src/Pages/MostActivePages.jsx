@@ -51,15 +51,7 @@ export const MostActivePagesGraphSettings = {
     window.open('https://www.wikidata.org/wiki/' + click.indexValue, '_blank')
   },
   tooltip: function(click) {
-    return (
-      <div className="iframe-container">
-        <iframe
-          src={'https://www.wikidata.org/wiki/' + click.indexValue}
-          className="iframe"
-          title="tooltip-option-2"
-        />
-      </div>
-    )
+    return this.tooltip(click, 'https://www.wikidata.org/wiki/')
   },
 }
 
