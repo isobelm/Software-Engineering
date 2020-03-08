@@ -98,3 +98,26 @@
 .Graph-Container-Card:hover {
   cursor: pointer;
 }
+
+.iframe-container {
+  overflow: hidden;
+  width: 40vw;
+  height: 40vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+iframe {
+  width: 100vw;
+  height: 100vh;
+  zoom: 0.75;
+  -ms-zoom: 0.75;
+  transform: scale(0.75);
+  transform-origin: 0 0;
+  -moz-transform: scale(0.75);
+  -moz-transform-origin: 0 0;
+  -o-transform: scale(0.75);
+  -o-transform-origin: 0 0;
+  -webkit-transform: scale(0.75);
+  -webkit-transform-origin: 0 0;
+}

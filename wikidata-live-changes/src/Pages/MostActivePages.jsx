@@ -12,7 +12,7 @@ export const MostActivePagesGraphSettings = {
     this.setState({ fullData: data })
     return data
   },
-  refreshTime: 1000,
+  refreshTime: 2000,
   refreshMethod: async function() {
     let data = await getMostActivePages()
     data = data.slice(0, 50)
@@ -49,6 +49,9 @@ export const MostActivePagesGraphSettings = {
   colors: 'pastel1',
   onClick: function(click) {
     window.open('https://www.wikidata.org/wiki/' + click.indexValue, '_blank')
+  },
+  tooltip: function(click) {
+    return this.tooltip(click, 'https://www.wikidata.org/wiki/')
   },
 }
 

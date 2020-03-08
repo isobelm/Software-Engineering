@@ -13,6 +13,18 @@ class SimpleBarGraph extends Component {
     this.loadData()
   }
 
+  tooltip = function(click, url) {
+    return (
+      <div className="iframe-container">
+        <iframe
+          src={url + click.indexValue}
+          className="iframe"
+          title="tooltip-option-2"
+        />
+      </div>
+    )
+  }
+
   loadData = async () => {
     let getData = this.props.settings.getData.bind(this)
     let data = await getData()
@@ -36,6 +48,7 @@ class SimpleBarGraph extends Component {
     let classname = ''
     let onClick = null
     let clickable = false
+    let tooltip = null
     if (this.state.fullGraph) {
       margin = { top: 5, right: 30, bottom: 80, left: 80 }
       label = true
@@ -43,6 +56,9 @@ class SimpleBarGraph extends Component {
       if (this.props.settings.onClick) {
         onClick = this.props.settings.onClick
         clickable = true
+      }
+      if (this.props.settings.tooltip) {
+        tooltip = this.props.settings.tooltip.bind(this)
       }
     } else {
       margin = { top: 0, right: 0, bottom: 0, left: 0 }
@@ -52,7 +68,7 @@ class SimpleBarGraph extends Component {
     return (
       <div>
         {!this.state.loaded ? (
-          'loading...'
+          'Loading...'
         ) : (
           <div className={classname}>
             <ResponsiveBar
@@ -88,6 +104,7 @@ class SimpleBarGraph extends Component {
               isInteractive={label}
               motionStiffness={90}
               motionDamping={15}
+              tooltip={tooltip}
             />
           </div>
         )}

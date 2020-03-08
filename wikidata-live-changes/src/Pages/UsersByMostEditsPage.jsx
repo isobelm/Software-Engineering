@@ -17,6 +17,9 @@ export const UsersByMostEditsGraphSettings = {
   xAxis: 'users',
   yAxis: 'edit count',
   colors: 'paired',
+  tooltip: function(click) {
+    return this.tooltip(click, 'https://www.wikidata.org/wiki/User:')
+  },
 }
 
 class UsersByMostEditsPage extends Component {
