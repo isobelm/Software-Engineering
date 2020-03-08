@@ -24,12 +24,12 @@ class HomePage extends Component {
       <div className="HomePage">
         <Navbar />
         <div class="row justify-content-left text-dark">
-          <div class="col-4">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
             <div class="feedContainer">
               <TestFeedData></TestFeedData>
             </div>
           </div>
-          <div class="col-8">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
             <div className="deck-container">
               <CardDeck className="deck">
                 <GraphCard
