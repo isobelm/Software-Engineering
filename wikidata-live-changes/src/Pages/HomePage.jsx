@@ -3,6 +3,7 @@ import TitleContainer from '../Components/TitleContainer'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Navbar from '../Components/Navbar'
+import HomeNavContainer from '../Components/HomeNavContainer'
 
 class HomePage extends Component {
   constructor(props) {
@@ -15,10 +16,13 @@ class HomePage extends Component {
     return (
       <div className="HomePage">
         <Navbar history={this.state.history} />
-        <TitleContainer
-          title="Wikidata Live"
-          subtitle="A web app to visualise recent changes to Wikidata in quasi real time."
-        ></TitleContainer>
+        <div class="row">
+           <TitleContainer
+             title="Wikidata Live"
+             subtitle="A web app to visualise recent changes to Wikidata in quasi real time."
+           ></TitleContainer>
+           <HomeNavContainer />
+        </div>
       </div>
     )
   }
