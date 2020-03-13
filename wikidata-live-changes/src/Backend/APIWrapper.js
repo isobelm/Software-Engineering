@@ -71,29 +71,16 @@ export const getMostActiveUsers = async () => {
  */
 
 /**
- * Returns an array of most active pages currently
+ * Returns an array of most active pages from recent changes feed
  *
  * @param {string} prevTimestamp - Previous timestamp when the function was
  *        last called
- * @return {Promise<PageInfo[]>}
+ * @return {Promise<PageInfo[] | string>}
  */
 export const getMostActivePages = async prevTimestamp => {
-  let tmpTimestamp = new Date()
-  const newTimestamp = tmpTimestamp.toISOString()
-  tmpTimestamp = tmpTimestamp - 1000
-  tmpTimestamp = new Date(tmpTimestamp).toISOString()
-  const params = {
-    action: 'query',
-    format: 'json',
-    list: 'recentchanges',
-    rcprop: 'title|ids|timestamp',
-    rclimit: 'max',
-    rcstart: tmpTimestamp,
-    rcend: prevTimestamp,
-  }
-  const activePages = query(params, NUM_RETRIES)
-    .then(data => data.query.recentchanges)
-    .then(recentChanges => getMostActivePagesTitles(recentChanges))
+  const [recentChanges, newTimestamp] = queryRecentChanges(prevTimestamp)
+  const activePages = recentChanges
+    .then(recentChanges => countPageOccurances(recentChanges))
     .then(pageTitles => {
       const ids = pageTitles.map(({ id }) => id)
       convertIDs(ids).then(convertedIDs => {
@@ -104,6 +91,19 @@ export const getMostActivePages = async prevTimestamp => {
       return pageTitles
     })
   return [await activePages, newTimestamp]
+}
+
+/**
+ * Returns an array of most users pages from recent changes feed
+ *
+ * @param {string} prevTimestamp - Previous timestamp when the function was
+ *        last called
+ * @return {Promise<User[] | string>}
+ */
+export const getRecentActiveUsers = async prevTimestamp => {
+  const [recentChanges, newTimestamp] = queryRecentChanges(prevTimestamp)
+  const activeUsers = recentChanges.then(activeUsers => countUsers(activeUsers))
+  return [await activeUsers, newTimestamp]
 }
 
 /**
@@ -161,7 +161,53 @@ const query = async (params, n) => {
   }
 }
 
-const getMostActivePagesTitles = recentChanges => {
+/**
+ * @typedef {Object} recentChanges
+ * @property {number} ns
+ * @property {number} old_revid - The old revision id
+ * @property {number} pageid - The page id
+ * @property {number} rcid - The recent change id
+ * @property {number} revid - The current revision id
+ * @property {string} timestamp - Timestamp of change
+ * @property {string} title - Title of the page changed
+ * @property {string} type - Type of action e.g. "new", "edit"
+ * @property {string} user - The username of the editor
+ */
+
+/**
+ * Queries the API for the most recent changes
+ *
+ * @param {string} prevTimestamp - Previous timestamp when the function was
+ *        last called
+ * @return {Array<Promise<recentChanges[]> | string>}
+ */
+const queryRecentChanges = prevTimestamp => {
+  let tmpTimestamp = new Date()
+  const newTimestamp = tmpTimestamp.toISOString()
+  tmpTimestamp = tmpTimestamp - 1000
+  tmpTimestamp = new Date(tmpTimestamp).toISOString()
+  const params = {
+    action: 'query',
+    format: 'json',
+    list: 'recentchanges',
+    rcprop: 'title|ids|timestamp|user',
+    rclimit: 'max',
+    rcstart: tmpTimestamp,
+    rcend: prevTimestamp,
+  }
+  const recentChanges = query(params, NUM_RETRIES).then(
+    data => data.query.recentchanges
+  )
+  return [recentChanges, newTimestamp]
+}
+
+/**
+ * Returns the number of times a page appeared on the recent changes feed sorted by
+ * number of actions done on the page
+ *
+ * @param {recentChanges[]} recentChanges - The array of recent changes from a query
+ */
+const countPageOccurances = recentChanges => {
   const compare = (a, b) => b.actions - a.actions
   const titleCounts = {}
   recentChanges.forEach(change => {
@@ -174,6 +220,28 @@ const getMostActivePagesTitles = recentChanges => {
   }))
   titles.sort(compare)
   return titles
+}
+
+/**
+ * Returns the number of times a user appeared on the recent changes feed sorted by
+ * number of actions done by that user
+ *
+ * @param {recentChanges[]} recentChanges - The array of recent changes from a query
+ */
+const countUsers = recentChanges => {
+  const compare = (a, b) => b.actions - a.actions
+  const userCounts = {}
+  recentChanges.forEach(change => {
+    const user = change.user
+    const numActions = userCounts[user] || 0
+    userCounts[user] = numActions + 1
+  })
+  const users = Object.entries(userCounts).map(([username, actions]) => ({
+    username,
+    actions,
+  }))
+  users.sort(compare)
+  return users
 }
 
 /**
