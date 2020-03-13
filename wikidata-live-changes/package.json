@@ -1,6 +1,6 @@
 {
-"homepage": "http://isobelm.github.io/Software-Engineering",  
-"name": "wikidata-live-changes",
+  "homepage": "http://isobelm.github.io/Software-Engineering",
+  "name": "wikidata-live-changes",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,8 +11,6 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
-    "jsonp": "^0.2.1",
-    "node-libcurl": "^2.0.3",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
@@ -27,8 +25,8 @@
     "useTabs": false
   },
   "scripts": {
-"predeploy": "npm run build",
-"deploy": "gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
