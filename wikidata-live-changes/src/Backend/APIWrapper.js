@@ -30,8 +30,8 @@ export const getMostEditsUsers = async () => {
     auactiveusers: '1',
   }
   const users = query(params, NUM_RETRIES)
-    .then((data) => data.query.allusers)
-    .then((users) => users.sort(compare))
+    .then(data => data.query.allusers)
+    .then(users => users.sort(compare))
   return users
 }
 
@@ -54,8 +54,8 @@ export const getMostActiveUsers = async () => {
     auactiveusers: '1',
   }
   const users = query(params, NUM_RETRIES)
-    .then((data) => data.query.allusers)
-    .then((users) => users.sort(compare))
+    .then(data => data.query.allusers)
+    .then(users => users.sort(compare))
   return users
 }
 
@@ -70,29 +70,37 @@ export const getMostActiveUsers = async () => {
 /**
  * Returns an array of most active pages currently
  *
+ * @param {string} prevTimestamp - Previous timestamp when the function was
+ *        last called
  * @return {Promise<PageInfo[]>}
  */
-export const getMostActivePages = async () => {
+export const getMostActivePages = async prevTimestamp => {
+  let tmpTimestamp = new Date()
+  const newTimestamp = tmpTimestamp.toISOString()
+  tmpTimestamp = tmpTimestamp - 1000
+  tmpTimestamp = new Date(tmpTimestamp).toISOString()
   const params = {
     action: 'query',
     format: 'json',
     list: 'recentchanges',
-    rcprop: 'title|ids',
+    rcprop: 'title|ids|timestamp',
     rclimit: 'max',
+    rcstart: tmpTimestamp,
+    rcend: prevTimestamp,
   }
   const activePages = query(params, NUM_RETRIES)
-    .then((data) => data.query.recentchanges)
-    .then((recentChanges) => getMostActivePagesTitles(recentChanges))
-    .then((pageTitles) => {
+    .then(data => data.query.recentchanges)
+    .then(recentChanges => getMostActivePagesTitles(recentChanges))
+    .then(pageTitles => {
       const ids = pageTitles.map(({ id }) => id)
-      convertIDs(ids).then((convertedIDs) => {
-        pageTitles.forEach((pageTitle) => {
+      convertIDs(ids).then(convertedIDs => {
+        pageTitles.forEach(pageTitle => {
           pageTitle.title = convertedIDs[pageTitle.id]
         })
       })
       return pageTitles
     })
-  return activePages
+  return [await activePages, newTimestamp]
 }
 
 /**
@@ -101,12 +109,12 @@ export const getMostActivePages = async () => {
  * @param {Array<string>} ids - An array of ids to retrieve the label of
  * @return {Promise<Map<string, string>>}
  */
-export const convertIDs = async (ids) => {
+export const convertIDs = async ids => {
   const converted = {}
   let batches = null
   if (ids instanceof Array) batches = createBatch(ids, MAX_QUERY_SIZE)
   else batches = [[ids]]
-  const results = batches.map(async (batch) => {
+  const results = batches.map(async batch => {
     const titlesString = batch.join('|')
     const params = {
       action: 'wbgetentities',
@@ -116,15 +124,15 @@ export const convertIDs = async (ids) => {
       languages: 'en',
     }
     return query(params, NUM_RETRIES)
-      .then((data) => data)
-      .then((data) => data.entities)
-      .then((entities) => {
-        batch.forEach((id) => {
+      .then(data => data)
+      .then(data => data.entities)
+      .then(entities => {
+        batch.forEach(id => {
           const labels = entities[id].labels
           if (labels && labels['en']) converted[id] = labels['en'].value
         })
       })
-      .catch((err) => null)
+      .catch(err => null)
   })
   await Promise.all(results)
   return converted
@@ -143,17 +151,17 @@ const query = async (params, n) => {
   try {
     const paramsString = new URLSearchParams(params).toString()
     const url = API_ENDPOINT + '?' + paramsString + '&origin=*'
-    return await fetch(url).then((response) => response.json())
+    return await fetch(url).then(response => response.json())
   } catch (err) {
     if (n === 1) throw err
     return await query(params, n - 1)
   }
 }
 
-const getMostActivePagesTitles = (recentChanges) => {
+const getMostActivePagesTitles = recentChanges => {
   const compare = (a, b) => b.actions - a.actions
   const titleCounts = {}
-  recentChanges.forEach((change) => {
+  recentChanges.forEach(change => {
     const actions = titleCounts[change.title] || 0
     titleCounts[change.title] = actions + 1
   })

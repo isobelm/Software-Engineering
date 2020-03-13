@@ -7,14 +7,22 @@ import { getMostActivePages } from '../Backend/APIWrapper'
 //It does look good though.
 export const MostActivePagesGraphSettings = {
   getData: async function() {
-    let data = await getMostActivePages()
+    let [data, newTimestamp] = await getMostActivePages(
+      new Date().toISOString()
+    )
     data = data.slice(0, 50)
-    this.setState({ fullData: data })
+    this.setState({
+      fullData: data,
+      prevTimestamp: newTimestamp,
+    })
     return data
   },
   refreshTime: 2000,
   refreshMethod: async function() {
-    let data = await getMostActivePages()
+    let [data, newTimestamp] = await getMostActivePages(
+      this.state.prevTimestamp
+    )
+    this.setState({ prevTimestamp: newTimestamp })
     data = data.slice(0, 50)
     if (this.state.fullData) {
       let fullData = this.state.fullData
