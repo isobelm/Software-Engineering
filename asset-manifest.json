@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Software-Engineering/static/css/main.741ba460.chunk.css",
+    "main.js": "/Software-Engineering/static/js/main.bcb498f0.chunk.js",
+    "main.js.map": "/Software-Engineering/static/js/main.bcb498f0.chunk.js.map",
+    "runtime-main.js": "/Software-Engineering/static/js/runtime-main.52962855.js",
+    "runtime-main.js.map": "/Software-Engineering/static/js/runtime-main.52962855.js.map",
+    "static/css/2.47e06e2e.chunk.css": "/Software-Engineering/static/css/2.47e06e2e.chunk.css",
+    "static/js/2.0a805acf.chunk.js": "/Software-Engineering/static/js/2.0a805acf.chunk.js",
+    "static/js/2.0a805acf.chunk.js.map": "/Software-Engineering/static/js/2.0a805acf.chunk.js.map",
+    "index.html": "/Software-Engineering/index.html",
+    "precache-manifest.b40a7f669adac41ce3555d17ca21c55e.js": "/Software-Engineering/precache-manifest.b40a7f669adac41ce3555d17ca21c55e.js",
+    "service-worker.js": "/Software-Engineering/service-worker.js",
+    "static/css/2.47e06e2e.chunk.css.map": "/Software-Engineering/static/css/2.47e06e2e.chunk.css.map",
+    "static/css/main.741ba460.chunk.css.map": "/Software-Engineering/static/css/main.741ba460.chunk.css.map",
+    "static/js/2.0a805acf.chunk.js.LICENSE": "/Software-Engineering/static/js/2.0a805acf.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.52962855.js",
+    "static/css/2.47e06e2e.chunk.css",
+    "static/js/2.0a805acf.chunk.js",
+    "static/css/main.741ba460.chunk.css",
+    "static/js/main.bcb498f0.chunk.js"
+  ]
+}
