@@ -17,14 +17,31 @@ class HomePage extends Component {
     return (
       <div className="HomePage">
         <Navbar history={this.state.history} />
-        <div className="row">
+        <div className="row margin-right: -15px margin-left: -15px">
            <TitleContainer
              title="Wikidata Live"
              subtitle="A web app to visualise recent changes to Wikidata in quasi real time."
            ></TitleContainer>
-           <HomeNavContainer />
-           <HomeStatsContainer className="col-md-12" />
+           <HomeNavContainer
+             btnImage="W"
+             btnTitle="Wikidata Feed"
+             btnText="Wikidata"
+             btnLink="/feed"
+           ></HomeNavContainer>
+           <HomeNavContainer
+             btnImage="M"
+             btnTitle="Graph Data"
+             btnText="Graphs"
+             btnLink="/page"
+           ></HomeNavContainer>
+           <HomeNavContainer
+             btnImage="👤"
+             btnTitle="User Data"
+             btnText="Users"
+             btnLink="/"
+           ></HomeNavContainer>
         </div>
+        <HomeStatsContainer />
       </div>
     )
   }

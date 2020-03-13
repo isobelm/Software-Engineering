@@ -4,8 +4,8 @@ import React from 'react'
 class TitleContainer extends React.Component {
     render() {
         return(
-                <div class="col-md-5 text-left">
-                     <h1 class="text-left  display-3"><b>{this.props.title}</b></h1>
+                <div className="col-md-6 text-left">
+                     <h1 className="text-left  display-3"><b>{this.props.title}</b></h1>
                      <h4>{this.props.subtitle}</h4  >
                   </div>
         )
