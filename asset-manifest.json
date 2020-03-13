@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/Software-Engineering/static/css/main.741ba460.chunk.css",
-    "main.js": "/Software-Engineering/static/js/main.bcb498f0.chunk.js",
-    "main.js.map": "/Software-Engineering/static/js/main.bcb498f0.chunk.js.map",
-    "runtime-main.js": "/Software-Engineering/static/js/runtime-main.52962855.js",
-    "runtime-main.js.map": "/Software-Engineering/static/js/runtime-main.52962855.js.map",
-    "static/css/2.47e06e2e.chunk.css": "/Software-Engineering/static/css/2.47e06e2e.chunk.css",
-    "static/js/2.0a805acf.chunk.js": "/Software-Engineering/static/js/2.0a805acf.chunk.js",
-    "static/js/2.0a805acf.chunk.js.map": "/Software-Engineering/static/js/2.0a805acf.chunk.js.map",
-    "index.html": "/Software-Engineering/index.html",
-    "precache-manifest.b40a7f669adac41ce3555d17ca21c55e.js": "/Software-Engineering/precache-manifest.b40a7f669adac41ce3555d17ca21c55e.js",
-    "service-worker.js": "/Software-Engineering/service-worker.js",
-    "static/css/2.47e06e2e.chunk.css.map": "/Software-Engineering/static/css/2.47e06e2e.chunk.css.map",
-    "static/css/main.741ba460.chunk.css.map": "/Software-Engineering/static/css/main.741ba460.chunk.css.map",
-    "static/js/2.0a805acf.chunk.js.LICENSE": "/Software-Engineering/static/js/2.0a805acf.chunk.js.LICENSE"
+    "main.css": "/Software-Engineering/wikidata-live-changes/static/css/main.6fc831c9.chunk.css",
+    "main.js": "/Software-Engineering/wikidata-live-changes/static/js/main.a0f5e786.chunk.js",
+    "main.js.map": "/Software-Engineering/wikidata-live-changes/static/js/main.a0f5e786.chunk.js.map",
+    "runtime-main.js": "/Software-Engineering/wikidata-live-changes/static/js/runtime-main.56f1be78.js",
+    "runtime-main.js.map": "/Software-Engineering/wikidata-live-changes/static/js/runtime-main.56f1be78.js.map",
+    "static/css/2.47e06e2e.chunk.css": "/Software-Engineering/wikidata-live-changes/static/css/2.47e06e2e.chunk.css",
+    "static/js/2.b73545ef.chunk.js": "/Software-Engineering/wikidata-live-changes/static/js/2.b73545ef.chunk.js",
+    "static/js/2.b73545ef.chunk.js.map": "/Software-Engineering/wikidata-live-changes/static/js/2.b73545ef.chunk.js.map",
+    "index.html": "/Software-Engineering/wikidata-live-changes/index.html",
+    "precache-manifest.5dfc3afaf78ca4e4ae1320cbe6e9a8e8.js": "/Software-Engineering/wikidata-live-changes/precache-manifest.5dfc3afaf78ca4e4ae1320cbe6e9a8e8.js",
+    "service-worker.js": "/Software-Engineering/wikidata-live-changes/service-worker.js",
+    "static/css/2.47e06e2e.chunk.css.map": "/Software-Engineering/wikidata-live-changes/static/css/2.47e06e2e.chunk.css.map",
+    "static/css/main.6fc831c9.chunk.css.map": "/Software-Engineering/wikidata-live-changes/static/css/main.6fc831c9.chunk.css.map",
+    "static/js/2.b73545ef.chunk.js.LICENSE": "/Software-Engineering/wikidata-live-changes/static/js/2.b73545ef.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.52962855.js",
+    "static/js/runtime-main.56f1be78.js",
     "static/css/2.47e06e2e.chunk.css",
-    "static/js/2.0a805acf.chunk.js",
-    "static/css/main.741ba460.chunk.css",
-    "static/js/main.bcb498f0.chunk.js"
+    "static/js/2.b73545ef.chunk.js",
+    "static/css/main.6fc831c9.chunk.css",
+    "static/js/main.a0f5e786.chunk.js"
   ]
 }
