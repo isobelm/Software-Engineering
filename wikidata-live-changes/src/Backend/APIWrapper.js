@@ -9,6 +9,9 @@ const NUM_RETRIES = 5
  * @property {number} editcount - The number of edits the user did
  * @property {number} recentactions - The number of actions a user did within
  *           30 days
+ * @property {Array} groups - An array of strings which contains the groups
+ *           the user belongs in. For example if the user contains "bot", it is
+ *           a non human user
  */
 
 /**
@@ -24,7 +27,7 @@ export const getMostEditsUsers = async () => {
     action: 'query',
     format: 'json',
     list: 'allusers',
-    auprop: 'editcount',
+    auprop: 'editcount|groups',
     aulimit: 'max',
     auwitheditsonly: '1',
     auactiveusers: '1',
@@ -48,7 +51,7 @@ export const getMostActiveUsers = async () => {
     action: 'query',
     format: 'json',
     list: 'allusers',
-    auprop: 'editcount',
+    auprop: 'editcount|groups',
     aulimit: 'max',
     auwitheditsonly: '1',
     auactiveusers: '1',

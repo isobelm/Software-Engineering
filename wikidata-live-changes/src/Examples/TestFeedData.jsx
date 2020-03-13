@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import FeedData from '../Backend/FeedData'
+// eslint-disable-next-line
 import style from '../style.css'
 
 function TestFeedData() {
@@ -28,7 +29,7 @@ function TestFeedData() {
   )
 }
 
-const getTimeDifference = (toCompare) =>
+const getTimeDifference = toCompare =>
   Math.round(Math.abs(new Date().getTime() / 1000 - toCompare))
 
 export default TestFeedData
