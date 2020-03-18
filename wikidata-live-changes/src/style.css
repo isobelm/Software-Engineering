@@ -22,6 +22,8 @@ input {
   background: #ffffff;
 }
 
+
+
 .searchBar:focus {
   border-bottom: 1px solid #aaaaaa;
   border-top: 0px solid #aaaaaa;
@@ -237,6 +239,8 @@ ul {
   border-color: var(--green);
   color: var(--b);
 }
+
+
 
 .list-group-item-green.active,
 .list-group-item-green.active:hover,
