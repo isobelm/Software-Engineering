@@ -14,7 +14,8 @@
     "react-dom": "^16.12.0",
     "react-native-rss-parser": "^1.4.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "wikibase-sdk": "^7.2.1"
   },
   "prettier": {
     "trailingComma": "es5",
