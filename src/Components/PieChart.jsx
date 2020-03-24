@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { ResponsivePie } from '@nivo/pie'
-import { Tooltip } from 'react-bootstrap'
 
 class SimpleBarGraph extends Component {
   constructor(props) {
@@ -83,9 +82,7 @@ class SimpleBarGraph extends Component {
               innerRadius={0.4}
               padAngle={0}
               cornerRadius={0}
-              borderColor="#ffffff"
               colors={{ scheme: 'paired' }}
-              borderWidth={1}
               enableRadialLabels={label}
               radialLabelsSkipAngle={10}
               radialLabelsTextXOffset={6}
@@ -123,15 +120,25 @@ class SimpleBarGraph extends Component {
               ]}
               onClick={onClick}
               tooltip={tooltip}
-              colorBy="type"
-              //   fill={[
-              //     {
-              //       match: {
-              //         id: 'ruby',
-              //       },
-              //       id: 'dots',
-              //     },
-              //   ]}
+              defs={[
+                {
+                  id: 'lines',
+                  type: 'patternLines',
+                  background: 'inherit',
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  rotation: -45,
+                  lineWidth: 6,
+                  spacing: 10,
+                },
+              ]}
+              fill={[
+                {
+                  match: {
+                    type: 'edit',
+                  },
+                  id: 'lines',
+                },
+              ]}
             />
           </div>
         )}

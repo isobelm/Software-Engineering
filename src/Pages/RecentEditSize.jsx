@@ -40,8 +40,13 @@ class RecentEditSize extends Component {
         handlePause={this.handlePause}
         paused={this.state.paused}
         explanation={
-          'The largest of the last 500 edits.' +
-          ' Hover over a section to get a preview of the page, or click to open the page in a new tab.'
+          <div>
+            {'The largest of the last 500 edits.' +
+              ' Hover over a section to get a preview of the page, or click to open the page in a new tab.'}
+            <p>
+              <img className="legend" src={require('../legend.svg')} />
+            </p>
+          </div>
         }
         graph={
           <PieChart

@@ -115,6 +115,11 @@
   border-width: 1px 1px 0 0;
 }
 
+.legend {
+  height: 14vh;
+  width: 14vh;
+}
+
 .iframe-container {
   overflow: hidden;
   width: 40vw;
