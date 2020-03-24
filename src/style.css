@@ -22,7 +22,10 @@ input {
   background: #ffffff;
 }
 
-
+.statsContent{
+	
+	padding-top:6%;
+}
 .HomePageContent{
 	padding-top: 8%;
 	
@@ -236,24 +239,86 @@ ul {
   border-color: var(--b);
   color: var(--b);
 }
+
+
+
 .list-group-item-green {
   background-color: transparent;
   color: var(--green);
 }
-
 .list-group-item-green:hover {
   background-color: var(--green);
   border-color: var(--green);
   color: var(--b);
 }
-
-
-
 .list-group-item-green.active,
 .list-group-item-green.active:hover,
 .list-group-item-green.active:focus {
   z-index: 2;
   background-color: var(--green);
+  border-color: var(--b);
+  color: var(--b);
+}
+
+
+
+.list-group-item-red {
+  background-color: transparent;
+  color: var(--red);
+}
+.list-group-item-red:hover {
+  background-color: var(--red);
+  border-color: var(--red);
+  color: var(--b);
+}
+.list-group-item-red.active,
+.list-group-item-red.active:hover,
+.list-group-item-red.active:focus {
+  z-index: 2;
+  background-color: var(--red);
+  border-color: var(--b);
+  color: var(--b);
+  }
+  
+  
+  
+  
+  
+.list-group-item-blue {
+  background-color: transparent;
+  color: var(--blue);
+}
+.list-group-item-blue:hover {
+  background-color: var(--blue);
+  border-color: var(--blue);
+  color: var(--b);
+}
+.list-group-item-blue.active,
+.list-group-item-blue.active:hover,
+.list-group-item-blue.active:focus {
+  z-index: 2;
+  background-color: var(--blue);
+  border-color: var(--b);
+  color: var(--b);
+}
+
+
+
+
+.list-group-item-black {
+  background-color: transparent;
+  color: var(--p);
+}
+.list-group-item-black:hover {
+  background-color: var(--p);
+  border-color: var(--p);
+  color: var(--b);
+}
+.list-group-item-black.active,
+.list-group-item-black.active:hover,
+.list-group-item-black.active:focus {
+  z-index: 2;
+  background-color: var(--p);
   border-color: var(--b);
   color: var(--b);
 }
