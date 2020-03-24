@@ -76,7 +76,6 @@ class MostActivePages extends Component {
   }
 
   render() {
-    console.log('upper pause:' + this.state.paused)
     return (
       <GraphPage
         handlePause={this.handlePause}

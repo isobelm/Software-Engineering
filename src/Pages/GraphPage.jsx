@@ -7,7 +7,6 @@ class GraphPage extends Component {
 
     this.state = {
       history: this.props.history,
-      graph: this.props.graph,
       title: this.props.name,
     }
   }
@@ -32,10 +31,9 @@ class GraphPage extends Component {
                 {'Paused'}
               </label>
             </form>
-            <p>{'Paused: ' + this.props.paused}</p>
           </p>
         </div>
-        {this.state.graph}
+        {this.props.graph}
       </div>
     )
   }
