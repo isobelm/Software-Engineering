@@ -240,9 +240,9 @@ const countUsers = recentChanges => {
     const numActions = userCounts[user] || 0
     userCounts[user] = numActions + 1
   })
-  const users = Object.entries(userCounts).map(([name, recentactions]) => ({
-    name,
-    recentactions,
+  const users = Object.entries(userCounts).map(([username, actions]) => ({
+    username,
+    actions,
   }))
   const userNames = users.map(({ name }) => name)
   const key = 'ususers'
