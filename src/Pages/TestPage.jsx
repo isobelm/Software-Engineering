@@ -41,6 +41,7 @@ class HomePage extends Component {
                   history={this.state.history}
                   graph={
                     <SimpleBarGraph
+                      paused={true}
                       fullGraph={false}
                       settings={UsersByMostEditsGraphSettings}
                     />
@@ -52,6 +53,7 @@ class HomePage extends Component {
                   history={this.state.history}
                   graph={
                     <SimpleBarGraph
+                      paused={true}
                       fullGraph={false}
                       settings={MostActiveUsersGraphSettings}
                     />
@@ -65,6 +67,7 @@ class HomePage extends Component {
                   history={this.state.history}
                   graph={
                     <SimpleBarGraph
+                      paused={false}
                       fullGraph={false}
                       settings={MostActivePagesGraphSettings}
                     />

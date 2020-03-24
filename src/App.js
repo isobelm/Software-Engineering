@@ -8,6 +8,9 @@ import UsersByMostEditsPage from './Pages/UsersByMostEditsPage'
 import MostActiveUsers from './Pages/MostActiveUsers'
 import MostActivePages from './Pages/MostActivePages'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import ReactDOM from 'react-dom'
+
+
 import './App.css'
 
 function App() {

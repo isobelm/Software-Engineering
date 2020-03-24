@@ -37,8 +37,6 @@ export const getMostEditsUsers = async () => {
     .then(users => users.sort(compare))
   return users
 }
-
-
 /**
  * Returns a list of 500 users who were recently active within 30 days which is
  * sorted by the most recent actions in descending order
@@ -81,11 +79,7 @@ export const getRecentEditsWithSize = async () => {
  */
 export const getRecentLargestEdits = async () => {
   const editList = await getRecentEditsWithSize()
-  
   editList.sort((a,b) => ((Math.abs(b.newlen - b.oldlen)) - (Math.abs(a.newlen - a.oldlen))));
-  editList.forEach((item) =>
-    console.log(Math.abs(item.newlen-item.oldlen))
-  )
   return editList
 }
 

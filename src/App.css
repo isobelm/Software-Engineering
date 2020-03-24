@@ -52,8 +52,11 @@
 }
 
 .full-graph-container {
-  min-width: 300px;
-  height: 80vh;
+  /* min-width: 300px; */
+  height: 92vh;
+  float: right;
+  width: 75vw;
+  height: 90vh;
   padding: 0;
 }
 
@@ -74,6 +77,7 @@
 
 .navbar {
   background-color: transparent;
+  height: 8vh;
 }
 
 .deck-container {
@@ -97,6 +101,16 @@
 
 .Graph-Container-Card:hover {
   cursor: pointer;
+}
+
+.infobox {
+  height: 92vh;
+  width: 25vw;
+  float: left;
+  background-color: #eeeeee;
+  text-align: left;
+  padding: 2vmin;
+  border-radius: 0 10vmin 0 0;
 }
 
 .iframe-container {

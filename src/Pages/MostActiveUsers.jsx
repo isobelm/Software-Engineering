@@ -8,7 +8,7 @@ export const MostActiveUsersGraphSettings = {
     let data = await getMostActiveUsers()
     return data
   },
-  refreshTime: 2000,
+  refreshTime: 20000,
   refreshMethod: function() {
     this.loadData()
   },
@@ -27,16 +27,24 @@ class MostActiveUsers extends Component {
     super(props)
     this.state = {
       history: this.props.history,
+      paused: false,
     }
+  }
+
+  handlePause = event => {
+    this.setState({ paused: event.target.value })
   }
 
   render() {
     return (
       <GraphPage
+        handlePause={this.handlePause}
+        paused={this.state.paused}
         graph={
           <SimpleBarGraph
             fullGraph={true}
             settings={MostActiveUsersGraphSettings}
+            paused={this.state.paused}
           />
         }
         name={'Most Active Users'}

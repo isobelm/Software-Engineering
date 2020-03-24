@@ -27,16 +27,24 @@ class UsersByMostEditsPage extends Component {
     super(props)
     this.state = {
       history: this.props.history,
+      paused: false,
     }
+  }
+
+  handlePause = event => {
+    this.setState({ paused: event.target.value })
   }
 
   render() {
     return (
       <GraphPage
+        handlePause={this.handlePause}
+        paused={this.state.paused}
         graph={
           <SimpleBarGraph
             fullGraph={true}
             settings={UsersByMostEditsGraphSettings}
+            paused={this.state.paused}
           />
         }
         name={'Users By Most Edits'}
