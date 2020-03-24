@@ -150,6 +150,33 @@ export const batchQuery = async (itemsKey, items, params) => {
   return result
 }
 
+/**
+ * Queries the API for the most recent changes
+ *
+ * @param {string} prevTimestamp - Previous timestamp when the function was
+ *        last called
+ * @return {Array<Promise<recentChanges[]> | string>}
+ */
+export const queryRecentChanges = prevTimestamp => {
+  let tmpTimestamp = new Date()
+  const newTimestamp = tmpTimestamp.toISOString()
+  tmpTimestamp = tmpTimestamp - 1000
+  tmpTimestamp = new Date(tmpTimestamp).toISOString()
+  const params = {
+    action: 'query',
+    format: 'json',
+    list: 'recentchanges',
+    rcprop: 'title|ids|timestamp|user',
+    rclimit: 'max',
+    rcstart: tmpTimestamp,
+    rcend: prevTimestamp,
+  }
+  const recentChanges = query(params, NUM_RETRIES).then(
+    data => data.query.recentchanges
+  )
+  return [recentChanges, newTimestamp]
+}
+
 // ~ Helper Functions ---------------------------------------------------------
 
 /**
@@ -182,33 +209,6 @@ const query = async (params, n) => {
  * @property {string} type - Type of action e.g. "new", "edit"
  * @property {string} user - The username of the editor
  */
-
-/**
- * Queries the API for the most recent changes
- *
- * @param {string} prevTimestamp - Previous timestamp when the function was
- *        last called
- * @return {Array<Promise<recentChanges[]> | string>}
- */
-const queryRecentChanges = prevTimestamp => {
-  let tmpTimestamp = new Date()
-  const newTimestamp = tmpTimestamp.toISOString()
-  tmpTimestamp = tmpTimestamp - 1000
-  tmpTimestamp = new Date(tmpTimestamp).toISOString()
-  const params = {
-    action: 'query',
-    format: 'json',
-    list: 'recentchanges',
-    rcprop: 'title|ids|timestamp|user',
-    rclimit: 'max',
-    rcstart: tmpTimestamp,
-    rcend: prevTimestamp,
-  }
-  const recentChanges = query(params, NUM_RETRIES).then(
-    data => data.query.recentchanges
-  )
-  return [recentChanges, newTimestamp]
-}
 
 /**
  * Returns the number of times a page appeared on the recent changes feed sorted by

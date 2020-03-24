@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import HomePage from './Pages/HomePage'
 import history from './Utils/History'
-import TestFeedData from './Examples/TestFeedData'
+import FeedData from './Components/FeedData'
 import TestPage from './Pages/TestPage'
 import UsersByMostEditsPage from './Pages/UsersByMostEditsPage'
 import MostActiveUsers from './Pages/MostActiveUsers'
@@ -32,7 +32,7 @@ function App() {
           <Route exact path="/most-active-users" component={MostActiveUsers} />
           <Route exact path="/recent-edit-size" component={RecentEditSize} />
           <Route exact path="/most-active-pages" component={MostActivePages} />
-          <Route exact path="/feed" component={TestFeedData} />
+          <Route exact path="/feed" component={FeedData} />
         </Switch>
       </Router>
     </div>
