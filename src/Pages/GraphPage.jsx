@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import TitleContainer from '../Components/TitleContainer'
-
-import 'bootstrap/dist/css/bootstrap.min.css'
 import Navbar from '../Components/Navbar'
 
 class GraphPage extends Component {
@@ -19,7 +16,24 @@ class GraphPage extends Component {
     return (
       <div className="HomePage">
         <Navbar history={this.state.history} />
-        <TitleContainer title="" subtitle={this.props.name}></TitleContainer>
+        <div className="infobox">
+          <h2>{this.state.title}</h2>
+          <p />
+          <p>{this.props.explanation}</p>
+          <p>
+            <form onChange={this.props.handlePause}>
+              <label>
+                {'Paused:\t'}
+                <input
+                  type="checkbox"
+                  id="paused"
+                  name="paused"
+                  value={this.props.paused}
+                />
+              </label>
+            </form>
+          </p>
+        </div>
         {this.state.graph}
       </div>
     )

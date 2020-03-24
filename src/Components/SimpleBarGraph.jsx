@@ -35,10 +35,17 @@ class SimpleBarGraph extends Component {
     })
   }
 
-  componentDidMount() {
-    this.refreshInterval = setInterval(async () => {
+  refresh = async () => {
+    console.log('paused: ' + this.props.paused)
+    if (this.props.paused) {
       let method = this.props.settings.refreshMethod.bind(this)
       await method()
+    }
+  }
+
+  componentDidMount() {
+    this.refreshInterval = setInterval(async () => {
+      await this.refresh()
     }, this.props.settings.refreshTime)
   }
 
@@ -71,6 +78,7 @@ class SimpleBarGraph extends Component {
           'Loading...'
         ) : (
           <div className={classname}>
+            {/* {'paused:' + this.props.paused} */}
             <ResponsiveBar
               data={this.state.data}
               keys={this.props.settings.keys}

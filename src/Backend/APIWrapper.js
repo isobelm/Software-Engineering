@@ -38,6 +38,41 @@ export const getMostEditsUsers = async () => {
   return users
 }
 
+export const getMonthlyEditsOverview = async () => {
+  let timestamp = new Date()
+  let today =
+    timestamp.getFullYear().toString() +
+    (timestamp.getMonth() < 10
+      ? '0' + timestamp.getMonth().toString()
+      : timestamp.getMonth().toString()) +
+    (timestamp.getDate() < 10
+      ? '0' + timestamp.getDate().toString()
+      : timestamp.getDate().toString())
+  let lastMonth =
+    timestamp.getMonth() === 1
+      ? (timestamp.getFullYear() - 1).toString() + '12' + timestamp.getDate()
+      : timestamp.getFullYear().toString() +
+        (timestamp.getMonth() - 1 < 10
+          ? '0' + (timestamp.getMonth() - 1).toString()
+          : (timestamp.getMonth() - 1).toString()) +
+        (timestamp.getDate() < 10
+          ? '0' + timestamp.getDate().toString()
+          : timestamp.getDate().toString())
+  const url =
+    'https://wikimedia.org/api/rest_v1/metrics/edits/aggregate/wikidata/all-editor-types/all-page-types/daily/' +
+    lastMonth +
+    '/' +
+    today
+  let response = await fetch(url)
+  let overview = await response.json()
+  overview = overview.items[0].results
+  overview.forEach(item => {
+    item.y = item.edits
+    item.x = item.timestamp.substring(0, 10)
+  })
+  return [{ id: 'edits', data: overview }]
+}
+
 /**
  * Returns a list of 500 users who were recently active within 30 days which is
  * sorted by the most recent actions in descending order
