@@ -5,7 +5,7 @@
   --p: #000000;
   --b: #ffffff;
 }
-
+html{ overflow-y: scroll;}
 body {
   background-color: #fffffE;
 }
@@ -92,6 +92,7 @@ img {
   max-height: 80%;
   width: 100%;
 }
+
 
 @media only screen and (max-width: 800px) {
   .page {
@@ -213,10 +214,13 @@ ul {
   overflow: auto;
 }
 
-/*DELETE THIS LINE AFTER DEMO*/
-/* .list-group {
+.feedContainer{
+	width:100%;
+}
+.list-group {
   max-height: 500px;
-} */
+  width: 100%;
+}
 
 .list-group-item:hover {
   background-color: var(--blue);
