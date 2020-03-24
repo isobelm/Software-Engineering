@@ -49,15 +49,16 @@
   min-width: 300px;
   height: 200px;
   padding: 0;
+  background-color: #fff;
 }
 
 .full-graph-container {
-  /* min-width: 300px; */
   height: 92vh;
   float: right;
   width: 75vw;
   height: 90vh;
   padding: 0;
+  background-color: #fff;
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -107,10 +108,11 @@
   height: 92vh;
   width: 25vw;
   float: left;
-  background-color: #eeeeee;
   text-align: left;
   padding: 2vmin;
   border-radius: 0 10vmin 0 0;
+  border-style: solid;
+  border-width: 1px 1px 0 0;
 }
 
 .iframe-container {

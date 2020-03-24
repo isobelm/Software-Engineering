@@ -4,11 +4,12 @@ import GraphCard from '../Components/GraphCard'
 import TestFeedData from '../Examples/TestFeedData'
 import CardDeck from 'react-bootstrap/CardDeck'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import SampleGraph from '../Components/SampleGraph'
 import SimpleBarGraph from '../Components/SimpleBarGraph'
+import PieChart from '../Components/PieChart'
 import { MostActiveUsersGraphSettings } from './MostActiveUsers'
 import { MostActivePagesGraphSettings } from './MostActivePages'
 import { UsersByMostEditsGraphSettings } from './UsersByMostEditsPage'
+import { RecentEditSizeSettings } from './RecentEditSize'
 
 class HomePage extends Component {
   constructor(props) {
@@ -71,10 +72,16 @@ class HomePage extends Component {
                   }
                 />
                 <GraphCard
-                  title="Sample Graph: link to home"
-                  pageLink=""
+                  title="Largest Recent Edits"
+                  pageLink="recent-edit-size"
                   history={this.state.history}
-                  graph={<SampleGraph />}
+                  graph={
+                    <PieChart
+                      paused={true}
+                      fullGraph={false}
+                      settings={RecentEditSizeSettings}
+                    />
+                  }
                 />
               </CardDeck>
             </div>

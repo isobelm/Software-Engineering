@@ -52,7 +52,7 @@ export const MostActiveUsersGraphSettings = {
   index: 'username',
   xAxis: 'username',
   yAxis: 'actions',
-  colors: 'pastel1',
+  colors: 'set2',
   onClick: function(click) {
     window.open(
       'https://www.wikidata.org/wiki/User:' + click.indexValue,

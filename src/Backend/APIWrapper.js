@@ -61,16 +61,17 @@ export const getMostActiveUsers = async () => {
   return users
 }
 
-
 export const getRecentEditsWithSize = async () => {
   const params = {
     action: 'query',
     format: 'json',
     list: 'recentchanges',
     rcprop: 'title|ids|sizes|timestamp',
-    rclimit: '500'
+    rclimit: '500',
   }
-  const edits = query(params, NUM_RETRIES).then(result => result.query.recentchanges)
+  const edits = query(params, NUM_RETRIES).then(
+    result => result.query.recentchanges
+  )
   return edits
 }
 /**
@@ -79,7 +80,14 @@ export const getRecentEditsWithSize = async () => {
  */
 export const getRecentLargestEdits = async () => {
   const editList = await getRecentEditsWithSize()
-  editList.sort((a,b) => ((Math.abs(b.newlen - b.oldlen)) - (Math.abs(a.newlen - a.oldlen))));
+
+  editList.forEach(item => {
+    item.value = Math.abs(item.newlen - item.oldlen)
+    item.id = item.title
+  })
+
+  editList.sort((a, b) => b.value - a.value)
+
   return editList
 }
 
