@@ -3,8 +3,6 @@ import GraphPage from './GraphPage'
 import SimpleBarGraph from '../Components/SimpleBarGraph'
 import { getMostActivePages } from '../Backend/APIWrapper'
 
-//This doesn't really work: currently, previous changes may get counted more than once.
-//It does look good though.
 export const MostActivePagesGraphSettings = {
   getData: async function() {
     let [data, newTimestamp] = await getMostActivePages(
