@@ -7,6 +7,7 @@ import TestPage from './Pages/TestPage'
 import UsersByMostEditsPage from './Pages/UsersByMostEditsPage'
 import MostActiveUsers from './Pages/MostActiveUsers'
 import MostActivePages from './Pages/MostActivePages'
+import RecentEditSize from './Pages/RecentEditSize'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ReactDOM from 'react-dom'
 
@@ -29,6 +30,7 @@ function App() {
             component={UsersByMostEditsPage}
           />
           <Route exact path="/most-active-users" component={MostActiveUsers} />
+          <Route exact path="/recent-edit-size" component={RecentEditSize} />
           <Route exact path="/most-active-pages" component={MostActivePages} />
           <Route exact path="/feed" component={TestFeedData} />
         </Switch>
