@@ -37,7 +37,7 @@ class HomePage extends Component {
 		   </div>
 		   <div className="col-4">
            <HomeNavContainer
-             btnImage="M"
+             btnImage="G"
              btnTitle="Graph Data"
              btnText="Graphs"
              btnLink="/page"
@@ -45,10 +45,10 @@ class HomePage extends Component {
 		   </div>
 		   <div className="col-4">
            <HomeNavContainer
-             btnImage="👤"
+             btnImage="U"
              btnTitle="User Data"
              btnText="Users"
-             btnLink="/"
+             btnLink="/most-active-users"
            ></HomeNavContainer>
 		   </div>
 		   </div>

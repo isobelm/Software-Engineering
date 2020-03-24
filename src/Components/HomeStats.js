@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {ListGroup} from 'react-bootstrap';
 import $ from 'jquery';
 
 class HomeStats extends Component {
 
 	 state = {
 		 text: 'something',
-		 errorCode: '',
+		 errorCode: 'Loading...',
 	 }
 
 	 componentDidMount() {
 	  this.updateStats();
 	  this.intervalID = setInterval(
 	    () => this.updateStats(),
-	    10000
+	    5000
 	  );
 	}
 	componentWillUnmount() {
@@ -29,18 +30,19 @@ class HomeStats extends Component {
 	  		  $("#div2").html($($(response).find('.mw-statistics-edits')).find('.mw-statistics-numbers'));
 	  		  $("#div3").html($($(response).find('.mw-statistics-users')).find('.mw-statistics-numbers'));
 	  		  $("#div4").html($($(response).find('.mw-statistics-users-active')).find('.mw-statistics-numbers'));
-		  },
-		 error: this.setState({errorCode: "Could not fetch data"})
+		  }
   	   });
 	}
 
 	render() {
 		return (
 			<div className="row">
-				<div className="col-md-3 text-left"><p id="div1">{ this.state.errorCode }</p>Items</div>
-				<div className="col-md-3 text-left"><p id="div2">{ this.state.errorCode }</p>Edits</div>
-				<div className="col-md-3 text-left"><p id="div3">{ this.state.errorCode }</p>Users</div>
-				<div className="col-md-3 text-left"><p id="div4">{ this.state.errorCode }</p>Active Users</div>
+			<ListGroup horizontal>
+			  <ListGroup.Item><p id="div1">{ this.state.errorCode }</p>Items</ListGroup.Item>
+			  <ListGroup.Item><p id="div2">{ this.state.errorCode }</p>Edits</ListGroup.Item>
+			  <ListGroup.Item><p id="div3">{ this.state.errorCode }</p>Users</ListGroup.Item>
+			  <ListGroup.Item><p id="div4">{ this.state.errorCode }</p>Active Users</ListGroup.Item>
+			</ListGroup>
 			</div>
 		);
 	}
