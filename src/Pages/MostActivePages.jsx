@@ -66,7 +66,7 @@ class MostActivePages extends Component {
     super(props)
     this.state = {
       history: this.props.history,
-      paused: true,
+      paused: false,
     }
   }
 
@@ -77,11 +77,10 @@ class MostActivePages extends Component {
 
   render() {
     console.log('upper pause:' + this.state.paused)
-    let paused = this.state.paused
     return (
       <GraphPage
         handlePause={this.handlePause}
-        paused={paused}
+        paused={this.state.paused}
         explanation={
           'A live view of the pages being edited right now.' +
           'Hover over a bar to get a preview of the page, or click to open the page in a new tab.'
@@ -90,7 +89,7 @@ class MostActivePages extends Component {
           <SimpleBarGraph
             fullGraph={true}
             settings={MostActivePagesGraphSettings}
-            paused={paused}
+            paused={this.state.paused}
           />
         }
         name={'Most Active Pages'}

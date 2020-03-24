@@ -37,7 +37,7 @@ class SimpleBarGraph extends Component {
 
   refresh = async () => {
     console.log('paused: ' + this.props.paused)
-    if (this.props.paused) {
+    if (!this.props.paused) {
       let method = this.props.settings.refreshMethod.bind(this)
       await method()
     }
@@ -78,7 +78,7 @@ class SimpleBarGraph extends Component {
           'Loading...'
         ) : (
           <div className={classname}>
-            {/* {'paused:' + this.props.paused} */}
+            {'Paused: ' + this.props.paused}
             <ResponsiveBar
               data={this.state.data}
               keys={this.props.settings.keys}

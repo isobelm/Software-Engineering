@@ -23,15 +23,16 @@ class GraphPage extends Component {
           <p>
             <form onChange={this.props.handlePause}>
               <label>
-                {'Paused:\t'}
                 <input
                   type="checkbox"
                   id="paused"
                   name="paused"
                   value={this.props.paused}
-                />
+                />{' '}
+                {'Paused'}
               </label>
             </form>
+            <p>{'Paused: ' + this.props.paused}</p>
           </p>
         </div>
         {this.state.graph}
