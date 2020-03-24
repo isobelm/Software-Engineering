@@ -38,10 +38,10 @@ class HomeStats extends Component {
 		return (
 			<div className="row">
 			<ListGroup horizontal>
-			  <ListGroup.Item><p id="div1">{ this.state.errorCode }</p>Items</ListGroup.Item>
-			  <ListGroup.Item><p id="div2">{ this.state.errorCode }</p>Edits</ListGroup.Item>
-			  <ListGroup.Item><p id="div3">{ this.state.errorCode }</p>Users</ListGroup.Item>
-			  <ListGroup.Item><p id="div4">{ this.state.errorCode }</p>Active Users</ListGroup.Item>
+			  <ListGroup.Item className="list-group-item-black"><h1 id="div1">{ this.state.errorCode }</h1><h1>Items</h1></ListGroup.Item>
+			  <ListGroup.Item  className="list-group-item-red"><h1 id="div2">{ this.state.errorCode }</h1><h1>Edits</h1></ListGroup.Item>
+			  <ListGroup.Item  className="list-group-item-green"><h1 id="div3">{ this.state.errorCode }</h1><h1>Users</h1></ListGroup.Item>
+			  <ListGroup.Item  className="list-group-item-blue"><h1 id="div4">{ this.state.errorCode }</h1><h1>Active Users</h1></ListGroup.Item>
 			</ListGroup>
 			</div>
 		);
