@@ -10,7 +10,6 @@ import MostActivePages from './Pages/MostActivePages'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ReactDOM from 'react-dom'
 
-
 import './App.css'
 
 function App() {
@@ -18,7 +17,11 @@ function App() {
     <div className="App">
       <Router history={history}>
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route
+            exact
+            path={process.env.PUBLIC_URL + '/'}
+            component={HomePage}
+          />
           <Route exact path="/page" component={TestPage} />
           <Route
             exact
