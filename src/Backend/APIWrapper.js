@@ -264,6 +264,7 @@ const countPageOccurances = recentChanges => {
  * @param {recentChanges[]} recentChanges - The array of recent changes from a query
  */
 const countUsers = recentChanges => {
+  console.log(recentChanges)
   const compare = (a, b) => b.actions - a.actions
   const userCounts = {}
   recentChanges.forEach(change => {
@@ -271,9 +272,9 @@ const countUsers = recentChanges => {
     const numActions = userCounts[user] || 0
     userCounts[user] = numActions + 1
   })
-  const users = Object.entries(userCounts).map(([username, actions]) => ({
-    username,
-    actions,
+  const users = Object.entries(userCounts).map(([name, recentactions]) => ({
+    name,
+    recentactions,
   }))
   users.sort(compare)
   return users

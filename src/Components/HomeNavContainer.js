@@ -5,11 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 class HomeNavContainer extends Component {
 	render() {
 		return (
-			<div className="col-md-2 inline">
-				<h1>{ this.props.btnImage }</h1>
-				<p className="font-weight-bold">{ this.props.btnTitle }</p>
+			<div className="ting">
+			
+				<h2 className={this.props.style}>{ this.props.btnTitle1 }</h2>
+				<h2 className={this.props.style}>{ this.props.btnTitle2 }</h2>
+				<br/>	
 				<Link to={ this.props.btnLink }>
-					 <button type="button" className="align-bottom btn btn-outline-primary">{ this.props.btnText }</button>
+					 <button type="button" className={this.props.btnStyle}>{ this.props.btnText }</button>
 				</Link>
 			</div>
 		);
