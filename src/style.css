@@ -23,7 +23,10 @@ input {
 }
 
 
-
+.HomePageContent{
+	padding-top: 8%;
+	
+}
 .searchBar:focus {
   border-bottom: 1px solid #aaaaaa;
   border-top: 0px solid #aaaaaa;
