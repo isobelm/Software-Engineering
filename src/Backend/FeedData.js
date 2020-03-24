@@ -1,4 +1,4 @@
-const URL = 'https://stream.wikimedia.org/v2/stream/recentchange'
+import { queryRecentChanges } from './APIWrapper'
 
 /** Class which wraps the Wikidata API recent changes feed */
 class FeedData {
@@ -9,18 +9,20 @@ class FeedData {
    *        feed.
    */
   constructor(maxItems) {
-    this.eventSource = new EventSource(URL)
     this.changes = []
     this.maxItems = maxItems
-    this.eventSource.addEventListener('message', (event) =>
-      this.handleMessage(event),
-    )
+    this.prevTimestamp = new Date().toISOString()
   }
 
-  async handleMessage(event) {
-    const change = JSON.parse(event.data)
-    this.changes.unshift(change)
-    if (this.changes.length > this.maxItems) this.changes.pop()
+  refresh() {
+    const [recentChanges, newTimeStamp] = queryRecentChanges(this.prevTimestamp)
+    recentChanges.then(changes =>
+      changes.forEach(change => {
+        this.changes.unshift(change)
+        if (this.changes.length > this.maxItems) this.changes.pop()
+      })
+    )
+    this.prevTimestamp = newTimeStamp
   }
 }
 
