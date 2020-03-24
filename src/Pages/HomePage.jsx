@@ -15,9 +15,9 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className="HomePage">
+      <div className="container">
         <Navbar history={this.state.history} />
-        <div className="row margin-right: -15px margin-left: -15px">
+        <div className="row">
            <TitleContainer
              title="Wikidata Live"
              subtitle="A web app to visualise recent changes to Wikidata in quasi real time."
@@ -29,16 +29,16 @@ class HomePage extends Component {
              btnLink="/feed"
            ></HomeNavContainer>
            <HomeNavContainer
-             btnImage="M"
+             btnImage="G"
              btnTitle="Graph Data"
              btnText="Graphs"
              btnLink="/page"
            ></HomeNavContainer>
            <HomeNavContainer
-             btnImage="👤"
+             btnImage="U"
              btnTitle="User Data"
              btnText="Users"
-             btnLink="/"
+             btnLink="/most-active-users"
            ></HomeNavContainer>
         </div>
         <HomeStatsContainer />
