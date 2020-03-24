@@ -61,16 +61,17 @@ export const getMostActiveUsers = async () => {
   return users
 }
 
-
 export const getRecentEditsWithSize = async () => {
   const params = {
     action: 'query',
     format: 'json',
     list: 'recentchanges',
     rcprop: 'title|ids|sizes|timestamp',
-    rclimit: '500'
+    rclimit: '500',
   }
-  const edits = query(params, NUM_RETRIES).then(result => result.query.recentchanges)
+  const edits = query(params, NUM_RETRIES).then(
+    result => result.query.recentchanges
+  )
   return edits
 }
 /**
@@ -79,7 +80,9 @@ export const getRecentEditsWithSize = async () => {
  */
 export const getRecentLargestEdits = async () => {
   const editList = await getRecentEditsWithSize()
-  editList.sort((a,b) => ((Math.abs(b.newlen - b.oldlen)) - (Math.abs(a.newlen - a.oldlen))));
+  editList.sort(
+    (a, b) => Math.abs(b.newlen - b.oldlen) - Math.abs(a.newlen - a.oldlen)
+  )
   return editList
 }
 
@@ -100,17 +103,9 @@ export const getRecentLargestEdits = async () => {
  */
 export const getMostActivePages = async prevTimestamp => {
   const [recentChanges, newTimestamp] = queryRecentChanges(prevTimestamp)
-  const activePages = recentChanges
-    .then(recentChanges => countPageOccurances(recentChanges))
-    .then(pageTitles => {
-      const ids = pageTitles.map(({ id }) => id)
-      convertIDs(ids).then(convertedIDs => {
-        pageTitles.forEach(pageTitle => {
-          pageTitle.title = convertedIDs[pageTitle.id]
-        })
-      })
-      return pageTitles
-    })
+  const activePages = recentChanges.then(recentChanges =>
+    countPageOccurances(recentChanges)
+  )
   return [await activePages, newTimestamp]
 }
 
@@ -128,38 +123,26 @@ export const getRecentActiveUsers = async prevTimestamp => {
 }
 
 /**
- * Returns a map where the key is the id and the value is the associated label
+ * Batches a query to cirumvent the 50 items query limit
  *
- * @param {Array<string>} ids - An array of ids to retrieve the label of
- * @return {Promise<Map<string, string>>}
+ * @param {string} itemsKey the query key
+ * @param {Array} items the items to add to the query
+ * @param {Object} params the parameters of the query
  */
-export const convertIDs = async ids => {
-  const converted = {}
+export const batchQuery = async (itemsKey, items, params) => {
+  let result = []
   let batches = null
-  if (ids instanceof Array) batches = createBatch(ids, MAX_QUERY_SIZE)
-  else batches = [[ids]]
+  if (items instanceof Array) batches = createBatch(items, MAX_QUERY_SIZE)
+  else batches = [[items]]
   const results = batches.map(async batch => {
-    const titlesString = batch.join('|')
-    const params = {
-      action: 'wbgetentities',
-      format: 'json',
-      ids: titlesString,
-      props: 'labels',
-      languages: 'en',
-    }
+    const batchString = batch.join('|')
+    params[itemsKey] = batchString
     return query(params, NUM_RETRIES)
-      .then(data => data)
-      .then(data => data.entities)
-      .then(entities => {
-        batch.forEach(id => {
-          const labels = entities[id].labels
-          if (labels && labels['en']) converted[id] = labels['en'].value
-        })
-      })
+      .then(data => result.push(data))
       .catch(err => null)
   })
   await Promise.all(results)
-  return converted
+  return result
 }
 
 // ~ Helper Functions ---------------------------------------------------------
@@ -257,11 +240,32 @@ const countUsers = recentChanges => {
     const numActions = userCounts[user] || 0
     userCounts[user] = numActions + 1
   })
-  const users = Object.entries(userCounts).map(([username, actions]) => ({
-    username,
-    actions,
+  const users = Object.entries(userCounts).map(([name, recentactions]) => ({
+    name,
+    recentactions,
   }))
-  users.sort(compare)
+  const userNames = users.map(({ name }) => name)
+  const key = 'ususers'
+  const params = {
+    action: 'query',
+    format: 'json',
+    list: 'users',
+    usprop: 'groups',
+  }
+  const groups = {}
+  batchQuery(key, userNames, params)
+    .then(data =>
+      data.forEach(queryResult => {
+        const users = queryResult.query.users
+        users.forEach(userObj => {
+          if (userObj.groups) groups[userObj.name] = userObj.groups
+        })
+      })
+    )
+    .then(() => {
+      users.forEach(userObj => (userObj.groups = groups[userObj.name]))
+      users.sort(compare)
+    })
   return users
 }
 
