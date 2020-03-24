@@ -38,6 +38,7 @@ export const getMostEditsUsers = async () => {
   return users
 }
 
+
 /**
  * Returns a list of 500 users who were recently active within 30 days which is
  * sorted by the most recent actions in descending order
@@ -60,6 +61,32 @@ export const getMostActiveUsers = async () => {
     .then(data => data.query.allusers)
     .then(users => users.sort(compare))
   return users
+}
+
+
+export const getRecentEditsWithSize = async () => {
+  const params = {
+    action: 'query',
+    format: 'json',
+    list: 'recentchanges',
+    rcprop: 'title|ids|sizes|timestamp',
+    rclimit: '500'
+  }
+  const edits = query(params, NUM_RETRIES).then(result => result.query.recentchanges)
+  return edits
+}
+/**
+ * Returns recent 500 recent edits sorted by size of changes made in absolute value
+ * So large additions and large deletions are included
+ */
+export const getRecentLargestEdits = async () => {
+  const editList = await getRecentEditsWithSize()
+  
+  editList.sort((a,b) => ((Math.abs(b.newlen - b.oldlen)) - (Math.abs(a.newlen - a.oldlen))));
+  editList.forEach((item) =>
+    console.log(Math.abs(item.newlen-item.oldlen))
+  )
+  return editList
 }
 
 /**

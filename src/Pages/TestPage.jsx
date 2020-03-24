@@ -10,6 +10,8 @@ import { MostActiveUsersGraphSettings } from './MostActiveUsers'
 import { MostActivePagesGraphSettings } from './MostActivePages'
 import { UsersByMostEditsGraphSettings } from './UsersByMostEditsPage'
 
+
+
 class HomePage extends Component {
   constructor(props) {
     super(props)
@@ -17,6 +19,7 @@ class HomePage extends Component {
     this.state = {
       history: this.props.history,
     }
+    
   }
 
   render() {

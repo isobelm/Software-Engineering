@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Navbar from '../Components/Navbar'
 import HomeNavContainer from '../Components/HomeNavContainer'
 import HomeStatsContainer from '../Components/HomeStats'
+import { getRecentLargestEdits } from '../Backend/APIWrapper'
 
 class HomePage extends Component {
   constructor(props) {
