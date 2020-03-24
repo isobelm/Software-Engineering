@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 class HomeNavContainer extends Component {
 	render() {
 		return (
-			<div className="col-md-2 inline">
+			<div className="ting">
 				<h1>{ this.props.btnImage }</h1>
 				<p className="font-weight-bold">{ this.props.btnTitle }</p>
 				<Link to={ this.props.btnLink }>

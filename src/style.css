@@ -5,9 +5,9 @@
   --p: #000000;
   --b: #ffffff;
 }
-
+html{ overflow-y: scroll;}
 body {
-  background-color: #ffffff;
+  background-color: #fffffE;
 }
 input {
   border: none;
@@ -23,7 +23,10 @@ input {
 }
 
 
-
+.HomePageContent{
+	padding-top: 8%;
+	
+}
 .searchBar:focus {
   border-bottom: 1px solid #aaaaaa;
   border-top: 0px solid #aaaaaa;
@@ -89,6 +92,7 @@ img {
   max-height: 80%;
   width: 100%;
 }
+
 
 @media only screen and (max-width: 800px) {
   .page {
@@ -210,10 +214,13 @@ ul {
   overflow: auto;
 }
 
-/*DELETE THIS LINE AFTER DEMO*/
-/* .list-group {
+.feedContainer{
+	width:100%;
+}
+.list-group {
   max-height: 500px;
-} */
+  width: 100%;
+}
 
 .list-group-item:hover {
   background-color: var(--blue);

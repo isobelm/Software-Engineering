@@ -15,31 +15,44 @@ class HomePage extends Component {
 
   render() {
     return (
+	
       <div className="HomePage">
         <Navbar history={this.state.history} />
-        <div className="row margin-right: -15px margin-left: -15px">
+        <div className="HomePageContent row margin-right: -15px margin-left: -15px">
+		<div className = "col-5">
            <TitleContainer
              title="Wikidata Live"
              subtitle="A web app to visualise recent changes to Wikidata in quasi real time."
            ></TitleContainer>
+		   </div>
+		   <div className = "col-7">
+		   <div className= "row">
+		   <div className="col-4">
            <HomeNavContainer
              btnImage="W"
              btnTitle="Wikidata Feed"
              btnText="Wikidata"
              btnLink="/feed"
            ></HomeNavContainer>
+		   </div>
+		   <div className="col-4">
            <HomeNavContainer
-             btnImage="M"
+             btnImage="G"
              btnTitle="Graph Data"
              btnText="Graphs"
              btnLink="/page"
            ></HomeNavContainer>
+		   </div>
+		   <div className="col-4">
            <HomeNavContainer
-             btnImage="👤"
+             btnImage="U"
              btnTitle="User Data"
              btnText="Users"
-             btnLink="/"
+             btnLink="/most-active-users"
            ></HomeNavContainer>
+		   </div>
+		   </div>
+		   </div>
         </div>
         <HomeStatsContainer />
       </div>
