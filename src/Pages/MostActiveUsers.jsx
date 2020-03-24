@@ -85,7 +85,7 @@ class MostActiveUsers extends Component {
         paused={this.state.paused}
         explanation={
           'A live view of the users active right now.' +
-          "Hover over a bar to get a preview of the user's page, or click to open the user's page in a new tab."
+          " Hover over a bar to get a preview of the user's page, or click to open the user's page in a new tab."
         }
         graph={
           <SimpleBarGraph

@@ -82,7 +82,7 @@ class MostActivePages extends Component {
         paused={this.state.paused}
         explanation={
           'A live view of the pages being edited right now.' +
-          'Hover over a bar to get a preview of the page, or click to open the page in a new tab.'
+          ' Hover over a bar to get a preview of the page, or click to open the page in a new tab.'
         }
         graph={
           <SimpleBarGraph
