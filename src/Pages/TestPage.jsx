@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Navbar from '../Components/Navbar'
 import GraphCard from '../Components/GraphCard'
-import FeedData from '../Components/FeedData'
+import FeedData from '../Components/Feed'
 import CardDeck from 'react-bootstrap/CardDeck'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import SimpleBarGraph from '../Components/SimpleBarGraph'
