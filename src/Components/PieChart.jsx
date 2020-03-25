@@ -52,15 +52,13 @@ class SimpleBarGraph extends Component {
     let label = null
     let classname = ''
     let onClick = null
-    let clickable = false
     let tooltip = null
     if (this.state.fullGraph) {
-      margin = { top: 30, right: 30, bottom: 30, left: 80 }
+      margin = { top: 30, right: 30, bottom: 30, left: 30 }
       label = true
       classname = 'full-graph-container'
       if (this.props.settings.onClick) {
         onClick = this.props.settings.onClick
-        clickable = true
       }
       if (this.props.settings.tooltip) {
         tooltip = this.props.settings.tooltip.bind(this)

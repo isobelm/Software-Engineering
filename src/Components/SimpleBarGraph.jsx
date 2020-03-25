@@ -55,8 +55,14 @@ class SimpleBarGraph extends Component {
     let onClick = null
     let clickable = false
     let tooltip = null
+    let legend = []
     if (this.state.fullGraph) {
-      margin = { top: 5, right: 30, bottom: 80, left: 80 }
+      if (this.props.settings.margin) {
+        margin = this.props.settings.margin
+      } else {
+        margin = { top: 5, right: 30, bottom: 80, left: 80 }
+      }
+      legend = [this.props.settings.legend]
       label = true
       classname = 'full-graph-container'
       if (this.props.settings.onClick) {
@@ -84,7 +90,7 @@ class SimpleBarGraph extends Component {
               margin={margin}
               padding={0.3}
               colors={{ scheme: this.props.settings.colors }}
-              colorBy="index"
+              colorBy={this.props.colorBy}
               borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
               axisTop={null}
               axisRight={null}
@@ -111,6 +117,7 @@ class SimpleBarGraph extends Component {
               motionStiffness={90}
               motionDamping={15}
               tooltip={tooltip}
+              legends={legend}
             />
           </div>
         )}
