@@ -16,11 +16,11 @@ import './App.css'
 function App() {
   return (
     <div className="App">
-      <Router history={history}>
+      <Router basename={process.env.PUBLIC_URL} history={history}>
         <Switch>
           <Route
             exact
-            path={process.env.PUBLIC_URL + '/'}
+            path={'/'}
             component={HomePage}
           />
           <Route exact path="/page" component={TestPage} />
