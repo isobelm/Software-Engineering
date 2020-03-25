@@ -9,13 +9,6 @@ export const MostActiveUsersGraphSettings = {
       new Date().toISOString()
     )
     data = data.slice(0, 50)
-    data.forEach(user => {
-      if (user.groups && user.groups.includes('bot')) {
-        user.type = 'bot'
-      } else {
-        user.type = 'human'
-      }
-    })
     this.setState({
       fullData: data,
       prevTimestamp: newTimestamp,
@@ -24,12 +17,12 @@ export const MostActiveUsersGraphSettings = {
   },
   refreshTime: 2000,
   refreshMethod: async function() {
-    debugger
     let [data, newTimestamp] = await getRecentActiveUsers(
       this.state.prevTimestamp
     )
-    debugger
     this.setState({ prevTimestamp: newTimestamp })
+    console.log(data)
+    console.log(this.state.data)
     data = data.slice(0, 50)
     if (this.state.fullData) {
       let fullData = this.state.fullData
@@ -43,17 +36,21 @@ export const MostActiveUsersGraphSettings = {
         if (index !== -1) {
           fullData[index].actions += userAdditions.actions
         } else {
-          if (userAdditions.groups && userAdditions.groups.includes('bot')) {
-            userAdditions.type = 'bot'
-          } else {
-            userAdditions.type = 'human'
-          }
           fullData.push(userAdditions)
         }
       })
       fullData.sort((a, b) => b.actions - a.actions)
       fullData.slice(0, 50)
       let smlData = fullData.slice(0, this.state.fullGraph ? 30 : 10)
+      smlData.forEach(user => {
+        if (user.groups !== undefined && user.groups.includes('bot')) {
+          user.bot = user.actions
+          user.human = 0
+        } else {
+          user.bot = 0
+          user.human = user.actions
+        }
+      })
 
       this.setState({ fullData: fullData, data: smlData })
     } else {
@@ -62,11 +59,34 @@ export const MostActiveUsersGraphSettings = {
       this.setState({ data: smlData })
     }
   },
-  keys: ['actions'],
+  keys: ['bot', 'human'],
   index: 'username',
   xAxis: 'username',
   yAxis: 'actions',
   colors: 'set2',
+  legend: {
+    dataFrom: 'keys',
+    anchor: 'bottom-right',
+    direction: 'column',
+    justify: false,
+    translateX: 120,
+    translateY: 0,
+    itemsSpacing: 2,
+    itemWidth: 100,
+    itemHeight: 20,
+    itemDirection: 'left-to-right',
+    itemOpacity: 0.85,
+    symbolSize: 20,
+    effects: [
+      {
+        on: 'hover',
+        style: {
+          itemOpacity: 1,
+        },
+      },
+    ],
+  },
+  margin: { top: 5, right: 130, bottom: 50, left: 80 },
   onClick: function(click) {
     window.open(
       'https://www.wikidata.org/wiki/User:' + click.indexValue,
