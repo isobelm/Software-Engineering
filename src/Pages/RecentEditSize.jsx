@@ -41,7 +41,7 @@ class RecentEditSize extends Component {
         paused={this.state.paused}
         explanation={
           <div>
-            {'The largest of the last 500 edits.' +
+            {'The largest of the last 500 edits. The number in each of the sections represents the size of the edit in bytes.' +
               ' Hover over a section to get a preview of the page, or click to open the page in a new tab.'}
             <p>
               <img className="legend" src={require('../legend.svg')} />

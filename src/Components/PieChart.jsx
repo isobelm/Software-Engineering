@@ -55,7 +55,7 @@ class SimpleBarGraph extends Component {
     let clickable = false
     let tooltip = null
     if (this.state.fullGraph) {
-      margin = { top: 30, right: 30, bottom: 30, left: 80 }
+      margin = { top: 30, right: 30, bottom: 30, left: 30 }
       label = true
       classname = 'full-graph-container'
       if (this.props.settings.onClick) {
