@@ -9,6 +9,13 @@ export const MostActiveUsersGraphSettings = {
       new Date().toISOString()
     )
     data = data.slice(0, 50)
+    data.forEach(user => {
+      if (user.groups && user.groups.includes('bot')) {
+        user.type = 'bot'
+      } else {
+        user.type = 'human'
+      }
+    })
     this.setState({
       fullData: data,
       prevTimestamp: newTimestamp,
@@ -17,6 +24,7 @@ export const MostActiveUsersGraphSettings = {
   },
   refreshTime: 2000,
   refreshMethod: async function() {
+    debugger
     let [data, newTimestamp] = await getRecentActiveUsers(
       this.state.prevTimestamp
     )
@@ -24,17 +32,22 @@ export const MostActiveUsersGraphSettings = {
     data = data.slice(0, 50)
     if (this.state.fullData) {
       let fullData = this.state.fullData
-      data.forEach(pageAdditions => {
+      data.forEach(userAdditions => {
         let index = -1
         for (let i = 0; i < fullData.length; i += 1) {
-          if (fullData[i].username === pageAdditions.username) {
+          if (fullData[i].username === userAdditions.username) {
             index = i
           }
         }
         if (index !== -1) {
-          fullData[index].actions += pageAdditions.actions
+          fullData[index].actions += userAdditions.actions
         } else {
-          fullData.push(pageAdditions)
+          if (userAdditions.groups && userAdditions.groups.includes('bot')) {
+            userAdditions.type = 'bot'
+          } else {
+            userAdditions.type = 'human'
+          }
+          fullData.push(userAdditions)
         }
       })
       fullData.sort((a, b) => b.actions - a.actions)
