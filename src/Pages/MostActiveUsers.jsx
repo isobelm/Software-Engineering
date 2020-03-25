@@ -64,6 +64,7 @@ export const MostActiveUsersGraphSettings = {
   xAxis: 'username',
   yAxis: 'actions',
   colors: 'set2',
+  colorBy: 'id',
   legend: {
     dataFrom: 'keys',
     anchor: 'bottom-right',
