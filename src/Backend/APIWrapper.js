@@ -177,6 +177,34 @@ export const queryRecentChanges = prevTimestamp => {
   return [recentChanges, newTimestamp]
 }
 
+/**
+ * Returns the groups of each username in the input array
+ *
+ * @param {Array<string>} userNames - an array of usernames to fetch the group of
+ * @return {Map<string, Array<string>>} - map of username to an array of groups
+ *         they belong to
+ */
+export const getUserGroups = userNames => {
+  const key = 'ususers'
+  const params = {
+    action: 'query',
+    format: 'json',
+    list: 'users',
+    usprop: 'groups',
+  }
+  const groups = batchQuery(key, userNames, params).then(data => {
+    const groups = {}
+    data.forEach(queryResult => {
+      const users = queryResult.query.users
+      users.forEach(userObj => {
+        if (userObj.groups) groups[userObj.name] = userObj.groups
+      })
+    })
+    return groups
+  })
+  return groups
+}
+
 // ~ Helper Functions ---------------------------------------------------------
 
 /**
@@ -249,28 +277,11 @@ const countUsers = recentChanges => {
     username,
     actions,
   }))
-  const userNames = users.map(({ name }) => name)
-  const key = 'ususers'
-  const params = {
-    action: 'query',
-    format: 'json',
-    list: 'users',
-    usprop: 'groups',
-  }
-  const groups = {}
-  batchQuery(key, userNames, params)
-    .then(data =>
-      data.forEach(queryResult => {
-        const users = queryResult.query.users
-        users.forEach(userObj => {
-          if (userObj.groups) groups[userObj.name] = userObj.groups
-        })
-      })
-    )
-    .then(() => {
-      users.forEach(userObj => (userObj.groups = groups[userObj.name]))
-      users.sort(compare)
-    })
+  const userNames = users.map(({ username }) => username)
+  getUserGroups(userNames).then(groups => {
+    users.forEach(userObj => (userObj.groups = groups[userObj.username]))
+    users.sort(compare)
+  })
   return users
 }
 
