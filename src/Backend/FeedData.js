@@ -1,4 +1,4 @@
-import { queryRecentChanges } from './APIWrapper'
+import { queryRecentChanges, getUserGroups } from './APIWrapper'
 
 /** Class which wraps the Wikidata API recent changes feed */
 class FeedData {
@@ -16,12 +16,16 @@ class FeedData {
 
   refresh() {
     const [recentChanges, newTimeStamp] = queryRecentChanges(this.prevTimestamp)
-    recentChanges.then(changes =>
-      changes.forEach(change => {
-        this.changes.unshift(change)
-        if (this.changes.length > this.maxItems) this.changes.pop()
-      })
-    )
+    recentChanges.then(changes => {
+      const usernames = changes.map(change => change.user)
+      getUserGroups(usernames).then(groups =>
+        changes.forEach(change => {
+          change.groups = groups[change.user]
+          this.changes.unshift(change)
+          if (this.changes.length > this.maxItems) this.changes.pop()
+        })
+      )
+    })
     this.prevTimestamp = newTimeStamp
   }
 }
