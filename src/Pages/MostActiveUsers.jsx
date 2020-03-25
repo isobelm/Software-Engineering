@@ -20,7 +20,6 @@ export const MostActiveUsersGraphSettings = {
     let [data, newTimestamp] = await getRecentActiveUsers(
       this.state.prevTimestamp
     )
-    debugger
     this.setState({ prevTimestamp: newTimestamp })
     data = data.slice(0, 50)
     if (this.state.fullData) {
