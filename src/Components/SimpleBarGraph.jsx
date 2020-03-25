@@ -35,10 +35,16 @@ class SimpleBarGraph extends Component {
     })
   }
 
-  componentDidMount() {
-    this.refreshInterval = setInterval(async () => {
+  refresh = async () => {
+    if (!this.props.paused) {
       let method = this.props.settings.refreshMethod.bind(this)
       await method()
+    }
+  }
+
+  componentDidMount() {
+    this.refreshInterval = setInterval(async () => {
+      await this.refresh()
     }, this.props.settings.refreshTime)
   }
 

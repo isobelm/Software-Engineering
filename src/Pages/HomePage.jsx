@@ -19,7 +19,6 @@ class HomePage extends Component {
 
   render() {
     return (
-	
       <div className="HomePage">
         <Navbar history={this.state.history} />
         <div className="HomePageContent row margin-right: -15px margin-left: -15px">
@@ -31,7 +30,6 @@ class HomePage extends Component {
 		   </div>
 		   <div className = "col-7">
 		   <div className= "row">
-		   
 		   <div className="col-4">
 		   <h1 className="text-red"><FontAwesomeIcon icon={faBars}/></h1>
            <HomeNavContainer
