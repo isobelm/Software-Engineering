@@ -1,14 +1,25 @@
 import React, { Component } from 'react'
 import GraphPage from './GraphPage'
 import PieChart from '../Components/PieChart'
-import { getRecentLargestEdits } from '../Backend/APIWrapper'
+import { getRecentEditsWithSize } from '../Backend/APIWrapper'
 
 export const RecentEditSizeSettings = {
-  getData: getRecentLargestEdits,
+  getData: async () => {
+    let data = await getRecentEditsWithSize()
+    data.forEach(item => {
+      item.id = item.title
+      item.value = Math.abs(item.newlen - item.oldlen)
+    })
+    return data
+  },
   refreshTime: 2000,
-  refreshMethod: getRecentLargestEdits,
-  value: item => {
-    Math.abs(item.newlen - item.oldlen)
+  refreshMethod: async () => {
+    let data = await getRecentEditsWithSize()
+    data.forEach(item => {
+      item.value = Math.abs(item.newlen - item.oldlen)
+      item.id = item.title
+    })
+    return data
   },
   colorBy: 'type',
   colors: 'pastel1',
@@ -41,7 +52,7 @@ class RecentEditSize extends Component {
         paused={this.state.paused}
         explanation={
           <div>
-            {'The largest of the last 500 edits. The number in each of the sections represents the size of the edit in bytes.' +
+            {'The size of the last 30 edits. The number in each of the sections represents the size of the edit in bytes.' +
               ' Hover over a section to get a preview of the page, or click to open the page in a new tab.'}
             <p>
               <img
@@ -59,7 +70,7 @@ class RecentEditSize extends Component {
             paused={this.state.paused}
           />
         }
-        name={'Largest Recent Edits'}
+        name={'Recent Edit Size'}
       />
     )
   }

@@ -8,7 +8,7 @@ import SimpleBarGraph from '../Components/SimpleBarGraph'
 import PieChart from '../Components/PieChart'
 import { MostActiveUsersGraphSettings } from './MostActiveUsers'
 import { MostActivePagesGraphSettings } from './MostActivePages'
-import { UsersByMostEditsGraphSettings } from './UsersByMostEditsPage'
+import { LargestRecentEditsSettings } from './LargestRecentEdits'
 import { RecentEditSizeSettings } from './RecentEditSize'
 
 class HomePage extends Component {
@@ -34,14 +34,14 @@ class HomePage extends Component {
             <div className="deck-container">
               <CardDeck className="deck">
                 <GraphCard
-                  title="Users by most edits"
-                  pageLink="users-by-most-edits"
+                  title="Recent Edit Size"
+                  pageLink="recent-edit-size"
                   history={this.state.history}
                   graph={
-                    <SimpleBarGraph
+                    <PieChart
                       paused={true}
                       fullGraph={false}
-                      settings={UsersByMostEditsGraphSettings}
+                      settings={RecentEditSizeSettings}
                     />
                   }
                 />
@@ -73,13 +73,13 @@ class HomePage extends Component {
                 />
                 <GraphCard
                   title="Largest Recent Edits"
-                  pageLink="recent-edit-size"
+                  pageLink="largest-recent-edits"
                   history={this.state.history}
                   graph={
                     <PieChart
                       paused={true}
                       fullGraph={false}
-                      settings={RecentEditSizeSettings}
+                      settings={LargestRecentEditsSettings}
                     />
                   }
                 />
