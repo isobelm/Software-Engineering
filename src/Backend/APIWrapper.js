@@ -1,4 +1,5 @@
 const API_ENDPOINT = 'https://www.wikidata.org/w/api.php'
+const SCORING_ENDPOINT = 'https://ores.wikimedia.org/v3/scores/wikidatawiki/'
 const MAX_QUERY_SIZE = 50
 const NUM_RETRIES = 5
 
@@ -151,6 +152,21 @@ export const batchQuery = async (itemsKey, items, params) => {
 }
 
 /**
+ * @typedef {Object} recentChanges
+ * @property {number} newlen - the number of bytes the page uses after the change
+ * @property {number} ns
+ * @property {number} old_revid - The old revision id
+ * @property {number} oldlen - the number of bytes the page uses before the change
+ * @property {number} pageid - The page id
+ * @property {number} rcid - The recent change id
+ * @property {number} revid - The current revision id
+ * @property {string} timestamp - Timestamp of change
+ * @property {string} title - Title of the page changed
+ * @property {string} type - Type of action e.g. "new", "edit"
+ * @property {string} user - The username of the editor
+ */
+
+/**
  * Queries the API for the most recent changes
  *
  * @param {string} prevTimestamp - Previous timestamp when the function was
@@ -166,14 +182,22 @@ export const queryRecentChanges = prevTimestamp => {
     action: 'query',
     format: 'json',
     list: 'recentchanges',
-    rcprop: 'title|ids|timestamp|user',
+    rcprop: 'title|ids|timestamp|user|sizes',
     rclimit: 'max',
     rcstart: tmpTimestamp,
     rcend: prevTimestamp,
   }
-  const recentChanges = query(params, NUM_RETRIES).then(
-    data => data.query.recentchanges
-  )
+  const recentChanges = query(params, NUM_RETRIES)
+    .then(data => data.query.recentchanges)
+    .then(recentChanges => {
+      return recentChanges.map(recentChange => {
+        const revid = recentChange.revid
+        getScore(revid, NUM_RETRIES).then(score => {
+          recentChange.score = score
+        })
+        return recentChange
+      })
+    })
   return [recentChanges, newTimestamp]
 }
 
@@ -226,17 +250,31 @@ const query = async (params, n) => {
 }
 
 /**
- * @typedef {Object} recentChanges
- * @property {number} ns
- * @property {number} old_revid - The old revision id
- * @property {number} pageid - The page id
- * @property {number} rcid - The recent change id
- * @property {number} revid - The current revision id
- * @property {string} timestamp - Timestamp of change
- * @property {string} title - Title of the page changed
- * @property {string} type - Type of action e.g. "new", "edit"
- * @property {string} user - The username of the editor
+ * Retruns the score of the revision id to find out if the edit was harmful or not
+ *
+ * @param {number} revisionId - Revision id to obtain the score of
+ * @param {number} n - Number of times to retry if failure occurs
+ * @return {Promise<Object>}
  */
+const getScore = (revisionId, n) => {
+  // try {
+  const url = SCORING_ENDPOINT + revisionId
+  return fetch(url)
+    .then(response => response.json())
+    .then(result => {
+      try {
+        const scores = result.wikidatawiki.scores[revisionId]
+        return {
+          damaging: scores.damaging.score,
+          goodfaith: scores.goodfaith.score,
+        }
+      } catch {}
+    })
+  // } catch (err) {
+  //   if (n === 1) throw err
+  //   return await getScore(revisionId, n - 1)
+  // }
+}
 
 /**
  * Returns the number of times a page appeared on the recent changes feed sorted by
