@@ -73,7 +73,7 @@ export const getRecentEditsWithSize = async () => {
   const edits = query(params, NUM_RETRIES).then(
     result => result.query.recentchanges
   )
-  return edits
+  return await edits
 }
 /**
  * Returns recent 500 recent edits sorted by size of changes made in absolute value
