@@ -33,9 +33,19 @@ function Feed() {
       <ul className="list-group">
         {recentChanges.items.map((item, index) => (
           <li className="list-group-item text-left" key={index}>
-            {`User ${item.user} action ${item.type} on ${
-              item.title
-            } ${getTimeDifference(item.timestamp)} seconds ago`}
+            <div
+              className={
+                item.score
+                  ? item.score.damaging.prediction
+                    ? 'text-red'
+                    : ''
+                  : ''
+              }
+            >
+              {`User ${item.user} action ${item.type} on ${
+                item.title
+              } ${getTimeDifference(item.timestamp)} seconds ago`}
+            </div>
           </li>
         ))}
       </ul>

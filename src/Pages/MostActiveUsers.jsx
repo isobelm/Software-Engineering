@@ -21,8 +21,6 @@ export const MostActiveUsersGraphSettings = {
       this.state.prevTimestamp
     )
     this.setState({ prevTimestamp: newTimestamp })
-    console.log(data)
-    console.log(this.state.data)
     data = data.slice(0, 50)
     if (this.state.fullData) {
       let fullData = this.state.fullData
