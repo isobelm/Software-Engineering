@@ -246,7 +246,7 @@ const query = async (endpoint, params, n) => {
     return await fetch(url).then(response => response.json())
   } catch (err) {
     if (n === 1) throw err
-    return await query(endpoint, params, n - 1)
+    return await setTimeout(query(endpoint, params, n - 1), 500)
   }
 }
 
@@ -263,10 +263,9 @@ const getScore = async revisionIds => {
   let scores = {}
   return batchQuery(key, revisionIds, SCORING_ENDPOINT, params).then(
     resultBatch => {
-      resultBatch.forEach(result => {
-        if (!result.wikidatawiki) console.log(result)
-        scores = { ...scores, ...result.wikidatawiki.scores }
-      })
+      resultBatch.forEach(
+        result => (scores = { ...scores, ...result.wikidatawiki?.scores })
+      )
       return scores
     }
   )

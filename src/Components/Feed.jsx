@@ -14,7 +14,7 @@ function Feed() {
     const refresh = setInterval(() => {
       if (!paused) feedData.refresh()
       setRecentChanges({ items: feedData.changes })
-    }, 2000)
+    }, 500)
     return () => clearInterval(refresh)
   }, [feedData, paused])
 
