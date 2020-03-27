@@ -31,6 +31,8 @@ input {
 	padding-left:1%;
 	
 }
+
+
 .searchBar:focus {
   border-bottom: 1px solid #aaaaaa;
   border-top: 0px solid #aaaaaa;
@@ -220,6 +222,7 @@ ul {
 
 .feedContainer{
 	width:100%;
+	padding-left: 2%;
 }
 .list-group {
   max-height: 500px;
