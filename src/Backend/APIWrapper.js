@@ -33,7 +33,7 @@ export const getMostEditsUsers = async () => {
     auwitheditsonly: '1',
     auactiveusers: '1',
   }
-  const users = query(params, NUM_RETRIES)
+  const users = query(API_ENDPOINT, params, NUM_RETRIES)
     .then(data => data.query.allusers)
     .then(users => users.sort(compare))
   return users
@@ -56,7 +56,7 @@ export const getMostActiveUsers = async () => {
     auwitheditsonly: '1',
     auactiveusers: '1',
   }
-  const users = query(params, NUM_RETRIES)
+  const users = query(API_ENDPOINT, params, NUM_RETRIES)
     .then(data => data.query.allusers)
     .then(users => users.sort(compare))
   return users
@@ -70,7 +70,7 @@ export const getRecentEditsWithSize = async () => {
     rcprop: 'title|ids|sizes|timestamp',
     rclimit: '500',
   }
-  const edits = query(params, NUM_RETRIES).then(
+  const edits = query(API_ENDPOINT, params, NUM_RETRIES).then(
     result => result.query.recentchanges
   )
   return await edits
@@ -133,9 +133,10 @@ export const getRecentActiveUsers = async prevTimestamp => {
  *
  * @param {string} itemsKey the query key
  * @param {Array} items the items to add to the query
+ * @param {string} endpoint the endpoint url
  * @param {Object} params the parameters of the query
  */
-export const batchQuery = async (itemsKey, items, params) => {
+export const batchQuery = async (itemsKey, items, endpoint, params) => {
   let result = []
   let batches = null
   if (items instanceof Array) batches = createBatch(items, MAX_QUERY_SIZE)
@@ -143,7 +144,7 @@ export const batchQuery = async (itemsKey, items, params) => {
   const results = batches.map(async batch => {
     const batchString = batch.join('|')
     params[itemsKey] = batchString
-    return query(params, NUM_RETRIES)
+    return query(endpoint, params, NUM_RETRIES)
       .then(data => result.push(data))
       .catch(err => null)
   })
@@ -187,16 +188,16 @@ export const queryRecentChanges = prevTimestamp => {
     rcstart: tmpTimestamp,
     rcend: prevTimestamp,
   }
-  const recentChanges = query(params, NUM_RETRIES)
+  const recentChanges = query(API_ENDPOINT, params, NUM_RETRIES)
     .then(data => data.query.recentchanges)
     .then(recentChanges => {
-      return recentChanges.map(recentChange => {
-        const revid = recentChange.revid
-        getScore(revid, NUM_RETRIES).then(score => {
-          recentChange.score = score
+      const revisionIds = recentChanges.map(recentChange => recentChange.revid)
+      return getScore(revisionIds).then(scores =>
+        recentChanges.map(recentChange => {
+          recentChange.scores = scores[recentChange.revid]
+          return recentChange
         })
-        return recentChange
-      })
+      )
     })
   return [recentChanges, newTimestamp]
 }
@@ -216,7 +217,7 @@ export const getUserGroups = userNames => {
     list: 'users',
     usprop: 'groups',
   }
-  const groups = batchQuery(key, userNames, params).then(data => {
+  const groups = batchQuery(key, userNames, API_ENDPOINT, params).then(data => {
     const groups = {}
     data.forEach(queryResult => {
       const users = queryResult.query.users
@@ -238,42 +239,37 @@ export const getUserGroups = userNames => {
  * @param {number} n - Number of times to retry if failure occurs
  * @return {Promise<Object>}
  */
-const query = async (params, n) => {
+const query = async (endpoint, params, n) => {
   try {
     const paramsString = new URLSearchParams(params).toString()
-    const url = API_ENDPOINT + '?' + paramsString + '&origin=*'
+    const url = endpoint + '?' + paramsString + '&origin=*'
     return await fetch(url).then(response => response.json())
   } catch (err) {
     if (n === 1) throw err
-    return await query(params, n - 1)
+    return await query(endpoint, params, n - 1)
   }
 }
 
 /**
  * Retruns the score of the revision id to find out if the edit was harmful or not
  *
- * @param {number} revisionId - Revision id to obtain the score of
- * @param {number} n - Number of times to retry if failure occurs
+ * @param {Array<number>} revisionIds - Revision ids to obtain the score of
  * @return {Promise<Object>}
  */
-const getScore = (revisionId, n) => {
-  // try {
-  const url = SCORING_ENDPOINT + revisionId
-  return fetch(url)
-    .then(response => response.json())
-    .then(result => {
-      try {
-        const scores = result.wikidatawiki.scores[revisionId]
-        return {
-          damaging: scores.damaging.score,
-          goodfaith: scores.goodfaith.score,
-        }
-      } catch {}
-    })
-  // } catch (err) {
-  //   if (n === 1) throw err
-  //   return await getScore(revisionId, n - 1)
-  // }
+const getScore = async revisionIds => {
+  if (revisionIds.length === 0) return
+  const key = 'revids'
+  const params = {}
+  let scores = {}
+  return batchQuery(key, revisionIds, SCORING_ENDPOINT, params).then(
+    resultBatch => {
+      resultBatch.forEach(result => {
+        if (!result.wikidatawiki) console.log(result)
+        scores = { ...scores, ...result.wikidatawiki.scores }
+      })
+      return scores
+    }
+  )
 }
 
 /**
