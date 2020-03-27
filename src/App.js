@@ -8,6 +8,7 @@ import UsersByMostEditsPage from './Pages/UsersByMostEditsPage'
 import MostActiveUsers from './Pages/MostActiveUsers'
 import MostActivePages from './Pages/MostActivePages'
 import RecentEditSize from './Pages/RecentEditSize'
+import LargestRecentEdits from './Pages/LargestRecentEdits'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ReactDOM from 'react-dom'
 
@@ -31,6 +32,11 @@ function App() {
           />
           <Route exact path="/most-active-users" component={MostActiveUsers} />
           <Route exact path="/recent-edit-size" component={RecentEditSize} />
+          <Route
+            exact
+            path="/largest-recent-edits"
+            component={LargestRecentEdits}
+          />
           <Route exact path="/most-active-pages" component={MostActivePages} />
           <Route exact path="/feed" component={FeedData} />
         </Switch>

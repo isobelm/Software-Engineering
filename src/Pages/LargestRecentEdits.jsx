@@ -1,26 +1,12 @@
 import React, { Component } from 'react'
 import GraphPage from './GraphPage'
 import PieChart from '../Components/PieChart'
-import { getRecentEditsWithSize } from '../Backend/APIWrapper'
+import { getRecentLargestEdits } from '../Backend/APIWrapper'
 
-export const RecentEditSizeSettings = {
-  getData: async () => {
-    let data = await getRecentEditsWithSize()
-    data.forEach(item => {
-      item.id = item.title
-      item.value = Math.abs(item.newlen - item.oldlen)
-    })
-    return data
-  },
+export const LargestRecentEditsSettings = {
+  getData: getRecentLargestEdits,
   refreshTime: 2000,
-  refreshMethod: async () => {
-    let data = await getRecentEditsWithSize()
-    data.forEach(item => {
-      item.value = Math.abs(item.newlen - item.oldlen)
-      item.id = item.title
-    })
-    return data
-  },
+  refreshMethod: getRecentLargestEdits,
   colorBy: 'type',
   colors: 'pastel1',
   onClick: function(click) {
@@ -31,7 +17,7 @@ export const RecentEditSizeSettings = {
   },
 }
 
-class RecentEditSize extends Component {
+class LargestRecentEdits extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -52,7 +38,7 @@ class RecentEditSize extends Component {
         paused={this.state.paused}
         explanation={
           <div>
-            {'The size of the last 30 edits. The number in each of the sections represents the size of the edit in bytes.' +
+            {'The largest of the last 500 edits. The number in each of the sections represents the size of the edit in bytes.' +
               ' Hover over a section to get a preview of the page, or click to open the page in a new tab.'}
             <p>
               <img
@@ -66,13 +52,13 @@ class RecentEditSize extends Component {
         graph={
           <PieChart
             fullGraph={true}
-            settings={RecentEditSizeSettings}
+            settings={LargestRecentEditsSettings}
             paused={this.state.paused}
           />
         }
-        name={'Recent Edit Size'}
+        name={'Largest Recent Edits'}
       />
     )
   }
 }
-export default RecentEditSize
+export default LargestRecentEdits
