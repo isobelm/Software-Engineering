@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ResponsivePie } from '@nivo/pie'
 
-class SimpleBarGraph extends Component {
+class PieChart extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -145,4 +145,4 @@ class SimpleBarGraph extends Component {
   }
 }
 
-export default SimpleBarGraph
+export default PieChart
