@@ -18,7 +18,7 @@ import './App.css'
 function App() {
   return (
     <div className="App">
-      <Router baseline = "https://isobelm.github.io/Software-Engineering" history={history}>
+      <Router basename = "https://isobelm.github.io/Software-Engineering" history={history}>
         <Switch>
           <Route
             exact
