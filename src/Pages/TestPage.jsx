@@ -10,6 +10,7 @@ import { MostActiveUsersGraphSettings } from './MostActiveUsers'
 import { MostActivePagesGraphSettings } from './MostActivePages'
 import { LargestRecentEditsSettings } from './LargestRecentEdits'
 import { RecentEditSizeSettings } from './RecentEditSize'
+import { ProportionFlaggedSettings } from './ProportionFlagged'
 
 class HomePage extends Component {
   constructor(props) {
@@ -71,6 +72,9 @@ class HomePage extends Component {
                     />
                   }
                 />
+              </CardDeck>
+
+              <CardDeck className="deck">
                 <GraphCard
                   title="Largest Recent Edits"
                   pageLink="largest-recent-edits"
@@ -80,6 +84,18 @@ class HomePage extends Component {
                       paused={true}
                       fullGraph={false}
                       settings={LargestRecentEditsSettings}
+                    />
+                  }
+                />
+                <GraphCard
+                  title={ProportionFlaggedSettings.name}
+                  pageLink="proportion-flagged"
+                  history={this.state.history}
+                  graph={
+                    <PieChart
+                      paused={false}
+                      fullGraph={false}
+                      settings={ProportionFlaggedSettings}
                     />
                   }
                 />
