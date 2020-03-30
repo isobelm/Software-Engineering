@@ -1,4 +1,4 @@
-import React from 'react'
+	import React from 'react'
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import HomePage from './Pages/HomePage'
 import history from './Utils/History'
@@ -16,11 +16,11 @@ import './App.css'
 function App() {
   return (
     <div className="App">
-      <Router history={history}>
+      <Router baseline = "https://isobelm.github.io/Software-Engineering" history={history}>
         <Switch>
           <Route
             exact
-            path={process.env.PUBLIC_URL + '/'}
+            path={'/'}
             component={HomePage}
           />
           <Route exact path="/page" component={TestPage} />
