@@ -283,7 +283,7 @@ export const getUserGroups = userNames => {
  * @param {number} n - Number of times to retry if failure occurs
  * @return {Promise<Object>}
  */
-const query = async (params, n) => {
+const query = async (endpoint, params, n) => {
   try {
     const paramsString = new URLSearchParams(params).toString()
     const url = API_ENDPOINT + '?' + paramsString + '&origin=*'
