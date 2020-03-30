@@ -17,7 +17,7 @@ class PieChart extends Component {
     return (
       <div className="iframe-container">
         <iframe
-          src={url + click.id}
+          src={url + click.label}
           className="iframe"
           title="tooltip-option-2"
         />
@@ -82,6 +82,7 @@ class PieChart extends Component {
               cornerRadius={0}
               colors={{ scheme: 'paired' }}
               enableRadialLabels={label}
+              radialLabel="label"
               radialLabelsSkipAngle={10}
               radialLabelsTextXOffset={6}
               radialLabelsTextColor="#333333"

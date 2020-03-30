@@ -75,47 +75,6 @@ export const getRecentEditsWithSize = async () => {
   )
   return await edits
 }
-
-export const getRecentEditsWithFlags = async () => {
-  const params = {
-    action: 'query',
-    format: 'json',
-    list: 'recentchanges',
-    rcprop: 'ids',
-    rclimit: '50',
-  }
-  let edits = await query(API_ENDPOINT, params, NUM_RETRIES)
-
-  edits = await edits.query.recentchanges
-
-  let data = [
-    { id: 'flagged', label: 'flagged', value: 0 },
-    { id: 'unknown', label: 'unknown', value: 0 },
-    { id: 'safe', label: 'safe', value: 0 },
-  ]
-  let url = SCORING_ENDPOINT + '?models=damaging&revids='
-  edits.forEach(edit => {
-    url += edit.revid + '|'
-  })
-  url = url.substring(0, url.length - 1)
-
-  const response = await fetch(url)
-  let scores = await response.json()
-  scores = scores.wikidatawiki.scores
-  for (var item in scores) {
-    if (Object.prototype.hasOwnProperty.call(scores, item)) {
-      if (scores[item].damaging) {
-        if (scores[item].damaging.prediction) {
-          data[0].value += 1
-        } else {
-          data[2].value += 1
-        }
-      }
-    }
-  }
-  return await data
-}
-
 /**
  * Returns recent 500 recent edits sorted by size of changes made in absolute value
  * So large additions and large deletions are included
@@ -125,7 +84,7 @@ export const getRecentLargestEdits = async () => {
 
   editList.forEach(item => {
     item.value = Math.abs(item.newlen - item.oldlen)
-    item.id = item.title
+    item.id = item.revid.toString()
     item.label = item.title
   })
 

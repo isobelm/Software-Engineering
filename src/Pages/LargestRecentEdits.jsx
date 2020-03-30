@@ -10,7 +10,7 @@ export const LargestRecentEditsSettings = {
   colorBy: 'type',
   colors: 'pastel1',
   onClick: function(click) {
-    window.open('https://www.wikidata.org/wiki/' + click.id, '_blank')
+    window.open('https://www.wikidata.org/wiki/' + click.label, '_blank')
   },
   tooltip: function(click) {
     return this.tooltip(click, 'https://www.wikidata.org/wiki/')

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import GraphPage from './GraphPage'
 import PieChart from '../Components/PieChart'
-import { getRecentEditsWithFlags } from '../Backend/APIWrapper'
+// import { getRecentEditsWithFlags } from '../Backend/APIWrapper'
 
 export const ProportionFlaggedSettings = {
-  getData: getRecentEditsWithFlags,
+  // getData: getRecentEditsWithFlags,
   refreshTime: 5000,
-  refreshMethod: getRecentEditsWithFlags,
+  // refreshMethod: getRecentEditsWithFlags,
   colorBy: 'type',
   colors: 'pastel1',
   name: 'Proportion Of Edits Flagged',
@@ -47,11 +47,11 @@ class ProportionFlagged extends Component {
         graph={
           <PieChart
             fullGraph={true}
-            settings={ProportionFlaggedSettings}
+            // settings={ProportionFlaggedSettings}
             paused={this.state.paused}
           />
         }
-        name={ProportionFlaggedSettings.name}
+        // name={ProportionFlaggedSettings.name}
       />
     )
   }
