@@ -18,7 +18,7 @@ import './App.css'
 function App() {
   return (
     <div className="App">
-      <Router basename = "https://isobelm.github.io/Software-Engineering" history={history}>
+      <Router basename={process.env.PUBLIC_URL} history={history}>
         <Switch>
           <Route
             exact
