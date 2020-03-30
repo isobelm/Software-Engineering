@@ -5,7 +5,7 @@ import { getRecentEditsWithFlags } from '../Backend/APIWrapper'
 
 export const ProportionFlaggedSettings = {
   getData: getRecentEditsWithFlags,
-  refreshTime: 5000,
+  refreshTime: 1000,
   refreshMethod: getRecentEditsWithFlags,
   colorBy: 'type',
   colors: 'pastel1',

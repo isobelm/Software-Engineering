@@ -6,6 +6,7 @@ class PieChart extends Component {
     super(props)
     this.state = {
       loaded: false,
+      error: false,
       data: null,
       fullGraph: this.props.fullGraph,
     }
@@ -27,12 +28,16 @@ class PieChart extends Component {
 
   loadData = async () => {
     let getData = this.props.settings.getData.bind(this)
-    let data = await getData()
-    let smlData = data.slice(0, this.state.fullGraph ? 30 : 10)
-    this.setState({
-      loaded: true,
-      data: smlData,
-    })
+    try {
+      let data = await getData()
+      let smlData = data.slice(0, this.state.fullGraph ? 30 : 10)
+      this.setState({
+        loaded: true,
+        data: smlData,
+      })
+    } catch (e) {
+      this.setState({ error: true })
+    }
   }
 
   refresh = async () => {
@@ -70,7 +75,9 @@ class PieChart extends Component {
     }
     return (
       <div>
-        {!this.state.loaded ? (
+        {this.state.error ? (
+          'Error'
+        ) : !this.state.loaded ? (
           'Loading...'
         ) : (
           <div className={classname}>
