@@ -290,7 +290,7 @@ const query = async (params, n) => {
     return await fetch(url).then(response => response.json())
   } catch (err) {
     if (n === 1) throw err
-    return await query(params, n - 1)
+    return await setTimeout(query(endpoint, params, n - 1), 500)
   }
 }
 
@@ -301,24 +301,19 @@ const query = async (params, n) => {
  * @param {number} n - Number of times to retry if failure occurs
  * @return {Promise<Object>}
  */
-const getScore = (revisionId, n) => {
-  // try {
-  const url = SCORING_ENDPOINT + revisionId
-  return fetch(url)
-    .then(response => response.json())
-    .then(result => {
-      try {
-        const scores = result.wikidatawiki.scores[revisionId]
-        return {
-          damaging: scores.damaging.score,
-          goodfaith: scores.goodfaith.score,
-        }
-      } catch {}
-    })
-  // } catch (err) {
-  //   if (n === 1) throw err
-  //   return await getScore(revisionId, n - 1)
-  // }
+const getScore = async revisionIds => {
+  if (revisionIds.length === 0) return
+  const key = 'revids'
+  const params = {}
+  let scores = {}
+  return batchQuery(key, revisionIds, SCORING_ENDPOINT, params).then(
+    resultBatch => {
+      resultBatch.forEach(
+        result => (scores = { ...scores, ...result.wikidatawiki?.scores })
+      )
+      return scores
+    }
+  )
 }
 
 /**
