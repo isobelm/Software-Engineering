@@ -81,7 +81,7 @@ class MostActivePages extends Component {
         handlePause={this.handlePause}
         paused={this.state.paused}
         explanation={
-          'A live view of the pages being edited right now.' +
+          'A live view of the pages being edited right now. The graph shows pages edited since this page was loaded.' +
           ' Hover over a bar to get a preview of the page, or click to open the page in a new tab.'
         }
         graph={

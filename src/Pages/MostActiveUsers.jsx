@@ -117,7 +117,7 @@ class MostActiveUsers extends Component {
         handlePause={this.handlePause}
         paused={this.state.paused}
         explanation={
-          'A live view of the users active right now.' +
+          'A live view of the users active right now. The graph shows users active since this page was loaded.' +
           " Hover over a bar to get a preview of the user's page, or click to open the user's page in a new tab."
         }
         graph={
