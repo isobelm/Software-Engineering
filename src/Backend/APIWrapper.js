@@ -1,4 +1,5 @@
 const API_ENDPOINT = 'https://www.wikidata.org/w/api.php'
+const SCORING_ENDPOINT = 'https://ores.wikimedia.org/v3/scores/wikidatawiki/'
 const MAX_QUERY_SIZE = 50
 const NUM_RETRIES = 5
 
@@ -32,7 +33,7 @@ export const getMostEditsUsers = async () => {
     auwitheditsonly: '1',
     auactiveusers: '1',
   }
-  const users = query(params, NUM_RETRIES)
+  const users = query(API_ENDPOINT, params, NUM_RETRIES)
     .then(data => data.query.allusers)
     .then(users => users.sort(compare))
   return users
@@ -55,7 +56,7 @@ export const getMostActiveUsers = async () => {
     auwitheditsonly: '1',
     auactiveusers: '1',
   }
-  const users = query(params, NUM_RETRIES)
+  const users = query(API_ENDPOINT, params, NUM_RETRIES)
     .then(data => data.query.allusers)
     .then(users => users.sort(compare))
   return users
@@ -69,11 +70,55 @@ export const getRecentEditsWithSize = async () => {
     rcprop: 'title|ids|sizes|timestamp',
     rclimit: '500',
   }
-  const edits = query(params, NUM_RETRIES).then(
+  const edits = query(API_ENDPOINT, params, NUM_RETRIES).then(
     result => result.query.recentchanges
   )
-  return edits
+  return await edits
 }
+
+export const getRecentEditsWithFlags = async () => {
+  const params = {
+    action: 'query',
+    format: 'json',
+    list: 'recentchanges',
+    rcprop: 'ids',
+    rclimit: '50',
+  }
+  const edits = query(API_ENDPOINT, params, NUM_RETRIES).then(
+    result => result.query.recentchanges
+  )
+
+  let revids = await edits
+  revids = revids.map(recentChange => recentChange.revid)
+  let scores = await getScore(revids)
+
+  let data = [
+    { id: 'damaging', label: 'damaging', value: 0, color: '#F25543' },
+    { id: 'unsure', label: 'unsure', value: 0, color: '#FFF047' },
+    { id: 'good faith', label: 'good faith', value: 0, color: '#92E16F' },
+  ]
+
+  scores = await scores
+
+  Object.values(scores).forEach(score => {
+    if (
+      score.damaging.score !== undefined &&
+      score.damaging.score.prediction === true
+    ) {
+      data[0].value += 1
+    } else if (
+      score.damaging.score !== undefined &&
+      score.damaging.score.prediction === false
+    ) {
+      data[2].value += 1
+    } else {
+      data[1].value += 1
+    }
+  })
+
+  return data
+}
+
 /**
  * Returns recent 500 recent edits sorted by size of changes made in absolute value
  * So large additions and large deletions are included
@@ -83,7 +128,8 @@ export const getRecentLargestEdits = async () => {
 
   editList.forEach(item => {
     item.value = Math.abs(item.newlen - item.oldlen)
-    item.id = item.title
+    item.id = item.revid.toString()
+    item.label = item.title
   })
 
   editList.sort((a, b) => b.value - a.value)
@@ -132,9 +178,10 @@ export const getRecentActiveUsers = async prevTimestamp => {
  *
  * @param {string} itemsKey the query key
  * @param {Array} items the items to add to the query
+ * @param {string} endpoint the endpoint url
  * @param {Object} params the parameters of the query
  */
-export const batchQuery = async (itemsKey, items, params) => {
+export const batchQuery = async (itemsKey, items, endpoint, params) => {
   let result = []
   let batches = null
   if (items instanceof Array) batches = createBatch(items, MAX_QUERY_SIZE)
@@ -142,13 +189,28 @@ export const batchQuery = async (itemsKey, items, params) => {
   const results = batches.map(async batch => {
     const batchString = batch.join('|')
     params[itemsKey] = batchString
-    return query(params, NUM_RETRIES)
+    return query(endpoint, params, NUM_RETRIES)
       .then(data => result.push(data))
       .catch(err => null)
   })
   await Promise.all(results)
   return result
 }
+
+/**
+ * @typedef {Object} recentChanges
+ * @property {number} newlen - the number of bytes the page uses after the change
+ * @property {number} ns
+ * @property {number} old_revid - The old revision id
+ * @property {number} oldlen - the number of bytes the page uses before the change
+ * @property {number} pageid - The page id
+ * @property {number} rcid - The recent change id
+ * @property {number} revid - The current revision id
+ * @property {string} timestamp - Timestamp of change
+ * @property {string} title - Title of the page changed
+ * @property {string} type - Type of action e.g. "new", "edit"
+ * @property {string} user - The username of the editor
+ */
 
 /**
  * Queries the API for the most recent changes
@@ -166,14 +228,22 @@ export const queryRecentChanges = prevTimestamp => {
     action: 'query',
     format: 'json',
     list: 'recentchanges',
-    rcprop: 'title|ids|timestamp|user',
+    rcprop: 'title|ids|timestamp|user|sizes',
     rclimit: 'max',
     rcstart: tmpTimestamp,
     rcend: prevTimestamp,
   }
-  const recentChanges = query(params, NUM_RETRIES).then(
-    data => data.query.recentchanges
-  )
+  const recentChanges = query(API_ENDPOINT, params, NUM_RETRIES)
+    .then(data => data.query.recentchanges)
+    .then(recentChanges => {
+      const revisionIds = recentChanges.map(recentChange => recentChange.revid)
+      return getScore(revisionIds).then(scores =>
+        recentChanges.map(recentChange => {
+          recentChange.scores = scores[recentChange.revid]
+          return recentChange
+        })
+      )
+    })
   return [recentChanges, newTimestamp]
 }
 
@@ -192,7 +262,7 @@ export const getUserGroups = userNames => {
     list: 'users',
     usprop: 'groups',
   }
-  const groups = batchQuery(key, userNames, params).then(data => {
+  const groups = batchQuery(key, userNames, API_ENDPOINT, params).then(data => {
     const groups = {}
     data.forEach(queryResult => {
       const users = queryResult.query.users
@@ -214,29 +284,37 @@ export const getUserGroups = userNames => {
  * @param {number} n - Number of times to retry if failure occurs
  * @return {Promise<Object>}
  */
-const query = async (params, n) => {
+const query = async (endpoint, params, n) => {
   try {
     const paramsString = new URLSearchParams(params).toString()
-    const url = API_ENDPOINT + '?' + paramsString + '&origin=*'
+    const url = endpoint + '?' + paramsString + '&origin=*'
     return await fetch(url).then(response => response.json())
   } catch (err) {
     if (n === 1) throw err
-    return await query(params, n - 1)
+    return await setTimeout(query(endpoint, params, n - 1), 500)
   }
 }
 
 /**
- * @typedef {Object} recentChanges
- * @property {number} ns
- * @property {number} old_revid - The old revision id
- * @property {number} pageid - The page id
- * @property {number} rcid - The recent change id
- * @property {number} revid - The current revision id
- * @property {string} timestamp - Timestamp of change
- * @property {string} title - Title of the page changed
- * @property {string} type - Type of action e.g. "new", "edit"
- * @property {string} user - The username of the editor
+ * Retruns the score of the revision id to find out if the edit was harmful or not
+ *
+ * @param {Array<number>} revisionIds - Revision ids to obtain the score of
+ * @return {Promise<Object>}
  */
+const getScore = async revisionIds => {
+  if (revisionIds.length === 0) return
+  const key = 'revids'
+  const params = {}
+  let scores = {}
+  return batchQuery(key, revisionIds, SCORING_ENDPOINT, params).then(
+    resultBatch => {
+      resultBatch.forEach(
+        result => (scores = { ...scores, ...result.wikidatawiki?.scores })
+      )
+      return scores
+    }
+  )
+}
 
 /**
  * Returns the number of times a page appeared on the recent changes feed sorted by

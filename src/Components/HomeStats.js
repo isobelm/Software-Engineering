@@ -23,7 +23,7 @@ class HomeStats extends Component {
 
      updateStats = () => {
 		$.ajax({
-  		  url: "https://cors-anywhere.herokuapp.com/https://www.wikidata.org/wiki/Special:Statistics",
+  		  url: "https://protected-shelf-93081.herokuapp.com/https://www.wikidata.org/wiki/Special:Statistics",
   		  type: 'GET',
   		  success: function(response) {
 			  $("#div1").html($($(response).find('.mw-statistics-articles')).find('.mw-statistics-numbers'));

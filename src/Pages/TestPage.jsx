@@ -8,8 +8,9 @@ import SimpleBarGraph from '../Components/SimpleBarGraph'
 import PieChart from '../Components/PieChart'
 import { MostActiveUsersGraphSettings } from './MostActiveUsers'
 import { MostActivePagesGraphSettings } from './MostActivePages'
-import { UsersByMostEditsGraphSettings } from './UsersByMostEditsPage'
+import { LargestRecentEditsSettings } from './LargestRecentEdits'
 import { RecentEditSizeSettings } from './RecentEditSize'
+import { ProportionFlaggedSettings } from './ProportionFlagged'
 
 class HomePage extends Component {
   constructor(props) {
@@ -34,14 +35,14 @@ class HomePage extends Component {
             <div className="deck-container">
               <CardDeck className="deck">
                 <GraphCard
-                  title="Users by most edits"
-                  pageLink="users-by-most-edits"
+                  title="Recent Edit Size"
+                  pageLink="recent-edit-size"
                   history={this.state.history}
                   graph={
-                    <SimpleBarGraph
+                    <PieChart
                       paused={true}
                       fullGraph={false}
-                      settings={UsersByMostEditsGraphSettings}
+                      settings={RecentEditSizeSettings}
                     />
                   }
                 />
@@ -71,15 +72,30 @@ class HomePage extends Component {
                     />
                   }
                 />
+              </CardDeck>
+
+              <CardDeck className="deck">
                 <GraphCard
                   title="Largest Recent Edits"
-                  pageLink="recent-edit-size"
+                  pageLink="largest-recent-edits"
                   history={this.state.history}
                   graph={
                     <PieChart
                       paused={true}
                       fullGraph={false}
-                      settings={RecentEditSizeSettings}
+                      settings={LargestRecentEditsSettings}
+                    />
+                  }
+                />
+                <GraphCard
+                  title={ProportionFlaggedSettings.name}
+                  pageLink="proportion-flagged"
+                  history={this.state.history}
+                  graph={
+                    <PieChart
+                      paused={false}
+                      fullGraph={false}
+                      settings={ProportionFlaggedSettings}
                     />
                   }
                 />

@@ -84,6 +84,9 @@
 .deck-container {
   padding: 2%;
   justify-content: start;
+  max-height: 92vh;
+  overflow-x: hidden;
+  overflow-x: auto;
 }
 
 .deck {

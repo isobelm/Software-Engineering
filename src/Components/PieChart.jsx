@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ResponsivePie } from '@nivo/pie'
 
-class SimpleBarGraph extends Component {
+class PieChart extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -17,7 +17,7 @@ class SimpleBarGraph extends Component {
     return (
       <div className="iframe-container">
         <iframe
-          src={url + click.id}
+          src={url + click.label}
           className="iframe"
           title="tooltip-option-2"
         />
@@ -51,12 +51,17 @@ class SimpleBarGraph extends Component {
     let margin = {}
     let label = null
     let classname = ''
-    let onClick = null
+    let onClick = () => {}
     let tooltip = null
+    let colors = { scheme: this.props.settings.colors }
+    if (this.props.settings.colorFunction) {
+      colors = this.props.settings.colorFunction
+    }
     if (this.state.fullGraph) {
       margin = { top: 30, right: 30, bottom: 30, left: 30 }
       label = true
       classname = 'full-graph-container'
+
       if (this.props.settings.onClick) {
         onClick = this.props.settings.onClick
       }
@@ -80,8 +85,9 @@ class SimpleBarGraph extends Component {
               innerRadius={0.4}
               padAngle={0}
               cornerRadius={0}
-              colors={{ scheme: 'paired' }}
+              colors={colors}
               enableRadialLabels={label}
+              radialLabel="label"
               radialLabelsSkipAngle={10}
               radialLabelsTextXOffset={6}
               radialLabelsTextColor="#333333"
@@ -116,6 +122,7 @@ class SimpleBarGraph extends Component {
                   spacing: 10,
                 },
               ]}
+              isInteractive={this.state.fullGraph}
               onClick={onClick}
               tooltip={tooltip}
               defs={[
@@ -145,4 +152,4 @@ class SimpleBarGraph extends Component {
   }
 }
 
-export default SimpleBarGraph
+export default PieChart
