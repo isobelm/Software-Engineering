@@ -7,8 +7,9 @@ export const RecentEditSizeSettings = {
   getData: async () => {
     let data = await getRecentEditsWithSize()
     data.forEach(item => {
-      item.id = item.title
+      item.id = item.revid.toString()
       item.value = Math.abs(item.newlen - item.oldlen)
+      item.label = item.title
     })
     return data
   },
@@ -17,14 +18,15 @@ export const RecentEditSizeSettings = {
     let data = await getRecentEditsWithSize()
     data.forEach(item => {
       item.value = Math.abs(item.newlen - item.oldlen)
-      item.id = item.title
+      item.id = item.revid.toString()
+      item.label = item.title
     })
     return data
   },
   colorBy: 'type',
-  colors: 'pastel1',
+  colors: 'set1',
   onClick: function(click) {
-    window.open('https://www.wikidata.org/wiki/' + click.id, '_blank')
+    window.open('https://www.wikidata.org/wiki/' + click.label, '_blank')
   },
   tooltip: function(click) {
     return this.tooltip(click, 'https://www.wikidata.org/wiki/')
