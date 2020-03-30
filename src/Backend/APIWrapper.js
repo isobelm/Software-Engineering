@@ -75,6 +75,50 @@ export const getRecentEditsWithSize = async () => {
   )
   return await edits
 }
+
+export const getRecentEditsWithFlags = async () => {
+  const params = {
+    action: 'query',
+    format: 'json',
+    list: 'recentchanges',
+    rcprop: 'ids',
+    rclimit: '50',
+  }
+  const edits = query(API_ENDPOINT, params, NUM_RETRIES).then(
+    result => result.query.recentchanges
+  )
+
+  let revids = await edits
+  revids = revids.map(recentChange => recentChange.revid)
+  let scores = await getScore(revids)
+
+  let data = [
+    { id: 'damaging', label: 'damaging', value: 0, color: '#F25543' },
+    { id: 'unsure', label: 'unsure', value: 0, color: '#FFF047' },
+    { id: 'good faith', label: 'good faith', value: 0, color: '#92E16F' },
+  ]
+
+  scores = await scores
+
+  Object.values(scores).forEach(score => {
+    if (
+      score.damaging.score !== undefined &&
+      score.damaging.score.prediction === true
+    ) {
+      data[0].value += 1
+    } else if (
+      score.damaging.score !== undefined &&
+      score.damaging.score.prediction === false
+    ) {
+      data[2].value += 1
+    } else {
+      data[1].value += 1
+    }
+  })
+
+  return data
+}
+
 /**
  * Returns recent 500 recent edits sorted by size of changes made in absolute value
  * So large additions and large deletions are included

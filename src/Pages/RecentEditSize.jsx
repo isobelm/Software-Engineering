@@ -24,7 +24,7 @@ export const RecentEditSizeSettings = {
     return data
   },
   colorBy: 'type',
-  colors: 'pastel1',
+  colors: 'set1',
   onClick: function(click) {
     window.open('https://www.wikidata.org/wiki/' + click.label, '_blank')
   },

@@ -53,10 +53,15 @@ class PieChart extends Component {
     let classname = ''
     let onClick = () => {}
     let tooltip = null
+    let colors = { scheme: this.props.settings.colors }
+    if (this.props.settings.colorFunction) {
+      colors = this.props.settings.colorFunction
+    }
     if (this.state.fullGraph) {
       margin = { top: 30, right: 30, bottom: 30, left: 30 }
       label = true
       classname = 'full-graph-container'
+
       if (this.props.settings.onClick) {
         onClick = this.props.settings.onClick
       }
@@ -80,7 +85,7 @@ class PieChart extends Component {
               innerRadius={0.4}
               padAngle={0}
               cornerRadius={0}
-              colors={{ scheme: 'paired' }}
+              colors={colors}
               enableRadialLabels={label}
               radialLabel="label"
               radialLabelsSkipAngle={10}
@@ -117,6 +122,7 @@ class PieChart extends Component {
                   spacing: 10,
                 },
               ]}
+              isInteractive={this.state.fullGraph}
               onClick={onClick}
               tooltip={tooltip}
               defs={[

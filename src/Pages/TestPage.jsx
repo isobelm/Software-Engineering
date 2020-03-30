@@ -72,6 +72,9 @@ class HomePage extends Component {
                     />
                   }
                 />
+              </CardDeck>
+
+              <CardDeck className="deck">
                 <GraphCard
                   title="Largest Recent Edits"
                   pageLink="largest-recent-edits"
@@ -84,8 +87,6 @@ class HomePage extends Component {
                     />
                   }
                 />
-              </CardDeck>
-              {/* <CardDeck className="deck">
                 <GraphCard
                   title={ProportionFlaggedSettings.name}
                   pageLink="proportion-flagged"
@@ -98,7 +99,7 @@ class HomePage extends Component {
                     />
                   }
                 />
-              </CardDeck> */}
+              </CardDeck>
             </div>
           </div>
         </div>
