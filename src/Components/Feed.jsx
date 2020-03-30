@@ -14,7 +14,7 @@ function Feed() {
     const refresh = setInterval(() => {
       if (!paused) feedData.refresh()
       setRecentChanges({ items: feedData.changes })
-    }, 1000)
+    }, 500)
     return () => clearInterval(refresh)
   }, [feedData, paused])
 
@@ -33,7 +33,11 @@ function Feed() {
       <ul className="list-group">
         {recentChanges.items.map((item, index) => (
           <li className="list-group-item text-left" key={index}>
-            <div className={item.score?.damaging?.prediction ? 'text-red' : ''}>
+            <div
+              className={
+                item.scores?.damaging?.score?.prediction ? 'text-red' : ''
+              }
+            >
               {`User ${item.user} action ${item.type} on ${
                 item.title
               } ${getTimeDifference(item.timestamp)} seconds ago`}
