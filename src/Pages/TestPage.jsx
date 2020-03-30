@@ -85,7 +85,7 @@ class HomePage extends Component {
                   }
                 />
               </CardDeck>
-              <CardDeck className="deck">
+              {/* <CardDeck className="deck">
                 <GraphCard
                   title={ProportionFlaggedSettings.name}
                   pageLink="proportion-flagged"
@@ -98,7 +98,7 @@ class HomePage extends Component {
                     />
                   }
                 />
-              </CardDeck>
+              </CardDeck> */}
             </div>
           </div>
         </div>

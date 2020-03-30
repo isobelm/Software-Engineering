@@ -51,7 +51,7 @@ class PieChart extends Component {
     let margin = {}
     let label = null
     let classname = ''
-    let onClick = null
+    let onClick = () => {}
     let tooltip = null
     if (this.state.fullGraph) {
       margin = { top: 30, right: 30, bottom: 30, left: 30 }

@@ -9,6 +9,7 @@ export const RecentEditSizeSettings = {
     data.forEach(item => {
       item.id = item.title
       item.value = Math.abs(item.newlen - item.oldlen)
+      item.label = item.title
     })
     return data
   },
@@ -18,6 +19,7 @@ export const RecentEditSizeSettings = {
     data.forEach(item => {
       item.value = Math.abs(item.newlen - item.oldlen)
       item.id = item.title
+      item.label = item.title
     })
     return data
   },

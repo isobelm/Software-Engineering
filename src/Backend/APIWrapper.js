@@ -77,45 +77,43 @@ export const getRecentEditsWithSize = async () => {
 }
 
 export const getRecentEditsWithFlags = async () => {
-  try {
-    const params = {
-      action: 'query',
-      format: 'json',
-      list: 'recentchanges',
-      rcprop: 'ids',
-      rclimit: '50',
-    }
-    let edits = await query(params, NUM_RETRIES)
+  const params = {
+    action: 'query',
+    format: 'json',
+    list: 'recentchanges',
+    rcprop: 'ids',
+    rclimit: '50',
+  }
+  let edits = await query(API_ENDPOINT, params, NUM_RETRIES)
 
-    edits = await edits.query.recentchanges
+  edits = await edits.query.recentchanges
 
-    let data = [
-      { id: 'flagged', value: 0 },
-      { id: 'unknown', value: 0 },
-      { id: 'safe', value: 0 },
-    ]
-    let url = SCORING_ENDPOINT + '?models=damaging&revids='
-    edits.forEach(edit => {
-      url += edit.revid + '|'
-    })
-    url = url.substring(0, url.length - 1)
+  let data = [
+    { id: 'flagged', label: 'flagged', value: 0 },
+    { id: 'unknown', label: 'unknown', value: 0 },
+    { id: 'safe', label: 'safe', value: 0 },
+  ]
+  let url = SCORING_ENDPOINT + '?models=damaging&revids='
+  edits.forEach(edit => {
+    url += edit.revid + '|'
+  })
+  url = url.substring(0, url.length - 1)
 
-    const response = await fetch(url)
-    let scores = await response.json()
-    scores = scores.wikidatawiki.scores
-    for (var item in scores) {
-      if (Object.prototype.hasOwnProperty.call(scores, item)) {
-        if (scores[item].damaging) {
-          if (scores[item].damaging.prediction) {
-            data[0].value += 1
-          } else {
-            data[2].value += 1
-          }
+  const response = await fetch(url)
+  let scores = await response.json()
+  scores = scores.wikidatawiki.scores
+  for (var item in scores) {
+    if (Object.prototype.hasOwnProperty.call(scores, item)) {
+      if (scores[item].damaging) {
+        if (scores[item].damaging.prediction) {
+          data[0].value += 1
+        } else {
+          data[2].value += 1
         }
       }
     }
-    return await data
-  } catch (e) {}
+  }
+  return await data
 }
 
 /**
@@ -128,6 +126,7 @@ export const getRecentLargestEdits = async () => {
   editList.forEach(item => {
     item.value = Math.abs(item.newlen - item.oldlen)
     item.id = item.title
+    item.label = item.title
   })
 
   editList.sort((a, b) => b.value - a.value)
