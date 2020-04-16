@@ -59,7 +59,7 @@ class HomePage extends Component {
 		   <h1 className="text-blue"><FontAwesomeIcon icon={faUser}/></h1>
            <HomeNavContainer
              style="font-weight-bold text-blue"
-			 btnStyle="align-bottom btn btn-outline-red"
+			 btnStyle="align-bottom btn btn-outline-blue"
              btnTitle1="User"
 			 btnTitle2="Data"
              btnText="Users"
