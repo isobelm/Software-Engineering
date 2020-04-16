@@ -3,6 +3,8 @@ import FeedData from '../Backend/FeedData'
 // eslint-disable-next-line
 import style from '../style.css'
 
+//Creates the feed shown on the dashboard, it updates in real time and highlights suspicious changes in red
+
 function Feed() {
   const [feedData] = useState(new FeedData(30))
   const [paused, setPaused] = useState(false)

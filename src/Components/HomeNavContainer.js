@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+//This class takes in a title and a description and displays them as shown on the homepage
+
+
 class HomeNavContainer extends Component {
 	render() {
 		return (

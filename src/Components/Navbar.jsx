@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
+//Creates the Navbar shown on all pages
+
 class NavbarLocal extends Component {
   constructor(props) {
     super(props)

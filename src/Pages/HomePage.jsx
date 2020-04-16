@@ -10,6 +10,9 @@ import { faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 
+/*This is the home page and makes use of the Navbar, 
+homeNavConatiner, homeStatsContainer and TitleContainer components */
+
 class HomePage extends Component {
   constructor(props) {
     super(props)

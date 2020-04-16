@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {ListGroup} from 'react-bootstrap';
 import $ from 'jquery';
 
+//These load the statistics from a server we set up and displays them on the homepage
+
 class HomeStats extends Component {
 
 	 state = {
