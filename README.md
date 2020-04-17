@@ -1,6 +1,6 @@
 # Wikidata Live Changes
 
-[banner](data/Dashboard.gif)
+![banner](data/Dashboard.gif)
 
 This is a website which visualises various changes to Wikidata in quasi-real-time. Wikidata is a collaboratively edited knowledge base hosted by the Wikimedia Foundation. The data visualised by our website will aid users of Wikidata to identify malicious edits to its databases.
 
@@ -43,7 +43,7 @@ The website should now have opened on your default browser. The server is hosted
 
 ## Built with
 
-* [JavaScript] - Code language used
+* JavaScript - Code language used
 * [ReactJS](https://reactjs.org/) - Web framework used
 * [React Bootstrap](https://react-bootstrap.github.io/) - CSS framework used
 * [Nivo](https://nivo.rocks/) - Graphing framework used
