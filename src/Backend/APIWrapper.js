@@ -19,7 +19,7 @@ const NUM_RETRIES = 5
  * Returns a list of 500 users who were recently active within 30 days which is
  * sorted by the most edits in descending order
  *
- * @returns {Promise<User[]>} - A Promise which resolves to an array of User
+ * @returns {Promise.<User[]>} - A Promise which resolves to an array of User
  *          objects
  */
 export const getMostEditsUsers = async () => {
@@ -34,15 +34,15 @@ export const getMostEditsUsers = async () => {
     auactiveusers: '1',
   }
   const users = query(API_ENDPOINT, params, NUM_RETRIES)
-    .then(data => data.query.allusers)
-    .then(users => users.sort(compare))
+    .then((data) => data.query.allusers)
+    .then((users) => users.sort(compare))
   return users
 }
 /**
  * Returns a list of 500 users who were recently active within 30 days which is
  * sorted by the most recent actions in descending order
  *
- * @returns {Promise<User[]>} - A Promise which resolves to an array of User
+ * @returns {Promise.<User[]>} - A Promise which resolves to an array of User
  *          objects
  */
 export const getMostActiveUsers = async () => {
@@ -57,8 +57,8 @@ export const getMostActiveUsers = async () => {
     auactiveusers: '1',
   }
   const users = query(API_ENDPOINT, params, NUM_RETRIES)
-    .then(data => data.query.allusers)
-    .then(users => users.sort(compare))
+    .then((data) => data.query.allusers)
+    .then((users) => users.sort(compare))
   return users
 }
 
@@ -71,7 +71,7 @@ export const getRecentEditsWithSize = async () => {
     rclimit: '500',
   }
   const edits = query(API_ENDPOINT, params, NUM_RETRIES).then(
-    result => result.query.recentchanges
+    (result) => result.query.recentchanges
   )
   return await edits
 }
@@ -85,11 +85,11 @@ export const getRecentEditsWithFlags = async () => {
     rclimit: '50',
   }
   const edits = query(API_ENDPOINT, params, NUM_RETRIES).then(
-    result => result.query.recentchanges
+    (result) => result.query.recentchanges
   )
 
   let revids = await edits
-  revids = revids.map(recentChange => recentChange.revid)
+  revids = revids.map((recentChange) => recentChange.revid)
   let scores = await getScore(revids)
 
   let data = [
@@ -100,7 +100,7 @@ export const getRecentEditsWithFlags = async () => {
 
   scores = await scores
 
-  Object.values(scores).forEach(score => {
+  Object.values(scores).forEach((score) => {
     if (
       score.damaging.score !== undefined &&
       score.damaging.score.prediction === true
@@ -126,7 +126,7 @@ export const getRecentEditsWithFlags = async () => {
 export const getRecentLargestEdits = async () => {
   const editList = await getRecentEditsWithSize()
 
-  editList.forEach(item => {
+  editList.forEach((item) => {
     item.value = Math.abs(item.newlen - item.oldlen)
     item.id = item.revid.toString()
     item.label = item.title
@@ -150,11 +150,11 @@ export const getRecentLargestEdits = async () => {
  *
  * @param {string} prevTimestamp - Previous timestamp when the function was
  *        last called
- * @return {Promise<PageInfo[] | string>}
+ * @returns {(Promise.<PageInfo[]> | string)[]}
  */
-export const getMostActivePages = async prevTimestamp => {
+export const getMostActivePages = async (prevTimestamp) => {
   const [recentChanges, newTimestamp] = queryRecentChanges(prevTimestamp)
-  const activePages = recentChanges.then(recentChanges =>
+  const activePages = recentChanges.then((recentChanges) =>
     countPageOccurances(recentChanges)
   )
   return [await activePages, newTimestamp]
@@ -165,11 +165,13 @@ export const getMostActivePages = async prevTimestamp => {
  *
  * @param {string} prevTimestamp - Previous timestamp when the function was
  *        last called
- * @return {Promise<User[] | string>}
+ * @returns {(Promise.<User[]> | string)[]}
  */
-export const getRecentActiveUsers = async prevTimestamp => {
+export const getRecentActiveUsers = async (prevTimestamp) => {
   const [recentChanges, newTimestamp] = queryRecentChanges(prevTimestamp)
-  const activeUsers = recentChanges.then(activeUsers => countUsers(activeUsers))
+  const activeUsers = recentChanges.then((activeUsers) =>
+    countUsers(activeUsers)
+  )
   return [await activeUsers, newTimestamp]
 }
 
@@ -186,19 +188,19 @@ export const batchQuery = async (itemsKey, items, endpoint, params) => {
   let batches = null
   if (items instanceof Array) batches = createBatch(items, MAX_QUERY_SIZE)
   else batches = [[items]]
-  const results = batches.map(async batch => {
+  const results = batches.map(async (batch) => {
     const batchString = batch.join('|')
     params[itemsKey] = batchString
     return query(endpoint, params, NUM_RETRIES)
-      .then(data => result.push(data))
-      .catch(err => null)
+      .then((data) => result.push(data))
+      .catch((err) => null)
   })
   await Promise.all(results)
   return result
 }
 
 /**
- * @typedef {Object} recentChanges
+ * @typedef {Object} RecentChanges
  * @property {number} newlen - the number of bytes the page uses after the change
  * @property {number} ns
  * @property {number} old_revid - The old revision id
@@ -217,9 +219,9 @@ export const batchQuery = async (itemsKey, items, endpoint, params) => {
  *
  * @param {string} prevTimestamp - Previous timestamp when the function was
  *        last called
- * @return {Array<Promise<recentChanges[]> | string>}
+ * @returns {(Promise.<RecentChanges[]> | string)[]}
  */
-export const queryRecentChanges = prevTimestamp => {
+export const queryRecentChanges = (prevTimestamp) => {
   let tmpTimestamp = new Date()
   const newTimestamp = tmpTimestamp.toISOString()
   tmpTimestamp = tmpTimestamp - 1000
@@ -234,11 +236,13 @@ export const queryRecentChanges = prevTimestamp => {
     rcend: prevTimestamp,
   }
   const recentChanges = query(API_ENDPOINT, params, NUM_RETRIES)
-    .then(data => data.query.recentchanges)
-    .then(recentChanges => {
-      const revisionIds = recentChanges.map(recentChange => recentChange.revid)
-      return getScore(revisionIds).then(scores =>
-        recentChanges.map(recentChange => {
+    .then((data) => data.query.recentchanges)
+    .then((recentChanges) => {
+      const revisionIds = recentChanges.map(
+        (recentChange) => recentChange.revid
+      )
+      return getScore(revisionIds).then((scores) =>
+        recentChanges.map((recentChange) => {
           recentChange.scores = scores[recentChange.revid]
           return recentChange
         })
@@ -250,11 +254,11 @@ export const queryRecentChanges = prevTimestamp => {
 /**
  * Returns the groups of each username in the input array
  *
- * @param {Array<string>} userNames - an array of usernames to fetch the group of
- * @return {Map<string, Array<string>>} - map of username to an array of groups
+ * @param {string[]} userNames - an array of usernames to fetch the group of
+ * @returns {Map.<string, string[]>} - map of username to an array of groups
  *         they belong to
  */
-export const getUserGroups = userNames => {
+export const getUserGroups = (userNames) => {
   const key = 'ususers'
   const params = {
     action: 'query',
@@ -262,16 +266,18 @@ export const getUserGroups = userNames => {
     list: 'users',
     usprop: 'groups',
   }
-  const groups = batchQuery(key, userNames, API_ENDPOINT, params).then(data => {
-    const groups = {}
-    data.forEach(queryResult => {
-      const users = queryResult.query.users
-      users.forEach(userObj => {
-        if (userObj.groups) groups[userObj.name] = userObj.groups
+  const groups = batchQuery(key, userNames, API_ENDPOINT, params).then(
+    (data) => {
+      const groups = {}
+      data.forEach((queryResult) => {
+        const users = queryResult.query.users
+        users.forEach((userObj) => {
+          if (userObj.groups) groups[userObj.name] = userObj.groups
+        })
       })
-    })
-    return groups
-  })
+      return groups
+    }
+  )
   return groups
 }
 
@@ -282,13 +288,13 @@ export const getUserGroups = userNames => {
  *
  * @param {Object} params - Object of parameters to use when querying
  * @param {number} n - Number of times to retry if failure occurs
- * @return {Promise<Object>}
+ * @returns {Promise.<Object>}
  */
 const query = async (endpoint, params, n) => {
   try {
     const paramsString = new URLSearchParams(params).toString()
     const url = endpoint + '?' + paramsString + '&origin=*'
-    return await fetch(url).then(response => response.json())
+    return await fetch(url).then((response) => response.json())
   } catch (err) {
     if (n === 1) throw err
     return await setTimeout(query(endpoint, params, n - 1), 500)
@@ -298,18 +304,18 @@ const query = async (endpoint, params, n) => {
 /**
  * Retruns the score of the revision id to find out if the edit was harmful or not
  *
- * @param {Array<number>} revisionIds - Revision ids to obtain the score of
- * @return {Promise<Object>}
+ * @param {number[]} revisionIds - Revision ids to obtain the score of
+ * @returns {Promise.<Object>}
  */
-const getScore = async revisionIds => {
+const getScore = async (revisionIds) => {
   if (revisionIds.length === 0) return
   const key = 'revids'
   const params = {}
   let scores = {}
   return batchQuery(key, revisionIds, SCORING_ENDPOINT, params).then(
-    resultBatch => {
+    (resultBatch) => {
       resultBatch.forEach(
-        result => (scores = { ...scores, ...result.wikidatawiki?.scores })
+        (result) => (scores = { ...scores, ...result.wikidatawiki?.scores })
       )
       return scores
     }
@@ -320,12 +326,12 @@ const getScore = async revisionIds => {
  * Returns the number of times a page appeared on the recent changes feed sorted by
  * number of actions done on the page
  *
- * @param {recentChanges[]} recentChanges - The array of recent changes from a query
+ * @param {RecentChanges[]} recentChanges - The array of recent changes from a query
  */
-const countPageOccurances = recentChanges => {
+const countPageOccurances = (recentChanges) => {
   const compare = (a, b) => b.actions - a.actions
   const titleCounts = {}
-  recentChanges.forEach(change => {
+  recentChanges.forEach((change) => {
     const actions = titleCounts[change.title] || 0
     titleCounts[change.title] = actions + 1
   })
@@ -341,12 +347,12 @@ const countPageOccurances = recentChanges => {
  * Returns the number of times a user appeared on the recent changes feed sorted by
  * number of actions done by that user
  *
- * @param {recentChanges[]} recentChanges - The array of recent changes from a query
+ * @param {RecentChanges[]} recentChanges - The array of recent changes from a query
  */
-const countUsers = recentChanges => {
+const countUsers = (recentChanges) => {
   const compare = (a, b) => b.actions - a.actions
   const userCounts = {}
-  recentChanges.forEach(change => {
+  recentChanges.forEach((change) => {
     const user = change.user
     const numActions = userCounts[user] || 0
     userCounts[user] = numActions + 1
@@ -356,8 +362,8 @@ const countUsers = recentChanges => {
     actions,
   }))
   const userNames = users.map(({ username }) => username)
-  getUserGroups(userNames).then(groups => {
-    users.forEach(userObj => (userObj.groups = groups[userObj.username]))
+  getUserGroups(userNames).then((groups) => {
+    users.forEach((userObj) => (userObj.groups = groups[userObj.username]))
     users.sort(compare)
   })
   return users
@@ -368,7 +374,7 @@ const countUsers = recentChanges => {
  *
  * @param {Array} array - Array to create batches from
  * @param {number} size - Batch size
- * @return {Array} batches - An array containing the batches which are of
+ * @returns {Array} batches - An array containing the batches which are of
  *         length size
  */
 const createBatch = (array, size) => {
