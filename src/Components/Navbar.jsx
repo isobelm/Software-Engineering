@@ -25,6 +25,17 @@ class NavbarLocal extends Component {
             >
               Home
             </Nav.Link>
+
+            <Nav.Link
+              as={Link}
+              to="/about-page"
+              className={
+                activePage.endsWith('/about-page') ? 'nav-link--active' : 'nav-link'
+              }
+            >
+              About Us
+            </Nav.Link>
+            
             <Nav.Link
               as={Link}
               to="/page"
@@ -34,6 +45,7 @@ class NavbarLocal extends Component {
             >
               Page
             </Nav.Link>
+
             <Nav.Link
               as={Link}
               to="/feed"
@@ -43,6 +55,19 @@ class NavbarLocal extends Component {
             >
               Feed
             </Nav.Link>
+
+            
+
+            <a
+              as={Link}
+              target="_blank"
+              href="https://github.com/isobelm/Software-Engineering"
+              className={
+                activePage.endsWith('/ksknc') ? 'nav-link--active' : 'nav-link'
+              }
+            >
+              Github Project
+            </a>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

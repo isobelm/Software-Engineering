@@ -25,26 +25,26 @@ class HomePage extends Component {
       <div className="HomePage">
         <Navbar history={this.state.history} />
         <div className="HomePageContent row margin-right: -15px margin-left: -15px">
-		<div className = "col-5">
+		<div className = "col-lg-5 col-sm-12">
            <TitleContainer
              title="Wikidata Live"
              subtitle="A web app to visualise recent changes to Wikidata in quasi real time."
            ></TitleContainer>
 		   </div>
-		   <div className = "col-7">
+		   <div className = "col-lg-7 col-sm-12">
 		   <div className= "row">
-		   <div className="col-4">
+		   <div className="col-lg-4 col-sm-12">
 		   <h1 className="text-red"><FontAwesomeIcon icon={faBars}/></h1>
            <HomeNavContainer
              style="font-weight-bold text-red"
 			 btnStyle="align-bottom btn btn-outline-red"
-             btnTitle1="Wikidata"
-			 btnTitle2="Feed"
-             btnText="Feed"
-             btnLink="/feed"
+             btnTitle1="About"
+			 btnTitle2="Us"
+             btnText="About"
+             btnLink="/about-page"
            ></HomeNavContainer>
 		   </div>
-		   <div className="col-4">
+		   <div className="col-lg-4 col-sm-12">
 		    <h1 className="text-green"><FontAwesomeIcon icon={faChartLine}/></h1>
            <HomeNavContainer
              style="font-weight-bold text-green"
@@ -55,7 +55,7 @@ class HomePage extends Component {
              btnLink="/page"
            ></HomeNavContainer>
 		   </div>
-		   <div className="col-4">
+		   <div className="col-lg-4 col-sm-12">
 		   <h1 className="text-blue"><FontAwesomeIcon icon={faUser}/></h1>
            <HomeNavContainer
              style="font-weight-bold text-blue"

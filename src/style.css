@@ -13,6 +13,10 @@ input {
   border: none;
 }
 
+.card-profile:hover{
+    filter: brightness(100%)!important; 
+}
+
 .searchBar {
   border-bottom: 1px solid var(--p);
   border-top: 0px solid #aaaaaa;
@@ -29,10 +33,23 @@ input {
 .HomePageContent{
 	padding-top: 8%;
 	padding-left:1%;
-	
+}
+
+.aboutPageContent{
+  padding-top: 3%;
+  padding-left: 4%;
 }
 
 
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: .5rem;
+}
+
+.profiles{
+  padding-left:5%;
+}
 .searchBar:focus {
   border-bottom: 1px solid #aaaaaa;
   border-top: 0px solid #aaaaaa;
@@ -82,7 +99,8 @@ input {
   display: inline-block;
   background-color: white;
   border-radius: 5px;
-  margin: 1.5vmin;
+  border: 1px solid #d6d6d6;
+  margin: 1vmin;
   padding: 0 10px;
   width: 30%;
 }
@@ -327,12 +345,11 @@ ul {
   color: var(--b);
 }
 
-a {
+.aBlack {
   color: var(--p);
   font-size: 1.12rem;
 }
-.homeStats {
-}
+
 
 .border-right-red {
   border-right: 2px solid var(--red);

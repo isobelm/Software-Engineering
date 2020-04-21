@@ -10,6 +10,7 @@ import MostActivePages from './Pages/MostActivePages'
 import RecentEditSize from './Pages/RecentEditSize'
 import LargestRecentEdits from './Pages/LargestRecentEdits'
 import ProportionFlagged from './Pages/ProportionFlagged'
+import AboutPage from './Pages/AboutPage'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ReactDOM from 'react-dom'
 
@@ -43,6 +44,11 @@ function App() {
             exact
             path="/proportion-flagged"
             component={ProportionFlagged}
+          />
+          <Route
+            exact
+            path="/about-page"
+            component={AboutPage}
           />
           <Route exact path="/feed" component={FeedData} />
         </Switch>
