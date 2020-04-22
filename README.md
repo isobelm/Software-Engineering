@@ -55,3 +55,6 @@ The website should now have opened on your default browser. The server is hosted
 * [Lexes Jan Mantiquilla](https://github.com/lexesjan)
 * [Alex Mahon](https://github.com/Juuiko)
 * [Flora Molnar](https://github.com/flora-m)
+
+## Licensing 
+This project is under the MIT software license. More details can be found in the license file in the repo.
