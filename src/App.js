@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Switch, HashRouter as Router } from 'react-router-dom';
 import HomePage from './Pages/HomePage';
 import history from './Utils/History';
 import FeedData from './Components/Feed';
