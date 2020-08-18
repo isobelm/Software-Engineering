@@ -21,7 +21,7 @@ function App() {
   console.log(baseName);
   return (
     <div className="App">
-      <Router basename={baseName} history={history}>
+      <Router basename={process.env.PUBLIC_URL} history={history}>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/page" component={TestPage} />
