@@ -1,16 +1,15 @@
-import React, { Component } from 'react'
-import GraphPage from './GraphPage'
-import SimpleBarGraph from '../Components/SimpleBarGraph'
-import { getMostEditsUsers } from '../Backend/APIWrapper'
+import React, { Component } from 'react';
+import GraphPage from './GraphPage';
+import SimpleBarGraph from '../Components/SimpleBarGraph';
+import { getMostEditsUsers } from '../Backend/APIWrapper';
 
 export const UsersByMostEditsGraphSettings = {
   getData: async function() {
-    let data = await getMostEditsUsers()
-    return data
+    return await getMostEditsUsers();
   },
   refreshTime: 2000,
   refreshMethod: function() {
-    this.loadData()
+    this.loadData();
   },
   keys: ['editcount'],
   index: 'name',
@@ -18,22 +17,22 @@ export const UsersByMostEditsGraphSettings = {
   yAxis: 'edit count',
   colors: 'paired',
   tooltip: function(click) {
-    return this.tooltip(click, 'https://www.wikidata.org/wiki/User:')
+    return this.tooltip(click, 'https://www.wikidata.org/wiki/User:');
   },
-}
+};
 
 class UsersByMostEditsPage extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       history: this.props.history,
       paused: false,
-    }
+    };
   }
 
   handlePause = event => {
-    this.setState({ paused: event.target.value })
-  }
+    this.setState({ paused: event.target.value });
+  };
 
   render() {
     return (
@@ -47,9 +46,9 @@ class UsersByMostEditsPage extends Component {
             paused={this.state.paused}
           />
         }
-        name={'Users By Most Edits'}
+        name="Users By Most Edits"
       />
-    )
+    );
   }
 }
-export default UsersByMostEditsPage
+export default UsersByMostEditsPage;

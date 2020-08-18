@@ -1,16 +1,16 @@
-import React, { Component } from 'react'
-import { ResponsiveBar } from '@nivo/bar'
+import React, { Component } from 'react';
+import { ResponsiveBar } from '@nivo/bar';
 
 class SimpleBarGraph extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       loaded: false,
       data: null,
       fullGraph: this.props.fullGraph,
-    }
+    };
 
-    this.loadData()
+    this.loadData();
   }
 
   tooltip = function(click, url) {
@@ -22,65 +22,66 @@ class SimpleBarGraph extends Component {
           title="tooltip-option-2"
         />
       </div>
-    )
-  }
+    );
+  };
 
-  loadData = async () => {
-    let getData = this.props.settings.getData.bind(this)
-    let data = await getData()
-    let smlData = data.slice(0, this.state.fullGraph ? 30 : 10)
-    this.setState({
-      loaded: true,
-      data: smlData,
-    })
-  }
+  loadData = () => {
+    const getData = this.props.settings.getData.bind(this);
+    const data = getData().then(() => {
+      const smlData = data.slice(0, this.state.fullGraph ? 30 : 10);
+      this.setState({
+        loaded: true,
+        data: smlData,
+      });
+    });
+  };
 
   refresh = async () => {
     if (!this.props.paused) {
-      let method = this.props.settings.refreshMethod.bind(this)
-      await method()
+      const method = this.props.settings.refreshMethod.bind(this);
+      await method();
     }
-  }
+  };
 
   componentDidMount() {
     this.refreshInterval = setInterval(async () => {
-      await this.refresh()
-    }, this.props.settings.refreshTime)
+      await this.refresh();
+    }, this.props.settings.refreshTime);
   }
 
   render() {
-    let margin = {}
-    let label = null
-    let classname = ''
-    let onClick = null
-    let clickable = false
-    let tooltip = null
-    let legend = []
-    let colorBy = this.props.settings.colorBy
+    let margin = {};
+    let label = null;
+    let classname = '';
+    let onClick = null;
+    let clickable = false;
+    let tooltip = null;
+    let legend = [];
+    const colorBy = this.props.settings.colorBy
       ? this.props.settings.colorBy
-      : 'index'
+      : 'index';
     if (this.state.fullGraph) {
       if (this.props.settings.margin) {
-        margin = this.props.settings.margin
+        margin = this.props.settings.margin;
       } else {
-        margin = { top: 5, right: 30, bottom: 80, left: 80 }
+        margin = { top: 5, right: 30, bottom: 80, left: 80 };
       }
       if (this.props.settings.legend) {
-        legend = [this.props.settings.legend]
+        legend = [this.props.settings.legend];
       }
-      label = true
-      classname = 'full-graph-container'
+      label = true;
+      classname = 'full-graph-container';
       if (this.props.settings.onClick) {
-        onClick = this.props.settings.onClick
-        clickable = true
+        onClick = this.props.settings.onClick;
+        clickable = true;
       }
       if (this.props.settings.tooltip) {
-        tooltip = this.props.settings.tooltip.bind(this)
+        tooltip = this.props.settings.tooltip.bind(this);
       }
     } else {
-      margin = { top: 0, right: 0, bottom: 0, left: 0 }
-      label = false
-      classname = 'Graph-Container-Card'
+      margin = { top: 0, right: 0, bottom: 0, left: 0 };
+      label = false;
+      classname = 'Graph-Container-Card';
     }
     return (
       <div>
@@ -127,8 +128,8 @@ class SimpleBarGraph extends Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 
-export default SimpleBarGraph
+export default SimpleBarGraph;

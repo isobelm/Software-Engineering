@@ -1,5 +1,5 @@
 {
-  "homepage": "http://isobelm.github.io/Software-Engineering",
+  "homepage": "https://github.com/vitalis-wiens/Software-Engineering/",
   "name": "wikidata-live-changes",
   "version": "0.1.0",
   "private": true,
@@ -24,9 +24,16 @@
     "react-scripts": "3.3.0",
     "wikibase-sdk": "^7.2.1"
   },
+  "devDependencies": {
+    "gh-pages": "^2.2.0",
+    "eslint": "^6.8.0",
+    "prettier": "^1.18.2",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-prettier": "^3.1.1"
+  },
   "prettier": {
     "trailingComma": "es5",
-    "semi": false,
+    "semi": true,
     "singleQuote": true,
     "useTabs": false
   },
@@ -36,10 +43,66 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error"
+      ],
+      "react/jsx-closing-bracket-location": [
+        "error"
+      ],
+      "react/jsx-closing-tag-location": [
+        "error"
+      ],
+      "react/sort-comp": [
+        "error"
+      ],
+      "jsx-quotes": [
+        "error"
+      ],
+
+      "no-multi-spaces": [
+        "error"
+      ],
+      "react/jsx-tag-spacing": [
+        "error"
+      ],
+      "react/jsx-curly-spacing": [
+        "error"
+      ],
+      "curly": [
+        "error"
+      ],
+      "react/jsx-wrap-multilines": [
+        "error"
+      ],
+      "react/self-closing-comp": [
+        "error"
+      ],
+      "no-var": [
+        "error"
+      ],
+      "no-const-assign": [
+        "error"
+      ],
+      "prefer-const": [
+        1
+      ],
+      "react/jsx-curly-brace-presence": [
+        "error"
+      ]
+    }
   },
   "browserslist": {
     "production": [
@@ -52,8 +115,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^2.2.0"
   }
 }

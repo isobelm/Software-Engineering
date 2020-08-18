@@ -1,7 +1,7 @@
-const API_ENDPOINT = 'https://www.wikidata.org/w/api.php'
-const SCORING_ENDPOINT = 'https://ores.wikimedia.org/v3/scores/wikidatawiki/'
-const MAX_QUERY_SIZE = 50
-const NUM_RETRIES = 5
+const API_ENDPOINT = 'https://www.wikidata.org/w/api.php';
+const SCORING_ENDPOINT = 'https://ores.wikimedia.org/v3/scores/wikidatawiki/';
+const MAX_QUERY_SIZE = 50;
+const NUM_RETRIES = 5;
 
 /**
  * @typedef {Object} User
@@ -23,7 +23,7 @@ const NUM_RETRIES = 5
  *          objects
  */
 export const getMostEditsUsers = async () => {
-  const compare = (a, b) => b.editcount - a.editcount
+  const compare = (a, b) => b.editcount - a.editcount;
   const params = {
     action: 'query',
     format: 'json',
@@ -32,12 +32,12 @@ export const getMostEditsUsers = async () => {
     aulimit: 'max',
     auwitheditsonly: '1',
     auactiveusers: '1',
-  }
+  };
   const users = query(API_ENDPOINT, params, NUM_RETRIES)
-    .then((data) => data.query.allusers)
-    .then((users) => users.sort(compare))
-  return users
-}
+    .then(data => data.query.allusers)
+    .then(users => users.sort(compare));
+  return users;
+};
 /**
  * Returns a list of 500 users who were recently active within 30 days which is
  * sorted by the most recent actions in descending order
@@ -46,7 +46,7 @@ export const getMostEditsUsers = async () => {
  *          objects
  */
 export const getMostActiveUsers = async () => {
-  const compare = (a, b) => b.recentactions - a.recentactions
+  const compare = (a, b) => b.recentactions - a.recentactions;
   const params = {
     action: 'query',
     format: 'json',
@@ -55,12 +55,12 @@ export const getMostActiveUsers = async () => {
     aulimit: 'max',
     auwitheditsonly: '1',
     auactiveusers: '1',
-  }
+  };
   const users = query(API_ENDPOINT, params, NUM_RETRIES)
-    .then((data) => data.query.allusers)
-    .then((users) => users.sort(compare))
-  return users
-}
+    .then(data => data.query.allusers)
+    .then(users => users.sort(compare));
+  return users;
+};
 
 export const getRecentEditsWithSize = async () => {
   const params = {
@@ -69,12 +69,12 @@ export const getRecentEditsWithSize = async () => {
     list: 'recentchanges',
     rcprop: 'title|ids|sizes|timestamp',
     rclimit: '500',
-  }
+  };
   const edits = query(API_ENDPOINT, params, NUM_RETRIES).then(
-    (result) => result.query.recentchanges
-  )
-  return await edits
-}
+    result => result.query.recentchanges
+  );
+  return await edits;
+};
 
 export const getRecentEditsWithFlags = async () => {
   const params = {
@@ -83,59 +83,59 @@ export const getRecentEditsWithFlags = async () => {
     list: 'recentchanges',
     rcprop: 'ids',
     rclimit: '50',
-  }
+  };
   const edits = query(API_ENDPOINT, params, NUM_RETRIES).then(
-    (result) => result.query.recentchanges
-  )
+    result => result.query.recentchanges
+  );
 
-  let revids = await edits
-  revids = revids.map((recentChange) => recentChange.revid)
-  let scores = await getScore(revids)
+  let revids = await edits;
+  revids = revids.map(recentChange => recentChange.revid);
+  let scores = await getScore(revids);
 
-  let data = [
+  const data = [
     { id: 'damaging', label: 'damaging', value: 0, color: '#F25543' },
     { id: 'unsure', label: 'unsure', value: 0, color: '#FFF047' },
     { id: 'good faith', label: 'good faith', value: 0, color: '#92E16F' },
-  ]
+  ];
 
-  scores = await scores
+  scores = await scores;
 
-  Object.values(scores).forEach((score) => {
+  Object.values(scores).forEach(score => {
     if (
       score.damaging.score !== undefined &&
       score.damaging.score.prediction === true
     ) {
-      data[0].value += 1
+      data[0].value += 1;
     } else if (
       score.damaging.score !== undefined &&
       score.damaging.score.prediction === false
     ) {
-      data[2].value += 1
+      data[2].value += 1;
     } else {
-      data[1].value += 1
+      data[1].value += 1;
     }
-  })
+  });
 
-  return data
-}
+  return data;
+};
 
 /**
  * Returns recent 500 recent edits sorted by size of changes made in absolute value
  * So large additions and large deletions are included
  */
 export const getRecentLargestEdits = async () => {
-  const editList = await getRecentEditsWithSize()
+  const editList = await getRecentEditsWithSize();
 
-  editList.forEach((item) => {
-    item.value = Math.abs(item.newlen - item.oldlen)
-    item.id = item.revid.toString()
-    item.label = item.title
-  })
+  editList.forEach(item => {
+    item.value = Math.abs(item.newlen - item.oldlen);
+    item.id = item.revid.toString();
+    item.label = item.title;
+  });
 
-  editList.sort((a, b) => b.value - a.value)
+  editList.sort((a, b) => b.value - a.value);
 
-  return editList
-}
+  return editList;
+};
 
 /**
  * @typedef {Object} PageInfo
@@ -152,13 +152,13 @@ export const getRecentLargestEdits = async () => {
  *        last called
  * @returns {(Promise.<PageInfo[]> | string)[]}
  */
-export const getMostActivePages = async (prevTimestamp) => {
-  const [recentChanges, newTimestamp] = queryRecentChanges(prevTimestamp)
-  const activePages = recentChanges.then((recentChanges) =>
+export const getMostActivePages = async prevTimestamp => {
+  const [recentChanges, newTimestamp] = queryRecentChanges(prevTimestamp);
+  const activePages = recentChanges.then(recentChanges =>
     countPageOccurances(recentChanges)
-  )
-  return [await activePages, newTimestamp]
-}
+  );
+  return [await activePages, newTimestamp];
+};
 
 /**
  * Returns an array of most users pages from recent changes feed
@@ -167,13 +167,13 @@ export const getMostActivePages = async (prevTimestamp) => {
  *        last called
  * @returns {(Promise.<User[]> | string)[]}
  */
-export const getRecentActiveUsers = async (prevTimestamp) => {
-  const [recentChanges, newTimestamp] = queryRecentChanges(prevTimestamp)
-  const activeUsers = recentChanges.then((activeUsers) =>
+export const getRecentActiveUsers = async prevTimestamp => {
+  const [recentChanges, newTimestamp] = queryRecentChanges(prevTimestamp);
+  const activeUsers = recentChanges.then(activeUsers =>
     countUsers(activeUsers)
-  )
-  return [await activeUsers, newTimestamp]
-}
+  );
+  return [await activeUsers, newTimestamp];
+};
 
 /**
  * Batches a query to cirumvent the 50 items query limit
@@ -184,20 +184,22 @@ export const getRecentActiveUsers = async (prevTimestamp) => {
  * @param {Object} params the parameters of the query
  */
 export const batchQuery = async (itemsKey, items, endpoint, params) => {
-  let result = []
-  let batches = null
-  if (items instanceof Array) batches = createBatch(items, MAX_QUERY_SIZE)
-  else batches = [[items]]
-  const results = batches.map(async (batch) => {
-    const batchString = batch.join('|')
-    params[itemsKey] = batchString
+  const result = [];
+  let batches = null;
+  if (items instanceof Array) {
+    batches = createBatch(items, MAX_QUERY_SIZE);
+  } else {
+    batches = [[items]];
+  }
+  const results = batches.map(async batch => {
+    params[itemsKey] = batch.join('|');
     return query(endpoint, params, NUM_RETRIES)
-      .then((data) => result.push(data))
-      .catch((err) => null)
-  })
-  await Promise.all(results)
-  return result
-}
+      .then(data => result.push(data))
+      .catch(err => null);
+  });
+  await Promise.all(results);
+  return result;
+};
 
 /**
  * @typedef {Object} RecentChanges
@@ -221,11 +223,11 @@ export const batchQuery = async (itemsKey, items, endpoint, params) => {
  *        last called
  * @returns {(Promise.<RecentChanges[]> | string)[]}
  */
-export const queryRecentChanges = (prevTimestamp) => {
-  let tmpTimestamp = new Date()
-  const newTimestamp = tmpTimestamp.toISOString()
-  tmpTimestamp = tmpTimestamp - 1000
-  tmpTimestamp = new Date(tmpTimestamp).toISOString()
+export const queryRecentChanges = prevTimestamp => {
+  let tmpTimestamp = new Date();
+  const newTimestamp = tmpTimestamp.toISOString();
+  tmpTimestamp = tmpTimestamp - 1000;
+  tmpTimestamp = new Date(tmpTimestamp).toISOString();
   const params = {
     action: 'query',
     format: 'json',
@@ -234,22 +236,20 @@ export const queryRecentChanges = (prevTimestamp) => {
     rclimit: 'max',
     rcstart: tmpTimestamp,
     rcend: prevTimestamp,
-  }
+  };
   const recentChanges = query(API_ENDPOINT, params, NUM_RETRIES)
-    .then((data) => data.query.recentchanges)
-    .then((recentChanges) => {
-      const revisionIds = recentChanges.map(
-        (recentChange) => recentChange.revid
-      )
-      return getScore(revisionIds).then((scores) =>
-        recentChanges.map((recentChange) => {
-          recentChange.scores = scores[recentChange.revid]
-          return recentChange
+    .then(data => data.query.recentchanges)
+    .then(recentChanges => {
+      const revisionIds = recentChanges.map(recentChange => recentChange.revid);
+      return getScore(revisionIds).then(scores =>
+        recentChanges.map(recentChange => {
+          recentChange.scores = scores[recentChange.revid];
+          return recentChange;
         })
-      )
-    })
-  return [recentChanges, newTimestamp]
-}
+      );
+    });
+  return [recentChanges, newTimestamp];
+};
 
 /**
  * Returns the groups of each username in the input array
@@ -258,28 +258,28 @@ export const queryRecentChanges = (prevTimestamp) => {
  * @returns {Map.<string, string[]>} - map of username to an array of groups
  *         they belong to
  */
-export const getUserGroups = (userNames) => {
-  const key = 'ususers'
+export const getUserGroups = userNames => {
+  const key = 'ususers';
   const params = {
     action: 'query',
     format: 'json',
     list: 'users',
     usprop: 'groups',
-  }
-  const groups = batchQuery(key, userNames, API_ENDPOINT, params).then(
-    (data) => {
-      const groups = {}
-      data.forEach((queryResult) => {
-        const users = queryResult.query.users
-        users.forEach((userObj) => {
-          if (userObj.groups) groups[userObj.name] = userObj.groups
-        })
-      })
-      return groups
-    }
-  )
-  return groups
-}
+  };
+  const groups = batchQuery(key, userNames, API_ENDPOINT, params).then(data => {
+    const groups = {};
+    data.forEach(queryResult => {
+      const users = queryResult.query.users;
+      users.forEach(userObj => {
+        if (userObj.groups) {
+          groups[userObj.name] = userObj.groups;
+        }
+      });
+    });
+    return groups;
+  });
+  return groups;
+};
 
 // ~ Helper Functions ---------------------------------------------------------
 
@@ -292,14 +292,16 @@ export const getUserGroups = (userNames) => {
  */
 const query = async (endpoint, params, n) => {
   try {
-    const paramsString = new URLSearchParams(params).toString()
-    const url = endpoint + '?' + paramsString + '&origin=*'
-    return await fetch(url).then((response) => response.json())
+    const paramsString = new URLSearchParams(params).toString();
+    const url = endpoint + '?' + paramsString + '&origin=*';
+    return await fetch(url).then(response => response.json());
   } catch (err) {
-    if (n === 1) throw err
-    return await setTimeout(query(endpoint, params, n - 1), 500)
+    if (n === 1) {
+      throw err;
+    }
+    return await setTimeout(query(endpoint, params, n - 1), 500);
   }
-}
+};
 
 /**
  * Retruns the score of the revision id to find out if the edit was harmful or not
@@ -307,20 +309,22 @@ const query = async (endpoint, params, n) => {
  * @param {number[]} revisionIds - Revision ids to obtain the score of
  * @returns {Promise.<Object>}
  */
-const getScore = async (revisionIds) => {
-  if (revisionIds.length === 0) return
-  const key = 'revids'
-  const params = {}
-  let scores = {}
+const getScore = async revisionIds => {
+  if (revisionIds.length === 0) {
+    return;
+  }
+  const key = 'revids';
+  const params = {};
+  let scores = {};
   return batchQuery(key, revisionIds, SCORING_ENDPOINT, params).then(
-    (resultBatch) => {
+    resultBatch => {
       resultBatch.forEach(
-        (result) => (scores = { ...scores, ...result.wikidatawiki?.scores })
-      )
-      return scores
+        result => (scores = { ...scores, ...result.wikidatawiki?.scores })
+      );
+      return scores;
     }
-  )
-}
+  );
+};
 
 /**
  * Returns the number of times a page appeared on the recent changes feed sorted by
@@ -328,20 +332,20 @@ const getScore = async (revisionIds) => {
  *
  * @param {RecentChanges[]} recentChanges - The array of recent changes from a query
  */
-const countPageOccurances = (recentChanges) => {
-  const compare = (a, b) => b.actions - a.actions
-  const titleCounts = {}
-  recentChanges.forEach((change) => {
-    const actions = titleCounts[change.title] || 0
-    titleCounts[change.title] = actions + 1
-  })
+const countPageOccurances = recentChanges => {
+  const compare = (a, b) => b.actions - a.actions;
+  const titleCounts = {};
+  recentChanges.forEach(change => {
+    const actions = titleCounts[change.title] || 0;
+    titleCounts[change.title] = actions + 1;
+  });
   const titles = Object.entries(titleCounts).map(([id, actions]) => ({
     id,
     actions,
-  }))
-  titles.sort(compare)
-  return titles
-}
+  }));
+  titles.sort(compare);
+  return titles;
+};
 
 /**
  * Returns the number of times a user appeared on the recent changes feed sorted by
@@ -349,25 +353,25 @@ const countPageOccurances = (recentChanges) => {
  *
  * @param {RecentChanges[]} recentChanges - The array of recent changes from a query
  */
-const countUsers = (recentChanges) => {
-  const compare = (a, b) => b.actions - a.actions
-  const userCounts = {}
-  recentChanges.forEach((change) => {
-    const user = change.user
-    const numActions = userCounts[user] || 0
-    userCounts[user] = numActions + 1
-  })
+const countUsers = recentChanges => {
+  const compare = (a, b) => b.actions - a.actions;
+  const userCounts = {};
+  recentChanges.forEach(change => {
+    const user = change.user;
+    const numActions = userCounts[user] || 0;
+    userCounts[user] = numActions + 1;
+  });
   const users = Object.entries(userCounts).map(([username, actions]) => ({
     username,
     actions,
-  }))
-  const userNames = users.map(({ username }) => username)
-  getUserGroups(userNames).then((groups) => {
-    users.forEach((userObj) => (userObj.groups = groups[userObj.username]))
-    users.sort(compare)
-  })
-  return users
-}
+  }));
+  const userNames = users.map(({ username }) => username);
+  getUserGroups(userNames).then(groups => {
+    users.forEach(userObj => (userObj.groups = groups[userObj.username]));
+    users.sort(compare);
+  });
+  return users;
+};
 
 /**
  * Splits up an array into smaller arrays
@@ -378,9 +382,9 @@ const countUsers = (recentChanges) => {
  *         length size
  */
 const createBatch = (array, size) => {
-  const batches = []
+  const batches = [];
   while (array.length > 0) {
-    batches.push(array.splice(0, size))
+    batches.push(array.splice(0, size));
   }
-  return batches
-}
+  return batches;
+};
