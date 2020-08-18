@@ -1,17 +1,17 @@
-import React, { Component } from 'react'
-import { Nav, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
+import { Nav, Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 //Creates the Navbar shown on all pages
 
 class NavbarLocal extends Component {
   constructor(props) {
-    super(props)
-    this.state = { history: this.props.history }
+    super(props);
+    this.state = { history: this.props.history };
   }
   render() {
     // var isActive = this.context.router.route.location.pathname
-    let activePage = window.location.href
+    const activePage = window.location.href;
     return (
       <Navbar>
         <Navbar.Collapse>
@@ -30,12 +30,14 @@ class NavbarLocal extends Component {
               as={Link}
               to="/about-page"
               className={
-                activePage.endsWith('/about-page') ? 'nav-link--active' : 'nav-link'
+                activePage.endsWith('/about-page')
+                  ? 'nav-link--active'
+                  : 'nav-link'
               }
             >
               About Us
             </Nav.Link>
-            
+
             <Nav.Link
               as={Link}
               to="/page"
@@ -56,11 +58,10 @@ class NavbarLocal extends Component {
               Feed
             </Nav.Link>
 
-            
-
             <a
               as={Link}
               target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/isobelm/Software-Engineering"
               className={
                 activePage.endsWith('/ksknc') ? 'nav-link--active' : 'nav-link'
@@ -71,8 +72,8 @@ class NavbarLocal extends Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-    )
+    );
   }
 }
 
-export default NavbarLocal
+export default NavbarLocal;

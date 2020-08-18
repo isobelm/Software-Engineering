@@ -1,5 +1,5 @@
-import { ResponsiveLine } from '@nivo/line'
-import React, { Component } from 'react'
+import { ResponsiveLine } from '@nivo/line';
+import React, { Component } from 'react';
 
 class SampleGraph extends Component {
   render = () => (
@@ -71,7 +71,7 @@ class SampleGraph extends Component {
         ]}
       />
     </div>
-  )
+  );
 }
 
 const data = [
@@ -129,6 +129,6 @@ const data = [
       },
     ],
   },
-]
+];
 
-export default SampleGraph
+export default SampleGraph;

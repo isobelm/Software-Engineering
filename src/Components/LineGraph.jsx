@@ -1,16 +1,23 @@
-import { ResponsiveLine } from '@nivo/line'
-import React, { Component } from 'react'
+import { ResponsiveLine } from '@nivo/line';
+import React, { Component } from 'react';
 
 class LineGraph extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       loaded: false,
       data: null,
       fullGraph: this.props.fullGraph,
-    }
+    };
 
-    this.loadData()
+    this.loadData();
+  }
+
+  componentDidMount() {
+    this.refreshInterval = setInterval(async () => {
+      const method = this.props.settings.refreshMethod.bind(this);
+      await method();
+    }, this.props.settings.refreshTime);
   }
 
   tooltip = function(click, url) {
@@ -22,37 +29,31 @@ class LineGraph extends Component {
           title="tooltip-option-2"
         />
       </div>
-    )
-  }
+    );
+  };
 
-  loadData = async () => {
-    let getData = this.props.settings.getData.bind(this)
-    let data = await getData()
-    let smlData = data.slice(0, this.state.fullGraph ? 30 : 10)
-    this.setState({
-      loaded: true,
-      data: smlData,
-    })
-  }
-
-  componentDidMount() {
-    this.refreshInterval = setInterval(async () => {
-      let method = this.props.settings.refreshMethod.bind(this)
-      await method()
-    }, this.props.settings.refreshTime)
-  }
+  loadData = () => {
+    const getData = this.props.settings.getData.bind(this);
+    getData().then(data => {
+      const smlData = data.slice(0, this.state.fullGraph ? 30 : 10);
+      this.setState({
+        loaded: true,
+        data: smlData,
+      });
+    });
+  };
 
   render = () => {
-    let margin = {}
-    let classname = ''
+    let margin = {};
+    let classname = '';
     if (this.state.fullGraph) {
-      margin = { top: 5, right: 60, bottom: 80, left: 80 }
-      classname = 'full-graph-container'
+      margin = { top: 5, right: 60, bottom: 80, left: 80 };
+      classname = 'full-graph-container';
       if (this.props.settings.onClick) {
       }
     } else {
-      margin = { top: 0, right: 0, bottom: 0, left: 0 }
-      classname = 'Graph-Container-Card'
+      margin = { top: 0, right: 0, bottom: 0, left: 0 };
+      classname = 'Graph-Container-Card';
     }
     return (
       <div className={classname}>
@@ -89,8 +90,8 @@ class LineGraph extends Component {
           />
         )}
       </div>
-    )
-  }
+    );
+  };
 }
 
-export default LineGraph
+export default LineGraph;

@@ -1,51 +1,51 @@
-import React, { Component } from 'react'
-import GraphPage from './GraphPage'
-import PieChart from '../Components/PieChart'
-import { getRecentEditsWithSize } from '../Backend/APIWrapper'
+import React, { Component } from 'react';
+import GraphPage from './GraphPage';
+import PieChart from '../Components/PieChart';
+import { getRecentEditsWithSize } from '../Backend/APIWrapper';
 
 export const RecentEditSizeSettings = {
   getData: async () => {
-    let data = await getRecentEditsWithSize()
+    const data = await getRecentEditsWithSize();
     data.forEach(item => {
-      item.id = item.revid.toString()
-      item.value = Math.abs(item.newlen - item.oldlen)
-      item.label = item.title
-    })
-    return data
+      item.id = item.revid.toString();
+      item.value = Math.abs(item.newlen - item.oldlen);
+      item.label = item.title;
+    });
+    return data;
   },
   refreshTime: 2000,
   refreshMethod: async () => {
-    let data = await getRecentEditsWithSize()
+    const data = await getRecentEditsWithSize();
     data.forEach(item => {
-      item.value = Math.abs(item.newlen - item.oldlen)
-      item.id = item.revid.toString()
-      item.label = item.title
-    })
-    return data
+      item.value = Math.abs(item.newlen - item.oldlen);
+      item.id = item.revid.toString();
+      item.label = item.title;
+    });
+    return data;
   },
   colorBy: 'type',
   colors: 'set1',
   onClick: function(click) {
-    window.open('https://www.wikidata.org/wiki/' + click.label, '_blank')
+    window.open('https://www.wikidata.org/wiki/' + click.label, '_blank');
   },
   tooltip: function(click) {
-    return this.tooltip(click, 'https://www.wikidata.org/wiki/')
+    return this.tooltip(click, 'https://www.wikidata.org/wiki/');
   },
-}
+};
 
 class RecentEditSize extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       history: this.props.history,
       paused: false,
-    }
+    };
   }
 
   handlePause = event => {
-    let paused = this.state.paused
-    this.setState({ paused: !paused })
-  }
+    const paused = this.state.paused;
+    this.setState({ paused: !paused });
+  };
 
   render() {
     return (
@@ -72,9 +72,9 @@ class RecentEditSize extends Component {
             paused={this.state.paused}
           />
         }
-        name={'Recent Edit Size'}
+        name="Recent Edit Size"
       />
-    )
+    );
   }
 }
-export default RecentEditSize
+export default RecentEditSize;

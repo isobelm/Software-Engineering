@@ -1,31 +1,26 @@
-	import React from 'react'
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
-import HomePage from './Pages/HomePage'
-import history from './Utils/History'
-import FeedData from './Components/Feed'
-import TestPage from './Pages/TestPage'
-import UsersByMostEditsPage from './Pages/UsersByMostEditsPage'
-import MostActiveUsers from './Pages/MostActiveUsers'
-import MostActivePages from './Pages/MostActivePages'
-import RecentEditSize from './Pages/RecentEditSize'
-import LargestRecentEdits from './Pages/LargestRecentEdits'
-import ProportionFlagged from './Pages/ProportionFlagged'
-import AboutPage from './Pages/AboutPage'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import { Route, Switch, HashRouter as Router } from 'react-router-dom';
+import HomePage from './Pages/HomePage';
+import history from './Utils/History';
+import FeedData from './Components/Feed';
+import TestPage from './Pages/TestPage';
+import UsersByMostEditsPage from './Pages/UsersByMostEditsPage';
+import MostActiveUsers from './Pages/MostActiveUsers';
+import MostActivePages from './Pages/MostActivePages';
+import RecentEditSize from './Pages/RecentEditSize';
+import LargestRecentEdits from './Pages/LargestRecentEdits';
+import ProportionFlagged from './Pages/ProportionFlagged';
+import AboutPage from './Pages/AboutPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import './App.css'
+import './App.css';
 
 function App() {
   return (
     <div className="App">
       <Router basename={process.env.PUBLIC_URL} history={history}>
         <Switch>
-          <Route
-            exact
-            path={'/'}
-            component={HomePage}
-          />
+          <Route exact path="/" component={HomePage} />
           <Route exact path="/page" component={TestPage} />
           <Route
             exact
@@ -45,16 +40,12 @@ function App() {
             path="/proportion-flagged"
             component={ProportionFlagged}
           />
-          <Route
-            exact
-            path="/about-page"
-            component={AboutPage}
-          />
+          <Route exact path="/about-page" component={AboutPage} />
           <Route exact path="/feed" component={FeedData} />
         </Switch>
       </Router>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

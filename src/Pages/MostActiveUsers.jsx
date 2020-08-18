@@ -1,60 +1,60 @@
-import React, { Component } from 'react'
-import GraphPage from './GraphPage'
-import SimpleBarGraph from '../Components/SimpleBarGraph'
-import { getRecentActiveUsers } from '../Backend/APIWrapper'
+import React, { Component } from 'react';
+import GraphPage from './GraphPage';
+import SimpleBarGraph from '../Components/SimpleBarGraph';
+import { getRecentActiveUsers } from '../Backend/APIWrapper';
 
 export const MostActiveUsersGraphSettings = {
   getData: async function() {
     let [data, newTimestamp] = await getRecentActiveUsers(
       new Date().toISOString()
-    )
-    data = data.slice(0, 50)
+    );
+    data = data.slice(0, 50);
     this.setState({
       fullData: data,
       prevTimestamp: newTimestamp,
-    })
-    return data
+    });
+    return data;
   },
   refreshTime: 2000,
   refreshMethod: async function() {
     let [data, newTimestamp] = await getRecentActiveUsers(
       this.state.prevTimestamp
-    )
-    this.setState({ prevTimestamp: newTimestamp })
-    data = data.slice(0, 50)
+    );
+    this.setState({ prevTimestamp: newTimestamp });
+    data = data.slice(0, 50);
     if (this.state.fullData) {
-      let fullData = this.state.fullData
+      const fullData = this.state.fullData;
       data.forEach(userAdditions => {
-        let index = -1
+        let index = -1;
         for (let i = 0; i < fullData.length; i += 1) {
           if (fullData[i].username === userAdditions.username) {
-            index = i
+            index = i;
           }
         }
         if (index !== -1) {
-          fullData[index].actions += userAdditions.actions
+          fullData[index].actions += userAdditions.actions;
         } else {
-          fullData.push(userAdditions)
+          fullData.push(userAdditions);
         }
-      })
-      fullData.sort((a, b) => b.actions - a.actions)
-      fullData.slice(0, 50)
-      let smlData = fullData.slice(0, this.state.fullGraph ? 30 : 10)
+      });
+      fullData.sort((a, b) => b.actions - a.actions);
+      fullData.slice(0, 50);
+      const smlData = fullData.slice(0, this.state.fullGraph ? 30 : 10);
       smlData.forEach(user => {
         if (user.groups !== undefined && user.groups.includes('bot')) {
-          user.bot = user.actions
-          user.human = 0
+          user.bot = user.actions;
+          user.human = 0;
         } else {
-          user.bot = 0
-          user.human = user.actions
+          user.bot = 0;
+          user.human = user.actions;
         }
-      })
+      });
 
-      this.setState({ fullData: fullData, data: smlData })
+      this.setState({ fullData: fullData, data: smlData });
     } else {
-      let smlData = data.slice(0, this.state.fullGraph ? 30 : 10)
+      const smlData = data.slice(0, this.state.fullGraph ? 30 : 10);
 
-      this.setState({ data: smlData })
+      this.setState({ data: smlData });
     }
   },
   keys: ['bot', 'human'],
@@ -90,26 +90,26 @@ export const MostActiveUsersGraphSettings = {
     window.open(
       'https://www.wikidata.org/wiki/User:' + click.indexValue,
       '_blank'
-    )
+    );
   },
   tooltip: function(click) {
-    return this.tooltip(click, 'https://www.wikidata.org/wiki/User:')
+    return this.tooltip(click, 'https://www.wikidata.org/wiki/User:');
   },
-}
+};
 
 class MostActiveUsers extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       history: this.props.history,
       paused: false,
-    }
+    };
   }
 
   handlePause = event => {
-    let paused = this.state.paused
-    this.setState({ paused: !paused })
-  }
+    const paused = this.state.paused;
+    this.setState({ paused: !paused });
+  };
 
   render() {
     return (
@@ -127,9 +127,9 @@ class MostActiveUsers extends Component {
             paused={this.state.paused}
           />
         }
-        name={'Most Active Users'}
+        name="Most Active Users"
       />
-    )
+    );
   }
 }
-export default MostActiveUsers
+export default MostActiveUsers;

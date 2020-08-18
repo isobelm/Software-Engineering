@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from 'react'
-import FeedData from '../Backend/FeedData'
+import React, { useState, useEffect } from 'react';
+import FeedData from '../Backend/FeedData';
 // eslint-disable-next-line
 import style from '../style.css'
 
 //Creates the feed shown on the dashboard, it updates in real time and highlights suspicious changes in red
 
 function Feed() {
-  const [feedData] = useState(new FeedData(30))
-  const [paused, setPaused] = useState(false)
+  const [feedData] = useState(new FeedData(30));
+  const [paused, setPaused] = useState(false);
   const [recentChanges, setRecentChanges] = useState({
     items: [],
-  })
+  });
 
   useEffect(() => {
     const refresh = setInterval(() => {
-      if (!paused) feedData.refresh()
-      setRecentChanges({ items: feedData.changes })
-    }, 500)
-    return () => clearInterval(refresh)
-  }, [feedData, paused])
+      if (!paused) {
+        feedData.refresh();
+      }
+      setRecentChanges({ items: feedData.changes });
+    }, 500);
+    return () => clearInterval(refresh);
+  }, [feedData, paused]);
 
   function togglePause() {
-    setPaused(prevPause => !prevPause)
+    setPaused(prevPause => !prevPause);
   }
 
   return (
@@ -48,12 +50,12 @@ function Feed() {
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
 const getTimeDifference = toCompare =>
   Math.round(
     Math.abs(new Date().getTime() - new Date(toCompare).getTime()) / 1000
-  )
+  );
 
-export default Feed
+export default Feed;

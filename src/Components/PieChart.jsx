@@ -1,16 +1,22 @@
-import React, { Component } from 'react'
-import { ResponsivePie } from '@nivo/pie'
+import React, { Component } from 'react';
+import { ResponsivePie } from '@nivo/pie';
 
 class PieChart extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       loaded: false,
       data: null,
       fullGraph: this.props.fullGraph,
-    }
+    };
 
-    this.loadData()
+    this.loadData();
+  }
+
+  componentDidMount() {
+    this.refreshInterval = setInterval(async () => {
+      await this.refresh();
+    }, this.props.settings.refreshTime);
   }
 
   tooltip = function(click, url) {
@@ -22,56 +28,51 @@ class PieChart extends Component {
           title="tooltip-option-2"
         />
       </div>
-    )
-  }
+    );
+  };
 
-  loadData = async () => {
-    let getData = this.props.settings.getData.bind(this)
-    let data = await getData()
-    let smlData = data.slice(0, this.state.fullGraph ? 30 : 10)
-    this.setState({
-      loaded: true,
-      data: smlData,
-    })
-  }
+  loadData = () => {
+    const getData = this.props.settings.getData.bind(this);
+    getData().then(data => {
+      const smlData = data.slice(0, this.state.fullGraph ? 30 : 10);
+      this.setState({
+        loaded: true,
+        data: smlData,
+      });
+    });
+  };
 
   refresh = async () => {
     if (!this.props.paused) {
-      this.loadData()
+      this.loadData();
     }
-  }
-
-  componentDidMount() {
-    this.refreshInterval = setInterval(async () => {
-      await this.refresh()
-    }, this.props.settings.refreshTime)
-  }
+  };
 
   render() {
-    let margin = {}
-    let label = null
-    let classname = ''
-    let onClick = () => {}
-    let tooltip = null
-    let colors = { scheme: this.props.settings.colors }
+    let margin = {};
+    let label = null;
+    let classname = '';
+    let onClick = () => {};
+    let tooltip = null;
+    let colors = { scheme: this.props.settings.colors };
     if (this.props.settings.colorFunction) {
-      colors = this.props.settings.colorFunction
+      colors = this.props.settings.colorFunction;
     }
     if (this.state.fullGraph) {
-      margin = { top: 30, right: 30, bottom: 30, left: 30 }
-      label = true
-      classname = 'full-graph-container'
+      margin = { top: 30, right: 30, bottom: 30, left: 30 };
+      label = true;
+      classname = 'full-graph-container';
 
       if (this.props.settings.onClick) {
-        onClick = this.props.settings.onClick
+        onClick = this.props.settings.onClick;
       }
       if (this.props.settings.tooltip) {
-        tooltip = this.props.settings.tooltip.bind(this)
+        tooltip = this.props.settings.tooltip.bind(this);
       }
     } else {
-      margin = { top: 0, right: 0, bottom: 0, left: 0 }
-      label = false
-      classname = 'Graph-Container-Card'
+      margin = { top: 0, right: 0, bottom: 0, left: 0 };
+      label = false;
+      classname = 'Graph-Container-Card';
     }
     return (
       <div>
@@ -102,26 +103,26 @@ class PieChart extends Component {
               animate={true}
               motionStiffness={90}
               motionDamping={15}
-              defs={[
-                {
-                  id: 'dots',
-                  type: 'patternDots',
-                  background: 'inherit',
-                  color: 'rgba(255, 255, 255, 0.3)',
-                  size: 4,
-                  padding: 1,
-                  stagger: true,
-                },
-                {
-                  id: 'lines',
-                  type: 'patternLines',
-                  background: 'inherit',
-                  color: 'rgba(255, 255, 255, 0.3)',
-                  rotation: -45,
-                  lineWidth: 6,
-                  spacing: 10,
-                },
-              ]}
+              // defs={[
+              //   {
+              //     id: 'dots',
+              //     type: 'patternDots',
+              //     background: 'inherit',
+              //     color: 'rgba(255, 255, 255, 0.3)',
+              //     size: 4,
+              //     padding: 1,
+              //     stagger: true,
+              //   },
+              //   {
+              //     id: 'lines',
+              //     type: 'patternLines',
+              //     background: 'inherit',
+              //     color: 'rgba(255, 255, 255, 0.3)',
+              //     rotation: -45,
+              //     lineWidth: 6,
+              //     spacing: 10,
+              //   },
+              // ]}
               isInteractive={this.state.fullGraph}
               onClick={onClick}
               tooltip={tooltip}
@@ -148,8 +149,8 @@ class PieChart extends Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 
-export default PieChart
+export default PieChart;
