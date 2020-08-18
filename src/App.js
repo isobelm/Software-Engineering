@@ -16,9 +16,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App() {
-  const baseName = 'Software-Engineering';
-  console.log(process.env.PUBLIC_URL);
-  console.log(baseName);
   return (
     <div className="App">
       <Router basename={process.env.PUBLIC_URL} history={history}>
