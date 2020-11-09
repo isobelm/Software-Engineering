@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FeedData from '../Backend/FeedData';
+import Navbar from '../Components/Navbar';
 // eslint-disable-next-line
 import style from '../style.css'
 

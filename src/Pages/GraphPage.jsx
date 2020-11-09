@@ -15,8 +15,9 @@ class GraphPage extends Component {
     return (
       <div className="HomePage">
         <Navbar history={this.state.history} />
+
         <div className="row">
-          <div className="infobox">
+          <div className="col-lg-3 col-12 infobox">
             <h2>{this.state.title}</h2>
             <p />
             <p>{this.props.explanation}</p>
@@ -34,7 +35,10 @@ class GraphPage extends Component {
               </form>
             </p>
           </div>
-          {this.props.graph}
+          <div className="col-lg-9 col-12">
+            {this.props.graph}
+          </div>
+
         </div>
       </div>
     );

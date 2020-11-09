@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, HashRouter as Router } from 'react-router-dom';
 import HomePage from './Pages/HomePage';
 import history from './Utils/History';
-import FeedData from './Components/Feed';
+import FeedData from './Pages/FeedData';
 import TestPage from './Pages/TestPage';
 import UsersByMostEditsPage from './Pages/UsersByMostEditsPage';
 import MostActiveUsers from './Pages/MostActiveUsers';

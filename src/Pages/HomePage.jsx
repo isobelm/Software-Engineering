@@ -31,7 +31,7 @@ class HomePage extends Component {
               subtitle="A web app to visualise recent changes to Wikidata in quasi real time."
             />
           </div>
-          <div className="col-lg-7 col-sm-12">
+          <div className="col-lg-7 col-sm-12 homeNav">
             <div className="row">
               <div className="col-lg-4 col-sm-12">
                 <h1 className="text-red">
@@ -46,7 +46,7 @@ class HomePage extends Component {
                   btnLink="/about-page"
                 />
               </div>
-              <div className="col-lg-4 col-sm-12">
+              <div className="col-lg-4 col-sm-12 homeNav">
                 <h1 className="text-green">
                   <FontAwesomeIcon icon={faChartLine} />
                 </h1>
@@ -59,7 +59,7 @@ class HomePage extends Component {
                   btnLink="/page"
                 />
               </div>
-              <div className="col-lg-4 col-sm-12">
+              <div className="col-lg-4 col-sm-12 homeNav">
                 <h1 className="text-blue">
                   <FontAwesomeIcon icon={faUser} />
                 </h1>

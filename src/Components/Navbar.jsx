@@ -45,7 +45,7 @@ class NavbarLocal extends Component {
                 activePage.endsWith('/page') ? 'nav-link--active' : 'nav-link'
               }
             >
-              Page
+              Dashboard
             </Nav.Link>
 
             <Nav.Link

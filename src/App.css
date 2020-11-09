@@ -53,13 +53,33 @@
 }
 
 .full-graph-container {
-  height: 92vh;
-  float: right;
   width: 75vw;
   height: 90vh;
   padding: 0;
   background-color: #fff;
 }
+
+@media screen and (max-width: 992px) {
+  .full-graph-container {
+    width: 100vw;
+    height: 80vh;
+    padding: 0;
+    background-color: #fff;
+  }
+
+  .homeNav{
+    margin-top: 7%;
+  }
+
+  .homeStat{
+    border-top: 1px solid var(--red);
+    border-bottom: 1px solid var(--red);
+    border-right:none;
+    border-left:none;
+    border-radius: 2%;
+  }
+}
+
 
 .navbar-light .navbar-nav .nav-link {
   color: var(--p);
@@ -108,8 +128,6 @@
 }
 
 .infobox {
-  height: 92vh;
-  width: 25vw;
   float: left;
   text-align: left;
   padding: 2vmin;

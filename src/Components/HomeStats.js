@@ -51,25 +51,36 @@ class HomeStats extends Component {
 
   render() {
     return (
-      <div className="row">
-        <ListGroup horizontal>
-          <ListGroup.Item className="list-group-item-black">
+      <div className="row col-lg-12 mx-auto col-12 justify-content-center  homeStatContainer text-left">
+            
+
+            <div className="col-lg-3 col-12 homeStat">
             <h1 id="div1">{this.state.errorCode}</h1>
             <h1>Items</h1>
-          </ListGroup.Item>
-          <ListGroup.Item className="list-group-item-red">
+            </div>
+
+            <div className="col-lg-3 col-12 homeStat">
             <h1 id="div2">{this.state.errorCode}</h1>
             <h1>Edits</h1>
-          </ListGroup.Item>
-          <ListGroup.Item className="list-group-item-green">
+            </div>
+
+            <div className="col-lg-3 col-12 homeStat">
             <h1 id="div3">{this.state.errorCode}</h1>
             <h1>Users</h1>
-          </ListGroup.Item>
-          <ListGroup.Item className="list-group-item-blue">
+            </div>
+
+            <div className="col-lg-3 col-12  homeStat">
             <h1 id="div4">{this.state.errorCode}</h1>
             <h1>Active Users</h1>
-          </ListGroup.Item>
-        </ListGroup>
+            </div>
+            
+          
+           
+        
+           
+      
+            
+      
       </div>
     );
   }

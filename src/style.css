@@ -17,6 +17,8 @@ input {
     filter: brightness(100%)!important; 
 }
 
+
+
 .searchBar {
   border-bottom: 1px solid var(--p);
   border-top: 0px solid #aaaaaa;
@@ -324,6 +326,16 @@ ul {
   color: var(--b);
 }
 
+
+
+.homeStat{
+  border-left: 1px solid var(--red);
+  border-right: 1px solid var(--red);
+  border-radius: 2%;
+}
+.statsContent{
+  margin-left: 2%;
+}
 
 
 
