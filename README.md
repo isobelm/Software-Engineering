@@ -1,3 +1,6 @@
+![CI/CD](https://github.com/Group29-TCD/Software-Engineering/workflows/CI/CD/badge.svg) [![codecov](https://codecov.io/gh/Group29-TCD/Software-Engineering/branch/master/graph/badge.svg)](https://codecov.io/gh/Group29-TCD/Software-Engineering)
+
+
 # [Wikidata Live Changes](https://isobelm.github.io/Software-Engineering/)
 
 ![banner](data/Dashboard.gif)
