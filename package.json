@@ -21,15 +21,16 @@
     "react-dom": "^16.12.0",
     "react-native-rss-parser": "^1.4.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0",
+    "react-scripts": "^3.3.0",
     "wikibase-sdk": "^7.2.1"
   },
   "devDependencies": {
-    "gh-pages": "^2.2.0",
     "eslint": "^6.8.0",
-    "prettier": "^1.18.2",
     "eslint-config-prettier": "^6.4.0",
-    "eslint-plugin-prettier": "^3.1.1"
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.28.0",
+    "gh-pages": "^2.2.0",
+    "prettier": "^1.18.2"
   },
   "prettier": {
     "trailingComma": "es5",
@@ -53,9 +54,16 @@
       "prettier"
     ],
     "plugins": [
-      "prettier"
+      "prettier",
+      "react"
     ],
     "rules": {
+      "react/jsx-uses-react": [
+        "error"
+      ],   
+      "react/jsx-uses-vars": [
+        "error"
+      ],
       "prettier/prettier": [
         "error"
       ],
